@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, viewport-fit=cover">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <title>Saldo Red</title>
+
+  <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript">
+
+  data = {
+    savedCards: [], lastCard: [{type: "undefined", num: "undefined", saldo: "···", leftTrips: "···", status: "ok"}]
+  };
+
+  TESelection = "end";
+
+  function openMenu(specifiedMenu) {
+    $(".content-wrapper").animate({ scrollTop: 0 }, 300);
+    $(".overlay-menus").removeClass().addClass("overlay-menus").addClass(specifiedMenu);
+
+    if (specifiedMenu == "addMoney") {
+      // Revisa la URL del iFrame cada 300 milisegundos para vincular eventos con app.
+      checkingframeurl = setInterval(function() { checkiFrame(); }, 300);
+      setTimeout(function(){
+        $("main").addClass("fixed");
+      }, 300);
+    } else if (specifiedMenu == "myCards") {
+      TESelection = "start";
+      TapticEngine.gestureSelectionStart();
+    } else {
+      // Don't worry baby.
+    }
+  }
+
+  function closeMenu(specifiedMenu) {
+    // Correcciones generales.
+    document.activeElement.blur();
+    $("iframe#tbk").attr("src","loading.html");
+    $("#transitCard").val("");
+    $("main").removeClass("fixed");
+    
+    // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
+    selectThisCard('Bip');
+
+    // Si no se especifica qué menú cerrar, se cierran todos.
+    if(specifiedMenu == null) {
+      $(".overlay-menus").removeClass().addClass("overlay-menus");
+    } else if (specifiedMenu == "addMoney") {
+      clearInterval(checkingframeurl);
+      $(".overlay-menus").removeClass(specifiedMenu);
+    } else if (specifiedMenu == "myCards") {
+      TapticEngine.gestureSelectionEnd();
+      TESelection = "end";
+      $(".overlay-menus").removeClass(specifiedMenu);
+    } else {
+      $(".overlay-menus").removeClass(specifiedMenu);
+    }
+  }
+
+  function getLastCardUsed() {
+    setCurrentCard((data['lastCard'][0].type), (data['lastCard'][0].num));
+  }
+
+  function setCurrentCard(type, num) {
+
+    if (TESelection == "start") {
+      TapticEngine.gestureSelectionChanged();
+    } else { }
+
+    $(".buttons").animate({ scrollLeft: 0 }, 300);
+
+    if (data['savedCards'].find(obj => (obj.num === num && obj.type === type)).status == "ok") {
+      $("main").removeClass().addClass("card-" + type.toLowerCase());
+    } else if (data['savedCards'].find(obj => (obj.num === num && obj.type === type)).status == "error") {
+      $("main").removeClass().addClass("card-" + type.toLowerCase()).addClass("error");
+    }
+
+    $("main").attr("data-type", type);
+    $("main").attr("data-num", num);
+    $(".saved-cards button").removeClass("selected");
+    $(".saved-cards button[data-type='" + type + "'][data-num='" + num + "']").addClass("selected");
+
+    // From https://stackoverflow.com/questions/7364150/find-object-by-id-in-an-array-of-javascript-objects
+    var lastCardSaldo = data['savedCards'].find(obj => (obj.num === num && obj.type === type)).saldo;
+    var lastCardLeftTrips = data['savedCards'].find(obj => (obj.num === num && obj.type === type)).leftTrips;
+
+    $('*[data-type="' + type + '"][data-num="' + num + '"] .saldo').html(lastCardSaldo);
+    $('*[data-type="' + type + '"][data-num="' + num + '"] .leftTrips').html(lastCardLeftTrips);
+    data['lastCard'][0].type = type;
+    data['lastCard'][0].num = num;
+    data['lastCard'][0].saldo = lastCardSaldo;
+    data['lastCard'][0].leftTrips = lastCardLeftTrips;
+    localStorage.setItem('data', JSON.stringify(data));
+    $("html, body, .content-wrapper").animate({ scrollTop: 0 }, 200);
+    getTarifa();
+    setTimeout(function(){
+      closeMenu();
+    }, 200);
+  }
+
+  function getTarifa() {
+    currentDay = ["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"][(new Date()).getDay()]
+    currentHour = ("0" + ((new Date()).getHours())).slice(-2);
+    currentMinute = ("0" + ((new Date()).getMinutes())).slice(-2);;
+    currentDayOfMonth = (new Date()).getDate();
+    currentMonth = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"][(new Date()).getMonth()]
+    currentYear = (new Date()).getFullYear();
+    now = (new Date()).getHours() * 60 + (new Date()).getMinutes();
+
+    if (currentDay == "Lunes" ||
+    currentDay == "Martes" ||
+    currentDay == "Miércoles" ||
+    currentDay == "Jueves" ||
+    currentDay == "Viernes") {
+
+      // Self-Note: La lógica detrás de esto es medir la hora del día en minutos desde las 00:00.
+      // Así, como estamos comparando variables (hh:mm) en una misma unidad de medida (minutos),
+      // podemos establecer condiciones como estas – donde se comparan 2 puntos del día con el actual.
+
+      // Entre 7:00 y 8:59 hrs. o 18:00 y 19:59 hrs.
+      if ((7 * 60) <= now && now <= (8 * 60 + 59) || (18 * 60) <= now && now <= (19 * 60 + 59)) {
+        block = "Horario Punta";
+        tarifaBip = "800";
+
+        // Entre 6:00 y 6:29 hrs. o 20:45 y 23:00 hrs.
+      } else if ((6 * 60) <= now && now <= (6 * 60 + 29) || (20 * 60 + 45) <= now && now <= (23 * 60)) {
+        block = "Horario Bajo";
+        tarifaBip = "700";
+
+        // Entre 6:30 y 6:59 hrs. o 9:00 y 17:59 hrs. o 20:00 y 20:44 hrs.
+      } else if ((6 * 60 + 30) <= now && now <= (6 * 60 + 59) || (9 * 60) <= now && now <= (17 * 60 + 59) || (20 * 60) <= now && now <= (20 * 60 + 44)) {
+        block = "Horario Valle";
+        tarifaBip = "720";
+      } else {
+        block = "Noche";
+        tarifaBip = "700";
+      }
+    } else {
+      // Fin de semana
+      block = "Fin de Semana";
+      tarifaBip = "720";
+    }
+
+    tarifaPase = "230";
+
+    fechaActual = currentDay + ", " + currentDayOfMonth + " de " + currentMonth + " de " + currentYear;
+    horaActual = currentHour + ":" + currentMinute;
+
+    $("main .currentBlock").html(block);
+    $("main[data-type='Bip'] .currentFare").html("$" + tarifaBip);
+    $("main[data-type='Pase'] .currentFare").html("$" + tarifaPase);
+
+  }
+
+  function getSavedCards() {
+    $(".saved-cards").html("");
+    if (data.savedCards.length == 0) {
+      $("main").removeClass().addClass("noCards");
+    } else {
+
+      if (data.savedCards.length >= 5) {
+        $(".addCardButton").css("display","none");
+      } else {
+        $(".addCardButton").css("display","block");
+      }
+
+      data.savedCards.forEach(function(element) {
+        if (element.status == "ok") {
+          $(".saved-cards").append(
+            '<button data-type="' + element.type + '" data-num="' + element.num + '" class="saved-card card-selector" ontouchstart="setCurrentCard(\'' + element.type + '\', \'' + element.num + '\');"><figure class="small-card"><div class="card ' + element.type.toLowerCase() + '"><div class="card-logo"></div></div></figure><div class="card-info"><span>' + element.type + '</span><p class="txt-gray"><span class="saldo">' + element.saldo + '</span> | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</p><p class="txt-red errorText">Error al consultar la tarjeta.</p></div></button>'
+          );
+        } else if (element.status == "error") {
+          $(".saved-cards").append(
+            '<button data-type="' + element.type + '" data-num="' + element.num + '" class="saved-card card-selector error" ontouchstart="setCurrentCard(\'' + element.type + '\', \'' + element.num + '\');"><figure class="small-card"><div class="card ' + element.type.toLowerCase() + '"><div class="card-logo"></div></div></figure><div class="card-info"><span>' + element.type + '</span><p class="txt-gray"><span class="saldo">' + element.saldo + '</span> | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</p><p class="txt-red errorText">Error al consultar la tarjeta.</p></div></button>'
+          );
+        }
+      });
+    }
+  }
+
+  function cardLoading(evt) {
+    if (evt == "start") {
+      $("main").addClass("loading");
+    } else if (evt == "stop") {
+      $("main").removeClass("loading");
+    }
+  }
+
+  function selectThisCard(type) {
+    $("#addCard .card-options .card-selector").removeClass("selected");
+    $("#addCard .card-options .card-selector[data-type='" + type + "']").addClass("selected");
+    newCardType = type;
+  }
+
+  function addCard(type, num) {
+    if (type == null) {
+
+      var letras=/\D/gi;
+      var numeros=/[\d\s]+/gi;
+
+      if ($("#transitCard").val().match(letras)) {
+        $("#transitCard").removeClass("shake");
+        setTimeout(function(){
+          $("#transitCard").addClass("shake");
+          TapticEngine.notification({
+            type: "error" // success | warning | error
+          });
+        }, 10);
+      } else if ($("#transitCard").val().match(numeros)) {
+
+        // Everything cool bro :)
+        newCardNum = $("#transitCard").val();
+        $("#transitCard").val("");
+
+        if (data['savedCards'].find(obj => (obj.num === newCardNum && obj.type === newCardType)) == undefined) {
+          // Todo bien.
+          data['savedCards'].push({type: newCardType, num: newCardNum, saldo: "···", leftTrips: "···", status: "ok"});
+          localStorage.setItem('data', JSON.stringify(data));
+        } else if ((data['savedCards'].find(obj => (obj.num === newCardNum && obj.type === newCardType)).type == newCardType) && (data['savedCards'].find(obj => (obj.num === newCardNum && obj.type === newCardType)).num == newCardNum)) {
+          // La tarjeta ya existe.
+        }
+
+        getSavedCards();
+        setCurrentCard(newCardType, newCardNum);
+        getSaldo();
+        // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
+        selectThisCard('Bip');
+
+      } else {
+        $("#transitCard").removeClass("shake");
+        setTimeout(function(){
+          $("#transitCard").addClass("shake");
+          TapticEngine.notification({
+            type: "error" // success | warning | error
+          });
+        }, 10);
+      }
+
+    } else {
+      data['savedCards'].push({type: type, num: num, saldo: "···", leftTrips: "···", status: "ok"});
+      localStorage.setItem('data', JSON.stringify(data));
+      getSavedCards();
+      setCurrentCard(type, num);
+      getSaldo();
+      // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
+      selectThisCard('Bip');
+    }
+  }
+
+  function deleteCard(type, num) {
+    if (type == null) {
+      data['savedCards'].splice((data['savedCards'].findIndex(obj => (obj.num === $("main").attr("data-num") && obj.type === $("main").attr("data-type")))), 1);
+      localStorage.setItem('data', JSON.stringify(data));
+      getSavedCards();
+      if (data.savedCards.length == 0) { } else {
+        setCurrentCard(data['savedCards'][0].type, data['savedCards'][0].num);
+        getSaldo();
+      }
+    } else {
+      data['savedCards'].splice((data['savedCards'].findIndex(obj => (obj.num === num && obj.type === type))), 1);
+      localStorage.setItem('data', JSON.stringify(data));
+      getSavedCards();
+      setCurrentCard(data['savedCards'][0].type, data['savedCards'][0].num);
+      getSaldo();
+    }
+  }
+
+  function getSaldo() {
+
+    cardLoading('start');
+    getTarifa();
+    document.activeElement.blur();
+
+    ctr = 0;
+    data.savedCards.forEach(function(element, index, array) {
+      var currentCard = element.type.toLowerCase();
+      var currentCardNoLowerCase = element.type;
+      if (currentCard == "bip") {
+        var APIUrl = "https://api.adderou.cl/bip/new.php?n=";
+        var tarifa = tarifaBip;
+      } else if (currentCard == "pase") {
+        var APIUrl = "https://api.adderou.cl/bip/new.php?n=";
+        var tarifa = tarifaPase;
+      } else if (currentCard == "trencentral") {
+        var APIUrl = "https://saldo.red/api/trencentral/?tarjeta=";
+        var tarifa = 0;
+      } else if (currentCard == "merval") {
+        var APIUrl = "https://saldo.red/api/merval/?tarjeta=";
+        var tarifa = 0;
+      } else if (currentCard == "biotren") {
+        var APIUrl = "https://saldo.red/api/biotren/?tarjeta=";
+        var tarifa = 0;
+      };
+
+      $.ajax({
+        "async": true,
+        "crossDomain": true,
+        // API
+        "url": APIUrl + element.num
+      }).done(function (response) {
+
+        var rawSaldo = response.saldo;
+        var APISaldo = '$' + response.saldo;
+        var APISaldoWithDots = APISaldo.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+
+        ctr++;
+        if (ctr === array.length) {
+          // Terminaron de cargar todos los saldos.
+        }
+
+        if (response.saldo == undefined || response.saldo == null || response.saldo === "") {
+          // Error :(
+          element.status = "error";
+          $(".saved-cards .card-selector[data-type='" + currentCardNoLowerCase + "'][data-num='" + element.num + "']").addClass("error");
+          // Si esta tarjeta es la "lastCardUsed", actualiza sus parámetros en la data.
+          if (currentCard == data['lastCard'][0].type.toLowerCase() && element.num == data['lastCard'][0].num) {
+            $("main[data-type='" + currentCardNoLowerCase + "'][data-num='" + element.num + "']").addClass("error");
+            cardLoading('stop');
+            TapticEngine.notification({
+              type: "error" // success | warning | error
+            });
+            data['lastCard'][0].saldo = "···";
+            data['lastCard'][0].leftTrips = "···";
+            localStorage.setItem('data', JSON.stringify(data));
+          } else {}
+        } else {
+          element.saldo = APISaldoWithDots;
+
+          if (rawSaldo >= 0) {
+            element.leftTrips = Math.floor(rawSaldo / tarifa);
+          } else {
+            element.leftTrips = 0;
+          };
+
+          element.status = "ok";
+
+          $('*[data-type="' + currentCardNoLowerCase + '"][data-num="' + element.num + '"] .saldo').html(element.saldo);
+          $('*[data-type="' + currentCardNoLowerCase + '"][data-num="' + element.num + '"] .leftTrips').html(element.leftTrips);
+
+          // Si esta tarjeta es la "lastCardUsed", actualiza sus parámetros en la data.
+          if (currentCard == data['lastCard'][0].type.toLowerCase() && element.num == data['lastCard'][0].num) {
+            cardLoading('stop');
+            TapticEngine.notification({
+              type: "success" // success | warning | error
+            });
+            data['lastCard'][0].saldo = element.saldo;
+            data['lastCard'][0].leftTrips = element.leftTrips;
+            localStorage.setItem('data', JSON.stringify(data));
+          } else {}
+        }
+
+      });
+    });
+  }
+
+  function transferOldCard(type, num) {
+    if (type == "bip" || type == "Bip") {
+      addCard('Bip', num);
+      localStorage.removeItem('savedCardType');
+      localStorage.removeItem('savedCardNum');
+    } else if (type == "pase" || type == "Pase") {
+      addCard('Pase', num);
+      localStorage.removeItem('savedCardType');
+      localStorage.removeItem('savedCardNum');
+    } else if (type == "trencentral" || type == "TrenCentral") {
+      addCard('TrenCentral', num);
+      localStorage.removeItem('savedCardType');
+      localStorage.removeItem('savedCardNum');
+    } else if (type == "merval" || type == "MerVal") {
+      addCard('MerVal', num);
+      localStorage.removeItem('savedCardType');
+      localStorage.removeItem('savedCardNum');
+    } else if (type == "biotren" || type == "BioTren") {
+      addCard('BioTren', num);
+      localStorage.removeItem('savedCardType');
+      localStorage.removeItem('savedCardNum');
+    } else {
+    }
+  }
+
+  function addMoney(amount) {
+    openMenu('addMoney');
+    $("iframe#tbk").attr("src","https://saldo.red/api/redbiptransbank/?tarjeta=" + $("main").attr("data-num") + "&email=jjjj@jjj.jjj&monto=" + amount);
+  }
+
+  function checkiFrame() {
+    var iframeURL = document.getElementById("tbk").contentWindow.location.href;
+    console.log(iframeURL);
+    if (iframeURL.match(/(https:\/\/cargatubip.metro.cl\/CargaTuBipRest\/falloCarga.xhtml).*/gi)) {
+      closeMenu('addMoney');
+    } else {
+      // Nothing, yet.
+    }
+  }
+
+  $(document).ready(function() {
+
+    $('a[target=_blank]').on('click', function(e) {
+      e.preventDefault();
+      window.open($(this).attr('href'), '_system');
+      return false;
+    });
+
+    if (localStorage.getItem('data') == null && localStorage.getItem('savedCardType') == null) {
+      localStorage.setItem('data', JSON.stringify(data));
+    } else if (localStorage.getItem('data') == null && localStorage.getItem('savedCardType') !== null) {
+      transferOldCard(localStorage.getItem('savedCardType'), localStorage.getItem('savedCardNum'));
+    } else {
+      data = JSON.parse(localStorage.getItem('data'));
+    }
+
+    // Por defecto, si la persona no especifica un tipo de tarjeta a agregar, se asume que es una Bip.
+    selectThisCard('Bip');
+
+    if (data.savedCards.length == 0) {
+      // No hay tarjetas guardadas
+      getSavedCards();
+      localStorage.removeItem('data');
+    } else {
+      getSavedCards();
+      getLastCardUsed();
+      getSaldo();
+    }
+
+    $("input[type=text]").bind("touchstart", function(e) {
+      $("input[type=text]").focus();
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    });
+
+    // Esto para que los clicks en los Menús no los cierren – como sí lo hacen los clicks en cualquier otra parte del overlay.
+    $(".menu, .overlay-menus").bind("touchstart", function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      return false;
+    });
+
+    // Actualiza la tarifa cada 1 minuto.
+    setInterval(function() {
+      getTarifa();
+    }, 60 * 1000); // 60 * 1000 milsec
+
+  });
+
+  </script>
+</head>
+<body>
+  <div class="app">
+
+    <div class="content-wrapper">
+
+      <div class="overlay-menus" ontouchstart="closeMenu();">
+        <div class="menu" id="addCard">
+          <div class="header">
+            <h3>Agregar Tarjeta</h3>
+            <button class="close" ontouchend="closeMenu('addCard');"><span class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#A2A2A2" d="M345,434 C350.53,434 355,438.47 355,444 C355,449.53 350.53,454 345,454 C339.47,454 335,449.53 335,444 C335,438.47 339.47,434 345,434 L345,434 Z M348.59,439 L345,442.59 L341.41,439 L340,440.41 L343.59,444 L340,447.59 L341.41,449 L345,445.41 L348.59,449 L350,447.59 L346.41,444 L350,440.41 L348.59,439 Z" transform="translate(-335 -434)"></path>
+              </svg></span></button>
+            </div>
+
+            <label for="card-options" class="txt-black" style="margin-top: 20px;">Tipo de tarjeta</label>
+            <div class="card-options" id="card-options">
+              <button data-type="Bip" ontouchend="selectThisCard('Bip');" class="card-selector selected"><figure class="small-card"><div class="card bip"><div class="card-logo"></div></div></figure>Bip</button>
+              <button data-type="Pase" ontouchend="selectThisCard('Pase');" class="card-selector"><figure class="small-card"><div class="card pase"><div class="card-logo"></div></div></figure>Pase</button>
+              <button data-type="TrenCentral" ontouchend="selectThisCard('TrenCentral');" class="card-selector"><figure class="small-card"><div class="card trencentral"><div class="card-logo"></div></div></figure>TrenCentral</button>
+              <button data-type="MerVal" ontouchend="selectThisCard('MerVal');" class="card-selector merval"><figure class="small-card"><div class="card merval"><div class="card-logo"></div></div></figure>MerVal</button>
+              <button data-type="BioTren" ontouchend="selectThisCard('BioTren');" class="card-selector"><figure class="small-card"><div class="card biotren"><div class="card-logo"></div></div></figure>BioTren</button>
+            </div>
+
+            <label for="transitCard" class="txt-black">Número de tarjeta</label>
+            <input pattern="[0-9]*" autocomplete="off" id="transitCard" type="text" value="" placeholder="12345678" onkeydown="if (event.keyCode == 13) addCard()">
+            <button class="big" ontouchend="addCard()">Agregar</button>
+          </div>
+          <div class="menu" id="myCards">
+            <div class="header">
+              <h3>Mis Tarjetas</h3>
+              <button class="close" ontouchend="closeMenu('myCards');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#A2A2A2" d="M345,434 C350.53,434 355,438.47 355,444 C355,449.53 350.53,454 345,454 C339.47,454 335,449.53 335,444 C335,438.47 339.47,434 345,434 L345,434 Z M348.59,439 L345,442.59 L341.41,439 L340,440.41 L343.59,444 L340,447.59 L341.41,449 L345,445.41 L348.59,449 L350,447.59 L346.41,444 L350,440.41 L348.59,439 Z" transform="translate(-335 -434)"></path>
+              </svg></span></button>
+            </div>
+            <div class="saved-cards">
+            </div>
+            <h4 tabindex="0" class="a txt-blue addCardButton" role="button" ontouchend="openMenu('addCard');">Agregar Tarjeta</h4>
+            <div class="privacy-note">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="21" viewBox="0 0 16 21">
+                <path fill="#9013FE" d="M16,13 L16,23 C16,24.1045695 15.1045695,25 14,25 L2,25 C0.8954305,25 0,24.1045695 0,23 L0,13 C0,11.89 0.9,11 2,11 L3,11 L3,9 C3,6.23857625 5.23857625,4 8,4 C9.32608245,4 10.597852,4.5267842 11.5355339,5.46446609 C12.4732158,6.40214799 13,7.67391755 13,9 L13,11 L14,11 C15.1045695,11 16,11.8954305 16,13 Z M8,6 C6.34314575,6 5,7.34314575 5,9 L5,11 L11,11 L11,9 C11,7.34314575 9.65685425,6 8,6 Z" transform="translate(0 -4)"></path>
+              </svg>
+              <h4>Tu información está protegida</h4>
+              <p>Saldo Red no recopila nada de ti, y utiliza el almacenamiento local de tu dispositivo para recordar tus tarjetas.</p>
+            </div>
+          </div>
+          <div class="menu webview" id="addMoney">
+            <div class="header">
+              <h3>Carga Directa</h3>
+              <button class="close" ontouchend="closeMenu('addMoney');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#A2A2A2" d="M345,434 C350.53,434 355,438.47 355,444 C355,449.53 350.53,454 345,454 C339.47,454 335,449.53 335,444 C335,438.47 339.47,434 345,434 L345,434 Z M348.59,439 L345,442.59 L341.41,439 L340,440.41 L343.59,444 L340,447.59 L341.41,449 L345,445.41 L348.59,449 L350,447.59 L346.41,444 L350,440.41 L348.59,439 Z" transform="translate(-335 -434)"></path>
+              </svg></span></button>
+            </div>
+            <div class="webview">
+              <iframe name="tbk" id="tbk" src="loading.html"></iframe>
+            </div>
+            <div class="web-buttons">
+              <!-- <input type="button" value="Back" ontouchend="tbk.history.back()"> -->
+            </div>
+          </div>
+        </div>
+
+        <main class="">
+
+          <figure class="card" aria-label="Tarjeta" ontouchstart="openMenu('myCards');" tabindex="0">
+            <div class="neutral-card-overlay"></div>
+            <div class="card-logo"></div>
+            <div class="loading-animation"></div>
+          </figure>
+
+          <div id="cardInfo">
+            <section id="primary">
+              <div>
+                <h4 class="txt-black">Saldo</h4>
+                <h2 class="saldo" class="saldo txt-black">···</h2>
+              </div>
+              <div class="trencentral-hide merval-hide biotren-hide">
+                <h4 class="txt-black">Viajes Restantes</h4>
+                <h2 class="leftTrips" class="saldo txt-black">···</h2>
+              </div>
+            </section>
+
+            <section class="buttons">
+              <button class="primary" id="getSaldo" ontouchend="getSaldo();"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+                <path d="M32.796875,13.203125 C31.4375,11.84375 29.571875,11 27.5,11 C23.3578644,11 20,14.3578644 20,18.5 C20,22.6421356 23.3578644,26 27.5,26 C30.996875,26 33.9125,23.609375 34.746875,20.375 L32.796875,20.375 C32.028125,22.559375 29.946875,24.125 27.5,24.125 C24.3933983,24.125 21.875,21.6066017 21.875,18.5 C21.875,15.3933983 24.3933983,12.875 27.5,12.875 C29.05625,12.875 30.44375,13.521875 31.45625,14.54375 L28.4375,17.5625 L35,17.5625 L35,11 L32.796875,13.203125 Z" transform="translate(-20 -11)"></path>
+              </svg></span>Actualizar</button>
+              <a href="https://www.metrovalparaiso.cl/carga-en-linea/" target="_blank" rel="noopener" class="button secondary bip-hide pase-hide trencentral-hide biotren-hide" role="button" tabindex="0"><span class="icon" style="transform: scale(1.2);"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15">
+                <path d="M35.6521739,22.0526316 L38,22.0526316 L38,23.6315789 L35.6521739,23.6315789 L35.6521739,26 L34.0869565,26 L34.0869565,23.6315789 L31.7391304,23.6315789 L31.7391304,22.0526316 L34.0869565,22.0526316 L34.0869565,19.6842105 L35.6521739,19.6842105 L35.6521739,22.0526316 L35.6521739,22.0526316 Z M34.0869565,14.1578947 L34.0869565,12.5789474 L21.5652174,12.5789474 L21.5652174,14.1578947 L34.0869565,14.1578947 L34.0869565,14.1578947 Z M34.0869565,17.3157895 L21.5652174,17.3157895 L21.5652174,22.0526316 L30.173913,22.0526316 L30.173913,23.6315789 L21.5652174,23.6315789 C20.6965217,23.6315789 20,22.9210526 20,22.0526316 L20,12.5789474 C20,11.7026316 20.6965217,11 21.5652174,11 L34.0869565,11 C34.9514022,11 35.6521739,11.7069188 35.6521739,12.5789474 L35.6521739,18.1052632 L34.0869565,18.1052632 L34.0869565,17.3157895 Z" transform="translate(-20 -11)"></path>
+              </svg></span>Carga en Línea</a>
+            </section>
+
+            <section class="info error">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#F5A623" d="M187.8,332.8 L186.2,332.8 L186.2,328 L187.8,328 L187.8,332.8 Z M187.8,336 L186.2,336 L186.2,334.4 L187.8,334.4 L187.8,336 Z M187,324 C182.581722,324 179,327.581722 179,332 C179,334.121732 179.842855,336.156563 181.343146,337.656854 C182.843437,339.157145 184.878268,340 187,340 C189.121732,340 191.156563,339.157145 192.656854,337.656854 C194.157145,336.156563 195,334.121732 195,332 C195,329.878268 194.157145,327.843437 192.656854,326.343146 C191.156563,324.842855 189.121732,324 187,324 Z" transform="translate(-179 -324)"></path>
+              </svg>
+              <h4 class="txt-red">Ocurrió un error al consultar tu tarjeta. Inténtalo de nuevo en unos minutos.</h4>
+            </section>
+
+            <div class="trencentral-hide merval-hide biotren-hide">
+              <h3 class="txt-black" style="margin: 20px 0 -10px 0;">Carga Directa</h3>
+              <section class="buttons">
+                <button class="secondary addMoney1000" onclick="addMoney('1000');">$1.000</button>
+                <button class="secondary addMoney2000" onclick="addMoney('2000');">$2.000</button>
+                <button class="secondary addMoney5000" onclick="addMoney('5000');">$5.000</button>
+                <button class="secondary addMoney10000" onclick="addMoney('10000');">$10.000</button>
+                <button class="secondary addMoney20000" onclick="addMoney('20000');">$20.000</button>
+              </section>
+            </div>
+
+            <h3 class="txt-black" style="margin: 20px 0 0 0;">Información General</h3>
+
+            <section class="info fares trencentral-hide merval-hide biotren-hide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#F5A623" d="M8.8,5.15625 L7.2,5.15625 L7.2,3.53125 L8.8,3.53125 L8.8,5.15625 L8.8,5.15625 Z M8.8,8.8125 L7.2,8.8125 L7.2,7.1875 L8.8,7.1875 L8.8,8.8125 L8.8,8.8125 Z M8.8,12.46875 L7.2,12.46875 L7.2,10.84375 L8.8,10.84375 L8.8,12.46875 L8.8,12.46875 Z M16,6.375 L16,3.125 C16,2.223125 15.28,1.5 14.4,1.5 L1.6,1.5 C0.7163444,1.5 0,2.22753728 0,3.125 L0,6.375 C0.888,6.375 1.6,7.10625 1.6,8 C1.6,8.89746272 0.8836556,9.625 0,9.625 L0,12.875 C0,13.7724627 0.7163444,14.5 1.6,14.5 L14.4,14.5 C15.2836556,14.5 16,13.7724627 16,12.875 L16,9.625 C15.1163444,9.625 14.4,8.89746272 14.4,8 C14.4,7.10253728 15.1163444,6.375 16,6.375 Z"></path>
+              </svg>
+              <div>
+                <h4 class="txt-gray">Tarifa</h4>
+                <h3 class="txt-black currentFare">···</h3>
+              </div>
+              <div>
+                <h4 class="txt-gray">Bloque</h4>
+                <h3 class="txt-black currentBlock">···</h3>
+              </div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" class="blink">
+                <circle cx="331" cy="589" r="4" fill="#ABABAB" fill-rule="evenodd" transform="translate(-327 -585)"></circle>
+              </svg>
+            </section>
+
+            <section class="info">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <path fill="#ABABAB" d="M31,79 L29,79 L29,77 L31,77 L31,79 Z M31,87 L29,87 L29,81 L31,81 L31,87 Z M30,72 C24.4771525,72 20,76.4771525 20,82 C20,84.6521649 21.0535684,87.195704 22.9289322,89.0710678 C24.804296,90.9464316 27.3478351,92 30,92 C32.6521649,92 35.195704,90.9464316 37.0710678,89.0710678 C38.9464316,87.195704 40,84.6521649 40,82 C40,79.3478351 38.9464316,76.804296 37.0710678,74.9289322 C35.195704,73.0535684 32.6521649,72 30,72 Z" transform="translate(-20 -72)"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Por qué tu saldo no se actualiza en tiempo real</h4>
+                <p class="txt-gray">Cada vez que marcas tu tarjeta, el validador guarda tu transacción y espera a que alguien lo conecte a internet para actualizarla en la nube. Así puede procesar más transacciones por minuto, ¡y evitar retrasos en la vida real!</p>
+              </div>
+            </section>
+
+            <!-- Enlaces de Interés Bip -->
+            <section class="info pase-hide trencentral-hide merval-hide biotren-hide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#9B9B9B" d="M1.52,8 C1.52,6.632 2.632,5.52 4,5.52 L7.2,5.52 L7.2,4 L4,4 C1.790861,4 0,5.790861 0,8 C0,10.209139 1.790861,12 4,12 L7.2,12 L7.2,10.48 L4,10.48 C2.632,10.48 1.52,9.368 1.52,8 L1.52,8 Z M4.8,8.8 L11.2,8.8 L11.2,7.2 L4.8,7.2 L4.8,8.8 L4.8,8.8 Z M12,4 L8.8,4 L8.8,5.52 L12,5.52 C13.368,5.52 14.48,6.632 14.48,8 C14.48,9.368 13.368,10.48 12,10.48 L8.8,10.48 L8.8,12 L12,12 C14.209139,12 16,10.209139 16,8 C16,5.790861 14.209139,4 12,4 Z"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Enlaces de Interés</h4>
+                <a href="https://www.metro.cl/tu-viaje/tarifas" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Tarifas</a>
+                <a href="https://saldo.red/privacidad" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Política de Privacidad</a>
+              </div>
+            </section>
+
+            <!-- Enlaces de Interés Pase -->
+            <section class="info bip-hide trencentral-hide merval-hide biotren-hide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#9B9B9B" d="M1.52,8 C1.52,6.632 2.632,5.52 4,5.52 L7.2,5.52 L7.2,4 L4,4 C1.790861,4 0,5.790861 0,8 C0,10.209139 1.790861,12 4,12 L7.2,12 L7.2,10.48 L4,10.48 C2.632,10.48 1.52,9.368 1.52,8 L1.52,8 Z M4.8,8.8 L11.2,8.8 L11.2,7.2 L4.8,7.2 L4.8,8.8 L4.8,8.8 Z M12,4 L8.8,4 L8.8,5.52 L12,5.52 C13.368,5.52 14.48,6.632 14.48,8 C14.48,9.368 13.368,10.48 12,10.48 L8.8,10.48 L8.8,12 L12,12 C14.209139,12 16,10.209139 16,8 C16,5.790861 14.209139,4 12,4 Z"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Enlaces de Interés</h4>
+                <a href="https://www.metro.cl/tu-viaje/tarifas" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Tarifas</a>
+                <a href="https://www.tne.cl/" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Tarjeta Nacional Estudiantil</a>
+                <a href="https://saldo.red/privacidad" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Política de Privacidad</a>
+              </div>
+            </section>
+
+            <!-- Enlaces de Interés TrenCentral -->
+            <section class="info bip-hide pase-hide merval-hide biotren-hide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#9B9B9B" d="M1.52,8 C1.52,6.632 2.632,5.52 4,5.52 L7.2,5.52 L7.2,4 L4,4 C1.790861,4 0,5.790861 0,8 C0,10.209139 1.790861,12 4,12 L7.2,12 L7.2,10.48 L4,10.48 C2.632,10.48 1.52,9.368 1.52,8 L1.52,8 Z M4.8,8.8 L11.2,8.8 L11.2,7.2 L4.8,7.2 L4.8,8.8 L4.8,8.8 Z M12,4 L8.8,4 L8.8,5.52 L12,5.52 C13.368,5.52 14.48,6.632 14.48,8 C14.48,9.368 13.368,10.48 12,10.48 L8.8,10.48 L8.8,12 L12,12 C14.209139,12 16,10.209139 16,8 C16,5.790861 14.209139,4 12,4 Z"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Enlaces de Interés</h4>
+                <a href="https://www.trencentral.cl/" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">TrenCentral</a>
+                <a href="https://saldo.red/privacidad" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Política de Privacidad</a>
+              </div>
+            </section>
+
+            <!-- Enlaces de Interés MerVal -->
+            <section class="info bip-hide pase-hide trencentral-hide biotren-hide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#9B9B9B" d="M1.52,8 C1.52,6.632 2.632,5.52 4,5.52 L7.2,5.52 L7.2,4 L4,4 C1.790861,4 0,5.790861 0,8 C0,10.209139 1.790861,12 4,12 L7.2,12 L7.2,10.48 L4,10.48 C2.632,10.48 1.52,9.368 1.52,8 L1.52,8 Z M4.8,8.8 L11.2,8.8 L11.2,7.2 L4.8,7.2 L4.8,8.8 L4.8,8.8 Z M12,4 L8.8,4 L8.8,5.52 L12,5.52 C13.368,5.52 14.48,6.632 14.48,8 C14.48,9.368 13.368,10.48 12,10.48 L8.8,10.48 L8.8,12 L12,12 C14.209139,12 16,10.209139 16,8 C16,5.790861 14.209139,4 12,4 Z"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Enlaces de Interés</h4>
+                <a href="https://www.metrovalparaiso.cl/" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Metro de Valparaíso</a>
+                <a href="https://www.metrovalparaiso.cl/tarifas/" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Tarifas</a>
+                <a href="https://saldo.red/privacidad" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Política de Privacidad</a>
+              </div>
+            </section>
+
+            <!-- Enlaces de Interés BioTren -->
+            <section class="info bip-hide pase-hide trencentral-hide merval-hide">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+                <path fill="#9B9B9B" d="M1.52,8 C1.52,6.632 2.632,5.52 4,5.52 L7.2,5.52 L7.2,4 L4,4 C1.790861,4 0,5.790861 0,8 C0,10.209139 1.790861,12 4,12 L7.2,12 L7.2,10.48 L4,10.48 C2.632,10.48 1.52,9.368 1.52,8 L1.52,8 Z M4.8,8.8 L11.2,8.8 L11.2,7.2 L4.8,7.2 L4.8,8.8 L4.8,8.8 Z M12,4 L8.8,4 L8.8,5.52 L12,5.52 C13.368,5.52 14.48,6.632 14.48,8 C14.48,9.368 13.368,10.48 12,10.48 L8.8,10.48 L8.8,12 L12,12 C14.209139,12 16,10.209139 16,8 C16,5.790861 14.209139,4 12,4 Z"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Enlaces de Interés</h4>
+                <a href="http://www.fesur.cl/" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">FeSur</a>
+                <a href="http://www.fesur.cl/fesur/planificatuviaje/#seccion-horarios?SERVICIO=BIOTREN" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Planifica tu Viaje</a>
+                <a href="https://saldo.red/privacidad" target="_blank" rel="noopener" class="h4 txt-blue" style="margin-top: 10px;">Política de Privacidad</a>
+              </div>
+            </section>
+
+            <section class="info">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="21" viewBox="0 0 16 21">
+                <path fill="#9013FE" d="M16,13 L16,23 C16,24.1045695 15.1045695,25 14,25 L2,25 C0.8954305,25 0,24.1045695 0,23 L0,13 C0,11.89 0.9,11 2,11 L3,11 L3,9 C3,6.23857625 5.23857625,4 8,4 C9.32608245,4 10.597852,4.5267842 11.5355339,5.46446609 C12.4732158,6.40214799 13,7.67391755 13,9 L13,11 L14,11 C15.1045695,11 16,11.8954305 16,13 Z M8,6 C6.34314575,6 5,7.34314575 5,9 L5,11 L11,11 L11,9 C11,7.34314575 9.65685425,6 8,6 Z" transform="translate(0 -4)"></path>
+              </svg>
+              <div>
+                <h4 class="txt-black">Tu información está protegida</h4>
+                <p class="txt-gray">Saldo Red no recopila nada de ti, y utiliza el almacenamiento local de tu dispositivo para recordar tus tarjetas.</p>
+              </div>
+            </section>
+
+            <h3 class="txt-black" style="margin: 20px 0 0 0;">Tarjetas</h3>
+
+            <h4 tabindex="0" class="a txt-blue addCardButton" ontouchstart="openMenu('addCard');" role="button" style="margin: 20px 0 0 0; width: fit-content; padding: 0; text-align: left;">Agregar Tarjeta</h4>
+            <h4 tabindex="0" class="a txt-blue" ontouchstart="deleteCard();" role="button" style="margin: 20px 0 0 0; width: fit-content;">Eliminar Tarjeta</h4>
+          </div>
+
+          <div id="onboarding">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 35 35">
+              <g fill="none" fill-rule="evenodd">
+                <path fill="#717171" fill-rule="nonzero" d="M15.8848921,4.66666667 C16.9974081,4.66666667 17.8992806,5.57204639 17.8992806,6.68888889 L17.8992806,15.7282222 L20.3366906,15.9911111 L30.2877698,20.4197778 C31.3553957,20.9051111 32,21.9768889 32,23.1497778 L32,31.9666667 C31.9395683,33.6248889 30.6302158,34.9393333 28.9784173,35 L15.8848921,35 C15.1194245,35 14.3942446,34.6966667 13.8705036,34.1304444 L4,25.6371111 L5.49064748,24.08 C5.87338129,23.6553333 6.41726619,23.4328889 6.98129496,23.4328889 L7.42446043,23.4328889 L13.8705036,26.9111111 L13.8705036,6.68888889 C13.8705036,5.57204639 14.772376,4.66666667 15.8848921,4.66666667 Z"></path>
+                <path class="onboarding-svg-card" fill="#D0021B" fill-rule="nonzero" d="M11.77,10.5 L11.77,12.6 L7.89471964,12.6 C7.27065652,12.6 7.04435616,12.5350221 6.81620801,12.4130071 C6.58805986,12.2909921 6.40900786,12.1119401 6.28699289,11.883792 C6.16497793,11.6556438 6.1,11.4293435 6.1,10.8052804 L6.1,1.79471964 C6.1,1.17065652 6.16497793,0.944356156 6.28699289,0.716208008 C6.40900786,0.488059859 6.58805986,0.309007857 6.81620801,0.186992893 C7.04435616,0.0649779278 7.27065652,0 7.89471964,0 L23.9052804,0 C24.5293435,0 24.7556438,0.0649779278 24.983792,0.186992893 C25.2119401,0.309007857 25.3909921,0.488059859 25.5130071,0.716208008 C25.6350221,0.944356156 25.7,1.17065652 25.7,1.79471964 L25.7,10.8052804 C25.7,11.4293435 25.6350221,11.6556438 25.5130071,11.883792 C25.3909921,12.1119401 25.2119401,12.2909921 24.983792,12.4130071 C24.7556438,12.5350221 24.5293435,12.6 23.9052804,12.6 L20.002,12.6 L20.002,10.5 L23.6,10.5 L23.6,2.1 L8.2,2.1 L8.2,10.5 L11.77,10.5 Z"></path>
+              </g>
+            </svg>
+            <h4 class="txt-black">Toca para ver tus tarjetas guardadas en Saldo Red</h4>
+          </div>
+
+        </main>
+
+      </div>
+
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+  </html>
