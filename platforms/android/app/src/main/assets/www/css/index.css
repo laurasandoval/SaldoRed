@@ -153,7 +153,7 @@ a, .a {
   display: none;
 }
 
-button, .button {
+button, .button, button:focus, .button:focus {
   -webkit-appearance:none;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
@@ -186,7 +186,7 @@ button, .button {
   supported by Chrome and Opera */
 }
 
-button.primary, .button.primary {
+button.primary, .button.primary, button.primary:focus, .button.primary:focus {
   border: none;
   background: rgba(29,115,232,1);
   color: rgba(255,255,255,1);
@@ -198,38 +198,38 @@ button.primary:active, .button.primary:active {
   color: rgba(255,255,255,0.3);
 }
 
-button.secondary, .button.secondary {
+button.secondary, .button.secondary, button.secondary:focus, .button.secondary:focus {
   border: 1px solid rgba(29,115,232,1);
   background: rgba(0,0,0,0);
   color: rgba(29,115,232,1);
 }
 
 /* Billetes */
-button.addMoney1000, .button.addMoney1000 {
+button.addMoney1000, .button.addMoney1000, button.addMoney1000:focus, .button.addMoney1000:focus {
   border: none;
   background: rgba(78,139,12,0.15);
   color: rgba(78,139,12,1);
 }
 
-button.addMoney2000, .button.addMoney2000 {
+button.addMoney2000, .button.addMoney2000, button.addMoney2000:focus, .button.addMoney2000:focus {
   border: none;
   background: rgba(124,48,190,0.15);
   color: rgba(124,48,190,1);
 }
 
-button.addMoney5000, .button.addMoney5000 {
+button.addMoney5000, .button.addMoney5000, button.addMoney5000:focus, .button.addMoney5000:focus {
   border: none;
   background: rgba(208,2,65,0.15);
   color: rgba(208,2,65,1);
 }
 
-button.addMoney10000, .button.addMoney10000 {
+button.addMoney10000, .button.addMoney10000, button.addMoney10000:focus, .button.addMoney10000:focus {
   border: none;
   background: rgba(2,64,208,0.15);
   color: rgba(2,64,208,1);
 }
 
-button.addMoney20000, .button.addMoney20000 {
+button.addMoney20000, .button.addMoney20000, button.addMoney20000:focus, .button.addMoney20000:focus {
   border: none;
   background: rgba(207,89,44,0.15);
   color: rgba(207,89,44,1);
@@ -239,7 +239,7 @@ button.secondary:active, .button.secondary:active {
   opacity: 0.3;
 }
 
-button.big, .button.big {
+button.big, .button.big, button.big:focus, .button.big:focus {
   font-size: 17px;
   width: 100%;
   height: 50px;
@@ -888,7 +888,7 @@ section.info a, section.info .a {
 @media only screen and (min-width: 350px) {
   .menu {
     padding-top: 20px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -941,7 +941,7 @@ section.info a, section.info .a {
 }
 
 .overlay-menus.addCard + main .onboarding-svg-card, .overlay-menus.myCards + main .onboarding-svg-card {
-  transform: scale(0.9);
+  /* transform: scale(0.9); */
 }
 
 main.fixed {
