@@ -45,7 +45,7 @@
     $("iframe#tbk").attr("src","loading.html");
     $("#transitCard").val("");
     $("main").removeClass("fixed");
-    
+
     // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
     selectThisCard('Bip');
 
@@ -525,20 +525,6 @@
               <p>Saldo Red no recopila nada de ti, y utiliza el almacenamiento local de tu dispositivo para recordar tus tarjetas.</p>
             </div>
           </div>
-          <div class="menu webview" id="addMoney">
-            <div class="header">
-              <h3>Carga Directa</h3>
-              <button class="close" ontouchend="closeMenu('addMoney');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                <path fill="#A2A2A2" d="M345,434 C350.53,434 355,438.47 355,444 C355,449.53 350.53,454 345,454 C339.47,454 335,449.53 335,444 C335,438.47 339.47,434 345,434 L345,434 Z M348.59,439 L345,442.59 L341.41,439 L340,440.41 L343.59,444 L340,447.59 L341.41,449 L345,445.41 L348.59,449 L350,447.59 L346.41,444 L350,440.41 L348.59,439 Z" transform="translate(-335 -434)"></path>
-              </svg></span></button>
-            </div>
-            <div class="webview">
-              <iframe name="tbk" id="tbk" src="loading.html"></iframe>
-            </div>
-            <div class="web-buttons">
-              <!-- <input type="button" value="Back" ontouchend="tbk.history.back()"> -->
-            </div>
-          </div>
         </div>
 
         <main class="">
@@ -565,6 +551,9 @@
               <button class="primary" id="getSaldo" ontouchend="getSaldo();"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
                 <path d="M32.796875,13.203125 C31.4375,11.84375 29.571875,11 27.5,11 C23.3578644,11 20,14.3578644 20,18.5 C20,22.6421356 23.3578644,26 27.5,26 C30.996875,26 33.9125,23.609375 34.746875,20.375 L32.796875,20.375 C32.028125,22.559375 29.946875,24.125 27.5,24.125 C24.3933983,24.125 21.875,21.6066017 21.875,18.5 C21.875,15.3933983 24.3933983,12.875 27.5,12.875 C29.05625,12.875 30.44375,13.521875 31.45625,14.54375 L28.4375,17.5625 L35,17.5625 L35,11 L32.796875,13.203125 Z" transform="translate(-20 -11)"></path>
               </svg></span>Actualizar</button>
+              <a href="https://cargatubip.metro.cl/CargaTuBipV2/" target="_blank" rel="noopener" class="button secondary merval-hide trencentral-hide biotren-hide" role="button" tabindex="0"><span class="icon" style="transform: scale(1.2);"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15">
+                <path d="M35.6521739,22.0526316 L38,22.0526316 L38,23.6315789 L35.6521739,23.6315789 L35.6521739,26 L34.0869565,26 L34.0869565,23.6315789 L31.7391304,23.6315789 L31.7391304,22.0526316 L34.0869565,22.0526316 L34.0869565,19.6842105 L35.6521739,19.6842105 L35.6521739,22.0526316 L35.6521739,22.0526316 Z M34.0869565,14.1578947 L34.0869565,12.5789474 L21.5652174,12.5789474 L21.5652174,14.1578947 L34.0869565,14.1578947 L34.0869565,14.1578947 Z M34.0869565,17.3157895 L21.5652174,17.3157895 L21.5652174,22.0526316 L30.173913,22.0526316 L30.173913,23.6315789 L21.5652174,23.6315789 C20.6965217,23.6315789 20,22.9210526 20,22.0526316 L20,12.5789474 C20,11.7026316 20.6965217,11 21.5652174,11 L34.0869565,11 C34.9514022,11 35.6521739,11.7069188 35.6521739,12.5789474 L35.6521739,18.1052632 L34.0869565,18.1052632 L34.0869565,17.3157895 Z" transform="translate(-20 -11)"></path>
+              </svg></span>Carga en Línea</a>
               <a href="https://www.metrovalparaiso.cl/carga-en-linea/" target="_blank" rel="noopener" class="button secondary bip-hide pase-hide trencentral-hide biotren-hide" role="button" tabindex="0"><span class="icon" style="transform: scale(1.2);"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15">
                 <path d="M35.6521739,22.0526316 L38,22.0526316 L38,23.6315789 L35.6521739,23.6315789 L35.6521739,26 L34.0869565,26 L34.0869565,23.6315789 L31.7391304,23.6315789 L31.7391304,22.0526316 L34.0869565,22.0526316 L34.0869565,19.6842105 L35.6521739,19.6842105 L35.6521739,22.0526316 L35.6521739,22.0526316 Z M34.0869565,14.1578947 L34.0869565,12.5789474 L21.5652174,12.5789474 L21.5652174,14.1578947 L34.0869565,14.1578947 L34.0869565,14.1578947 Z M34.0869565,17.3157895 L21.5652174,17.3157895 L21.5652174,22.0526316 L30.173913,22.0526316 L30.173913,23.6315789 L21.5652174,23.6315789 C20.6965217,23.6315789 20,22.9210526 20,22.0526316 L20,12.5789474 C20,11.7026316 20.6965217,11 21.5652174,11 L34.0869565,11 C34.9514022,11 35.6521739,11.7069188 35.6521739,12.5789474 L35.6521739,18.1052632 L34.0869565,18.1052632 L34.0869565,17.3157895 Z" transform="translate(-20 -11)"></path>
               </svg></span>Carga en Línea</a>
@@ -576,17 +565,6 @@
               </svg>
               <h4 class="txt-red">Ocurrió un error al consultar tu tarjeta. Inténtalo de nuevo en unos minutos.</h4>
             </section>
-
-            <div class="trencentral-hide merval-hide biotren-hide">
-              <h3 class="txt-black" style="margin: 20px 0 -10px 0;">Carga Directa</h3>
-              <section class="buttons">
-                <button class="secondary addMoney1000" onclick="addMoney('1000');">$1.000</button>
-                <button class="secondary addMoney2000" onclick="addMoney('2000');">$2.000</button>
-                <button class="secondary addMoney5000" onclick="addMoney('5000');">$5.000</button>
-                <button class="secondary addMoney10000" onclick="addMoney('10000');">$10.000</button>
-                <button class="secondary addMoney20000" onclick="addMoney('20000');">$20.000</button>
-              </section>
-            </div>
 
             <h3 class="txt-black" style="margin: 20px 0 0 0;">Información General</h3>
 
