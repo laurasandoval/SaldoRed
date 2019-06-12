@@ -22,8 +22,12 @@
     $(".overlay-menus").removeClass().addClass("overlay-menus").addClass(specifiedMenu);
 
     if (specifiedMenu == "addMoney") {
-      // Revisa la URL del iFrame cada 300 milisegundos para vincular eventos con app.
-      checkingframeurl = setInterval(function() { checkiFrame(); }, 300);
+      // Revisa la URL del iFrame cuando esta cambia para vincular eventos con app.
+      var iframe = document.getElementById("tbk");
+      iframe.addEventListener('load', function() {
+        checkiFrame();
+      })
+
       setTimeout(function(){
         $("main").addClass("fixed");
       }, 300);
@@ -49,7 +53,6 @@
     if(specifiedMenu == null) {
       $(".overlay-menus").removeClass().addClass("overlay-menus");
     } else if (specifiedMenu == "addMoney") {
-      clearInterval(checkingframeurl);
       $(".overlay-menus").removeClass(specifiedMenu);
     } else if (specifiedMenu == "myCards") {
       TapticEngine.gestureSelectionEnd();
@@ -387,10 +390,38 @@
   }
 
   function checkiFrame() {
-    var iframeURL = document.getElementById("tbk").contentWindow.location.href;
+    var iframe = document.getElementById("tbk");
+    var iframeURL = iframe.contentWindow.location.href;
     console.log(iframeURL);
-    if (iframeURL.match(/(https:\/\/cargatubip.metro.cl\/CargaTuBipRest\/falloCarga.xhtml).*/gi)) {
+    if (iframeURL.match(/(https:\/\/cargatubip\.metro\.cl\/CargaTuBipRest\/falloCarga\.xhtml).*/gi)) {
       closeMenu('addMoney');
+    } else if (iframeURL.match(/(https:\/\/webpay3g\.transbank\.cl\/webpayserver\/auth_emisor\.cgi).*/gi)) {
+        var formUrl = iframe.contentDocument.getElementById("paso").action
+        var formToken = iframe.contentDocument.getElementsByName("token_ws")[0].value
+        console.log(formUrl)
+        console.log(formToken)
+        iframe.contentWindow.location.href = "about:blank" // cancelamos la carga de la pagina luego de conseguir los valores importantes (para evitar que desaparezcan)
+        closeMenu('addMoney') // cerramos este menú
+
+        // Acá hacemos la llamada ajax
+        console.log("haciendo llamada ajax...")
+        $.ajax({
+          "async": true,
+          "crossDomain": true,
+          "type": "post",
+          "url": formUrl,
+          "data": "token_ws=" + formToken,
+          "headers": {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).done(function (response) {
+          console.log(response)
+          var responseHTML = $.parseHTML(response);
+          console.log(responseHTML)
+          var txData = JSON.parse(responseHTML[3].textContent.trim())
+          // json tiene los datos de respuesta de haber hecho el pago. Acá puedes hacer lo que quieras con ellos! (como mandarlos a una función que los muestre en un modal)
+          console.log(txData);
+        });
     } else {
       // Nothing, yet.
     }
