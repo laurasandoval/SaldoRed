@@ -57,4 +57,7 @@
         <param name="ios-package" value="ThreeDeeTouch" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
 </widget>

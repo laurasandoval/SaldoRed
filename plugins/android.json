@@ -15,6 +15,9 @@
     },
     "cordova-plugin-3dtouch": {
       "PACKAGE_NAME": "red.saldo"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "red.saldo"
     }
   },
   "dependent_plugins": {}
