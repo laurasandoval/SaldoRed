@@ -15,10 +15,10 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-inappbrowser": {
+  "cordova-plugin-3dtouch": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-inappbrowser@3.0.0"
+      "id": "cordova-plugin-3dtouch"
     },
     "is_top_level": true,
     "variables": {}

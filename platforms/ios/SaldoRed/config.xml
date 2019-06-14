@@ -53,7 +53,8 @@
     <feature name="TapticEngine">
         <param name="ios-package" value="TapticEngine" />
     </feature>
-    <feature name="InAppBrowser">
-        <param name="ios-package" value="CDVInAppBrowser" />
+    <feature name="ThreeDeeTouch">
+        <param name="ios-package" value="ThreeDeeTouch" />
+        <param name="onload" value="true" />
     </feature>
 </widget>

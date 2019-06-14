@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<plugin
+    id="cordova-plugin-3dtouch"
+    version="1.3.6"
+    xmlns="http://apache.org/cordova/ns/plugins/1.0">
+
+  <name>3D Touch</name>
+
+  <author>Eddy Verbruggen - @EddyVerbruggen</author>
+
+  <description>Add Quick Actions to your Home Screen which can be triggered by 3D Touch. Also, you can enable Link Preview with this plugin. Supported on iPhone6S an up.</description>
+
+  <keywords>3DTouch, 3D Touch, Force Touch</keywords>
+
+  <license>MIT</license>
+
+  <engines>
+    <engine name="cordova" version=">=3.5.0"/>
+  </engines>
+
+  <js-module name="ThreeDeeTouch" src="www/ThreeDeeTouch.js">
+    <clobbers target="ThreeDeeTouch"/>
+  </js-module>
+
+  <platform name="ios">
+    <config-file parent="/*" target="config.xml">
+      <feature name="ThreeDeeTouch">
+        <param name="ios-package" value="ThreeDeeTouch"/>
+        <param name="onload" value="true"/>
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/app/ThreeDeeTouch.h"/>
+    <source-file src="src/ios/app/ThreeDeeTouch.m"/>
+    <header-file src="src/ios/app/AppDelegate+threedeetouch.h"/>
+    <source-file src="src/ios/app/AppDelegate+threedeetouch.m"/>
+
+    <!-- These are examples of how to localize your static icons:
+         - In the .plist change f.i. the subtitle 'Awesome subtitle' to a key like 'shortcut.subtitle.view'
+           (these keys can be added to the resource files below).
+         - Uncomment the relevant sample resource files below (don't forget to add similar files for missing locales).
+         - Browse to src/ios/locales and add/change according to the config below.
+    -->
+    <!--<resource-file src="src/ios/locales/en.lproj" />-->
+    <!--<resource-file src="src/ios/locales/nl.lproj" />-->
+
+  </platform>
+
+</plugin>

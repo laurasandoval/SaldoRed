@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
+		13FF30B32A964654899B021C /* AppDelegate+threedeetouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E803ADDDEC426B9E9C080E /* AppDelegate+threedeetouch.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
-		39F9F393930A412082D26E99 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */; };
+		429A61313E3849DC914E4E03 /* ThreeDeeTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD47E676BB144D986FD6586 /* ThreeDeeTouch.m */; };
 		479EA1A622A4F1770072DFF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 479EA1A522A4F1770072DFF4 /* Launch Screen.storyboard */; };
 		479EA1A822A4F18F0072DFF4 /* SaldoRed-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 479EA1A722A4F18F0072DFF4 /* SaldoRed-Icon.png */; };
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
@@ -48,7 +49,6 @@
 /* Begin PBXFileReference section */
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SaldoRed/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		0B1E5D850F734A50990BE270 /* TapticEngine.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = TapticEngine.h; path = "cordova-plugin-taptic-engine/TapticEngine.h"; sourceTree = "<group>"; };
-		0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* SaldoRed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaldoRed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,7 +67,10 @@
 		4A63099459C04C0E916F013E /* AudioToolbox.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = SaldoRed/CDVLaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* SaldoRed-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SaldoRed-Info.plist"; path = "SaldoRed/SaldoRed-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
-		9259A83A3EA249FDAEC781F2 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; };
+		91E803ADDDEC426B9E9C080E /* AppDelegate+threedeetouch.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+threedeetouch.m"; path = "cordova-plugin-3dtouch/AppDelegate+threedeetouch.m"; sourceTree = "<group>"; };
+		ACD47E676BB144D986FD6586 /* ThreeDeeTouch.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = ThreeDeeTouch.m; path = "cordova-plugin-3dtouch/ThreeDeeTouch.m"; sourceTree = "<group>"; };
+		B21BE33FACB141D69245FA1C /* ThreeDeeTouch.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = ThreeDeeTouch.h; path = "cordova-plugin-3dtouch/ThreeDeeTouch.h"; sourceTree = "<group>"; };
+		D533B86783794F8A9550A81C /* AppDelegate+threedeetouch.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+threedeetouch.h"; path = "cordova-plugin-3dtouch/AppDelegate+threedeetouch.h"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -183,8 +186,10 @@
 			children = (
 				FE249256CE9B45E59D996A1F /* TapticEngine.m */,
 				0B1E5D850F734A50990BE270 /* TapticEngine.h */,
-				0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */,
-				9259A83A3EA249FDAEC781F2 /* CDVInAppBrowser.h */,
+				ACD47E676BB144D986FD6586 /* ThreeDeeTouch.m */,
+				91E803ADDDEC426B9E9C080E /* AppDelegate+threedeetouch.m */,
+				B21BE33FACB141D69245FA1C /* ThreeDeeTouch.h */,
+				D533B86783794F8A9550A81C /* AppDelegate+threedeetouch.h */,
 			);
 			name = Plugins;
 			path = SaldoRed/Plugins;
@@ -317,7 +322,8 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				E979B3965F2C42A987D68D07 /* TapticEngine.m in Sources */,
-				39F9F393930A412082D26E99 /* CDVInAppBrowser.m in Sources */,
+				429A61313E3849DC914E4E03 /* ThreeDeeTouch.m in Sources */,
+				13FF30B32A964654899B021C /* AppDelegate+threedeetouch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

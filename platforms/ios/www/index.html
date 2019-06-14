@@ -359,31 +359,6 @@
     });
   }
 
-  function transferOldCard(type, num) {
-    if (type == "bip" || type == "Bip") {
-      addCard('Bip', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "pase" || type == "Pase") {
-      addCard('Pase', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "trencentral" || type == "TrenCentral") {
-      addCard('TrenCentral', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "merval" || type == "MerVal") {
-      addCard('MerVal', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "biotren" || type == "BioTren") {
-      addCard('BioTren', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else {
-    }
-  }
-
   function addMoney(amount) {
     openMenu('addMoney');
     $("iframe#tbk").attr("src","https://saldo.red/api/redbiptransbank/?tarjeta=" + $("main").attr("data-num") + "&email=jjjj@jjj.jjj&monto=" + amount);
@@ -435,10 +410,8 @@
       return false;
     });
 
-    if (localStorage.getItem('data') == null && localStorage.getItem('savedCardType') == null) {
+    if (localStorage.getItem('data') == null) {
       localStorage.setItem('data', JSON.stringify(data));
-    } else if (localStorage.getItem('data') == null && localStorage.getItem('savedCardType') !== null) {
-      transferOldCard(localStorage.getItem('savedCardType'), localStorage.getItem('savedCardNum'));
     } else {
       data = JSON.parse(localStorage.getItem('data'));
     }
@@ -692,5 +665,48 @@
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+
+    document.addEventListener('deviceready', function () {
+
+      if (data.savedCards.length >= 5) {
+        ThreeDeeTouch.configureQuickActions([
+          {
+            type: 'myCards',
+            title: 'Mis Tarjetas',
+            // subtitle: 'Subtítulo Opcional',
+            iconType: 'love'
+          }
+        ]);
+      } else {
+        ThreeDeeTouch.configureQuickActions([
+          {
+            type: 'myCards',
+            title: 'Mis Tarjetas',
+            // subtitle: 'Subtítulo Opcional',
+            iconType: 'love'
+          },
+          {
+            type: 'addCard',
+            title: 'Agregar Tarjeta',
+            // subtitle: 'Subtítulo Opcional',
+            iconType: 'add'
+          }
+        ]);
+      }
+
+      ThreeDeeTouch.onHomeIconPressed = function (payload) {
+        if (payload.type == 'myCards') {
+          openMenu('myCards');
+        } else if (payload.type == 'addCard') {
+          openMenu('addCard');
+        } else {
+          // nothing
+        }
+      }
+    }, false);
+    </script>
+
   </body>
   </html>
