@@ -30,6 +30,9 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "red.saldo"
+    },
+    "cordova-plugin-3dtouch": {
+      "PACKAGE_NAME": "red.saldo"
     }
   },
   "dependent_plugins": {},
@@ -50,11 +53,20 @@
       "clobbers": [
         "TapticEngine"
       ]
+    },
+    {
+      "id": "cordova-plugin-3dtouch.ThreeDeeTouch",
+      "file": "plugins/cordova-plugin-3dtouch/www/ThreeDeeTouch.js",
+      "pluginId": "cordova-plugin-3dtouch",
+      "clobbers": [
+        "ThreeDeeTouch"
+      ]
     }
   ],
   "plugin_metadata": {
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-taptic-engine": "2.1.0",
-    "cordova-plugin-whitelist": "1.3.3"
+    "cordova-plugin-whitelist": "1.3.3",
+    "cordova-plugin-3dtouch": "1.3.6"
   }
 }

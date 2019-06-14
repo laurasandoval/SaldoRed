@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -19,6 +18,8 @@
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
 		B24C86C071B94ACA811EC384 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A63099459C04C0E916F013E /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E979B3965F2C42A987D68D07 /* TapticEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE249256CE9B45E59D996A1F /* TapticEngine.m */; };
+		429A61313E3849DC914E4E03 /* ThreeDeeTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = ACD47E676BB144D986FD6586 /* ThreeDeeTouch.m */; };
+		13FF30B32A964654899B021C /* AppDelegate+threedeetouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E803ADDDEC426B9E9C080E /* AppDelegate+threedeetouch.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,10 @@
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = SaldoRed/config.xml; sourceTree = "<group>"; };
 		FE249256CE9B45E59D996A1F /* TapticEngine.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = TapticEngine.m; path = "cordova-plugin-taptic-engine/TapticEngine.m"; sourceTree = "<group>"; };
+		ACD47E676BB144D986FD6586 /* ThreeDeeTouch.m */ = {isa = PBXFileReference; name = "ThreeDeeTouch.m"; path = "cordova-plugin-3dtouch/ThreeDeeTouch.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		91E803ADDDEC426B9E9C080E /* AppDelegate+threedeetouch.m */ = {isa = PBXFileReference; name = "AppDelegate+threedeetouch.m"; path = "cordova-plugin-3dtouch/AppDelegate+threedeetouch.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		B21BE33FACB141D69245FA1C /* ThreeDeeTouch.h */ = {isa = PBXFileReference; name = "ThreeDeeTouch.h"; path = "cordova-plugin-3dtouch/ThreeDeeTouch.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		D533B86783794F8A9550A81C /* AppDelegate+threedeetouch.h */ = {isa = PBXFileReference; name = "AppDelegate+threedeetouch.h"; path = "cordova-plugin-3dtouch/AppDelegate+threedeetouch.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +190,10 @@
 				0B1E5D850F734A50990BE270 /* TapticEngine.h */,
 				0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */,
 				9259A83A3EA249FDAEC781F2 /* CDVInAppBrowser.h */,
+				ACD47E676BB144D986FD6586 /* ThreeDeeTouch.m */,
+				91E803ADDDEC426B9E9C080E /* AppDelegate+threedeetouch.m */,
+				B21BE33FACB141D69245FA1C /* ThreeDeeTouch.h */,
+				D533B86783794F8A9550A81C /* AppDelegate+threedeetouch.h */,
 			);
 			name = Plugins;
 			path = SaldoRed/Plugins;
@@ -318,6 +327,8 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				E979B3965F2C42A987D68D07 /* TapticEngine.m in Sources */,
 				39F9F393930A412082D26E99 /* CDVInAppBrowser.m in Sources */,
+				429A61313E3849DC914E4E03 /* ThreeDeeTouch.m in Sources */,
+				13FF30B32A964654899B021C /* AppDelegate+threedeetouch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

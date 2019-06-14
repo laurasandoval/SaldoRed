@@ -15,6 +15,9 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "red.saldo"
+    },
+    "cordova-plugin-3dtouch": {
+      "PACKAGE_NAME": "red.saldo"
     }
   },
   "dependent_plugins": {}

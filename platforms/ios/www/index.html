@@ -692,5 +692,48 @@
 
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+
+    document.addEventListener('deviceready', function () {
+
+      if (data.savedCards.length >= 5) {
+        ThreeDeeTouch.configureQuickActions([
+          {
+            type: 'myCards',
+            title: 'Mis Tarjetas',
+            // subtitle: 'Subtítulo Opcional',
+            iconType: 'love'
+          }
+        ]);
+      } else {
+        ThreeDeeTouch.configureQuickActions([
+          {
+            type: 'myCards',
+            title: 'Mis Tarjetas',
+            // subtitle: 'Subtítulo Opcional',
+            iconType: 'love'
+          },
+          {
+            type: 'addCard',
+            title: 'Agregar Tarjeta',
+            // subtitle: 'Subtítulo Opcional',
+            iconType: 'add'
+          }
+        ]);
+      }
+
+      ThreeDeeTouch.onHomeIconPressed = function (payload) {
+        if (payload.type == 'myCards') {
+          openMenu('myCards');
+        } else if (payload.type == 'addCard') {
+          openMenu('addCard');
+        } else {
+          // nothing
+        }
+      }
+    }, false);
+    </script>
+
   </body>
   </html>
