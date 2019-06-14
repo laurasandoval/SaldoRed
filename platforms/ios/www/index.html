@@ -359,31 +359,6 @@
     });
   }
 
-  function transferOldCard(type, num) {
-    if (type == "bip" || type == "Bip") {
-      addCard('Bip', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "pase" || type == "Pase") {
-      addCard('Pase', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "trencentral" || type == "TrenCentral") {
-      addCard('TrenCentral', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "merval" || type == "MerVal") {
-      addCard('MerVal', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else if (type == "biotren" || type == "BioTren") {
-      addCard('BioTren', num);
-      localStorage.removeItem('savedCardType');
-      localStorage.removeItem('savedCardNum');
-    } else {
-    }
-  }
-
   function addMoney(amount) {
     openMenu('addMoney');
     $("iframe#tbk").attr("src","https://saldo.red/api/redbiptransbank/?tarjeta=" + $("main").attr("data-num") + "&email=jjjj@jjj.jjj&monto=" + amount);
@@ -435,10 +410,8 @@
       return false;
     });
 
-    if (localStorage.getItem('data') == null && localStorage.getItem('savedCardType') == null) {
+    if (localStorage.getItem('data') == null) {
       localStorage.setItem('data', JSON.stringify(data));
-    } else if (localStorage.getItem('data') == null && localStorage.getItem('savedCardType') !== null) {
-      transferOldCard(localStorage.getItem('savedCardType'), localStorage.getItem('savedCardNum'));
     } else {
       data = JSON.parse(localStorage.getItem('data'));
     }
