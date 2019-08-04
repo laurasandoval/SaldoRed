@@ -28,9 +28,7 @@
         checkiFrame();
       })
 
-      setTimeout(function(){
-        $("main").addClass("fixed");
-      }, 300);
+      $("main").addClass("fixed");
     } else if (specifiedMenu == "myCards") {
       TESelection = "start";
       TapticEngine.gestureSelectionStart();
@@ -42,10 +40,10 @@
   function closeMenu(specifiedMenu) {
     // Correcciones generales.
     document.activeElement.blur();
-    $("iframe#tbk").attr("src","loading.html");
+    $("iframe#tbk").attr("src","");
     $("#transitCard").val("");
     $("main").removeClass("fixed");
-    
+
     // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
     selectThisCard('Bip');
 
@@ -386,7 +384,7 @@
 
   function addMoney(amount) {
     openMenu('addMoney');
-    $("iframe#tbk").attr("src","https://saldo.red/api/redbiptransbank/?tarjeta=" + $("main").attr("data-num") + "&email=jjjj@jjj.jjj&monto=" + amount);
+    $("iframe#tbk").attr("src","cargadirecta.html?tarjeta=" + $("main").attr("data-num") + "&email=jjjj@jjj.jjj&monto=" + amount);
   }
 
   function checkiFrame() {
@@ -533,7 +531,7 @@
               </svg></span></button>
             </div>
             <div class="webview">
-              <iframe name="tbk" id="tbk" src="loading.html"></iframe>
+              <iframe name="tbk" id="tbk" src=""></iframe>
             </div>
             <div class="web-buttons">
               <!-- <input type="button" value="Back" ontouchend="tbk.history.back()"> -->

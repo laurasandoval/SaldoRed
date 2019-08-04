@@ -1,13 +1,3 @@
-/*
-App-o-Mat jQuery Mobile Cordova starter template
-Copyright 2014 Lou Franco
-https://github.com/app-o-mat/jqm-cordova-template-project
-http://app-o-mat.com
-
-MIT License
-https://github.com/app-o-mat/jqm-cordova-template-project/LICENSE.md
-*/
-
 /* iPhone X and above */
 main {
   margin-top: env(safe-area-inset-top);
@@ -15,9 +5,9 @@ main {
 }
 
 /* iPad Font Rendering Fix */
-h1, h2, h3, h4, p, a, button {
-  -webkit-transform: translate3d(0px,0px,0px);
-}
+/* h1, h2, h3, h4, p, a, button {
+-webkit-transform: translate3d(0px,0px,0px);
+} */
 
 .content-wrapper {
   position: fixed;
@@ -69,8 +59,6 @@ main {
   -moz-transition:    all 0.4s ease;
   -ms-transition:     all 0.4s ease;
   -o-transition:      all 0.4s ease;
-
-  will-change: transform;
 }
 
 hr {
@@ -710,8 +698,8 @@ button:hover, .button:hover {
 
 section#primary {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  grid-gap: 8px;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
 }
 
 section.info {
@@ -950,6 +938,15 @@ main.fixed {
   right: 0;
 }
 
+body, .content-wrapper, .overlay-menus {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+}
+
 .overlay-menus.addCard #addCard {
   transform: translateY(0);
   opacity: 1;
@@ -1009,4 +1006,77 @@ main.fixed {
 
 .menu .header button.close svg path {
   fill: #9B9B9B;
+}
+
+@media (prefers-color-scheme: dark) {
+  body, html, main {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  #primary h4 {
+    color: rgba(152,152,157,1);
+  }
+
+  section.info {
+    border: 1px solid rgba(0,0,0,0);
+    background: rgba(28,28,30,1);
+  }
+
+  .txt-black {
+    color: #FFFFFF;
+  }
+
+  .txt-white {
+    color: #000000;
+  }
+
+  .txt-blue {
+    color: #0a84ff;
+  }
+
+  .txt-gray {
+    color: #8e8e93;
+  }
+
+  .menu {
+    background: rgba(44,44,46,1);
+  }
+
+  button.card-selector {
+    border: rgba(58,58,60,0);
+    background: rgba(58,58,60,1);
+    color: #FFFFFF;
+  }
+
+  button.card-selector.selected, .button.card-selector.selected {
+    border: rgba(58,58,60,0);
+    background: rgba(142,142,147,1);
+    color: rgba(44,44,46,1);
+  }
+
+  button.card-selector.selected p, button.card-selector.selected span, .button.card-selector.selected p, .button.card-selector.selected span {
+    color: rgba(44,44,46,1)!important;
+  }
+
+  input[type=text], input[type=text]:focus {
+    background: rgba(58,58,60,1);
+    color: #FFFFFF;
+  }
+
+  main.loading .card .loading-animation {
+    background: repeating-linear-gradient(to right, #1e2b3a, #293346, #1e2b3a)!important;
+    background-size: 200% auto!important;
+    background-position: 0 100%!important;
+    opacity: 1!important;
+    animation: gradient 1.5s infinite!important;
+  }
+
+  .menu.webview .header {
+    background: #000000;
+  }
+
+  .overlay-menus.addCard, .overlay-menus.myCards, .overlay-menus.addMoney {
+    background: rgba(0,0,0,0.85);
+  }
 }
