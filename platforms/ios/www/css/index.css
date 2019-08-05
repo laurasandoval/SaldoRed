@@ -151,11 +151,13 @@ button, .button {
   box-sizing: border-box;
   height: 36px;
   border-radius: 1000px;
-  padding: 10px 20px;
+  padding: 10px 16px;
   margin-right: 5px;
   margin-left: 0;
   text-decoration: none;
   border: none;
+  outline: none;
+  will-change: transform;
 
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;
@@ -187,38 +189,43 @@ button.primary:active, .button.primary:active {
 }
 
 button.secondary, .button.secondary {
-  border: 1px solid rgba(29,115,232,1);
-  background: rgba(0,0,0,0);
+  border: none;
+  background: rgba(29,115,232,0.1);
   color: rgba(29,115,232,1);
 }
 
 /* Billetes */
-button.addMoney1000, .button.addMoney1000 {
+
+button.addMoney1000, .button.addMoney1000,
+button.addMoney1000, .button.addMoney2000,
+button.addMoney1000, .button.addMoney5000,
+button.addMoney1000, .button.addMoney10000,
+button.addMoney1000, .button.addMoney20000 {
   border: none;
+  font-family: "SF Pro Rounded", system-ui;
+}
+
+button.addMoney1000, .button.addMoney1000 {
   background: rgba(78,139,12,0.15);
   color: rgba(78,139,12,1);
 }
 
 button.addMoney2000, .button.addMoney2000 {
-  border: none;
   background: rgba(124,48,190,0.15);
   color: rgba(124,48,190,1);
 }
 
 button.addMoney5000, .button.addMoney5000 {
-  border: none;
   background: rgba(208,2,65,0.15);
   color: rgba(208,2,65,1);
 }
 
 button.addMoney10000, .button.addMoney10000 {
-  border: none;
   background: rgba(2,64,208,0.15);
   color: rgba(2,64,208,1);
 }
 
 button.addMoney20000, .button.addMoney20000 {
-  border: none;
   background: rgba(207,89,44,0.15);
   color: rgba(207,89,44,1);
 }
@@ -320,15 +327,20 @@ img {
   -ms-user-select: none;
 }
 
-.icon svg {
+.icon {
   display: inline-flex;
+  height: 1.2em;
   align-self: center;
-  height: 1em;
+}
+
+.icon svg {
+  height: auto;
   width: 1em;
+  margin-right: 6px;
+}
+
+.icon svg path {
   fill: currentColor;
-  top: .125em;
-  position: relative;
-  margin-right: 5px;
 }
 
 .small-card {
@@ -343,6 +355,8 @@ main .card, .small-card .card {
   padding-bottom: 65%; /* 16:9 */
   position: relative;
   margin: 0;
+  border: none;
+  outline: none;
 
   border-radius: 10px;
   -webkit-box-shadow: 0px 5px 15px 5px rgba(80,80,80,0.2);
@@ -705,6 +719,10 @@ section#primary {
   grid-gap: 20px;
 }
 
+/* section#primary h2 {
+  font-family: "SF Pro Rounded", system-ui;
+} */
+
 section.info {
   display: grid;
   grid-template-rows: auto;
@@ -1009,6 +1027,31 @@ body, .content-wrapper, .overlay-menus {
 
 .menu .header button.close svg path {
   fill: #9B9B9B;
+}
+
+.notifications {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notifications .notification {
+  position: fixed;
+  bottom: 48px;
+  padding: 10px 36px;
+  box-sizing: border-box;
+  transform: translateY(100px);
+  z-index: 1000;
+
+  background: #FFFFFF;
+  box-shadow: 0 0 30px 6px rgba(0,0,0,0.14);
+  border-radius: 100px;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+}
+
+.notifications.show .notification {
+  transform: translateY(0);
 }
 
 @media (prefers-color-scheme: dark) {

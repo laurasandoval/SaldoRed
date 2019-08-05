@@ -1,4 +1,0 @@
-#Sat Jul 06 15:15:43 CLT 2019
-base.0=/Users/eljoseurena/Desktop/ihavenoideawhatimdoing/DESDE CERO PERO BIEN/saldored/platforms/android/app/build/intermediates/transforms/dexMerger/debug/6
-path.0=classes.dex
-renamed.0=classes.dex
