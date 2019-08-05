@@ -431,6 +431,21 @@
     }
   }
 
+  function showNotification(notificationText) {
+    $(".notifications .notification h4").html(notificationText);
+    $(".notifications").addClass("show");
+    setTimeout(function() {
+      $(".notifications").removeClass("show");
+    }, 3000);
+  }
+
+  function copyCardNum() {
+    $(".notifications input").val("123").select();
+    document.execCommand("copy");
+
+    showNotification("¡Copiado!");
+  }
+
   $(document).ready(function() {
 
     $('a[target=_blank]').on('click', function(e) {
@@ -485,6 +500,10 @@
 </head>
 <body>
   <div class="app">
+
+    <div class="notifications">
+      <div class="notification"><h4></h4></div>
+    </div>
 
     <div class="content-wrapper">
 
@@ -640,6 +659,7 @@
               <a href="https://www.metrovalparaiso.cl/carga-en-linea/" target="_blank" rel="noopener" class="button secondary bip-hide pase-hide trencentral-hide biotren-hide" role="button" tabindex="0"><span class="icon" style="transform: scale(1.2);"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 18 15">
                 <path d="M35.6521739,22.0526316 L38,22.0526316 L38,23.6315789 L35.6521739,23.6315789 L35.6521739,26 L34.0869565,26 L34.0869565,23.6315789 L31.7391304,23.6315789 L31.7391304,22.0526316 L34.0869565,22.0526316 L34.0869565,19.6842105 L35.6521739,19.6842105 L35.6521739,22.0526316 L35.6521739,22.0526316 Z M34.0869565,14.1578947 L34.0869565,12.5789474 L21.5652174,12.5789474 L21.5652174,14.1578947 L34.0869565,14.1578947 L34.0869565,14.1578947 Z M34.0869565,17.3157895 L21.5652174,17.3157895 L21.5652174,22.0526316 L30.173913,22.0526316 L30.173913,23.6315789 L21.5652174,23.6315789 C20.6965217,23.6315789 20,22.9210526 20,22.0526316 L20,12.5789474 C20,11.7026316 20.6965217,11 21.5652174,11 L34.0869565,11 C34.9514022,11 35.6521739,11.7069188 35.6521739,12.5789474 L35.6521739,18.1052632 L34.0869565,18.1052632 L34.0869565,17.3157895 Z" transform="translate(-20 -11)"></path>
               </svg></span>Carga en Línea</a>
+              <button class="secondary" ontouchend="copyCardNum();">Copiar Número</button>
             </section>
 
             <section class="info error">
