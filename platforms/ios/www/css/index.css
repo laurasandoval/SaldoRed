@@ -90,6 +90,7 @@ h3, .h3 {
   margin: 0;
   text-decoration: none;
   display: block;
+  outline: none;
 }
 
 h4, .h4, label {
@@ -98,16 +99,19 @@ h4, .h4, label {
   margin: 0;
   text-decoration: none;
   display: block;
+  outline: none;
 }
 
 p, .p {
   font-size: 13px;
   font-weight: 400;
   margin: 4px 0 0 0;
+  outline: none;
 }
 
 a, .a {
   margin: 0;
+  outline: none;
 }
 
 .txt-black {
@@ -371,6 +375,13 @@ main .card, .small-card .card {
   overflow: hidden;
 }
 
+/* main .card:active {
+-webkit-box-shadow: 0px 3px 10px 4px rgba(80,80,80,0.25);
+-moz-box-shadow: 0px 3px 10px 4px rgba(80,80,80,0.25);
+box-shadow: 0px 3px 10px 4px rgba(80,80,80,0.25);
+transform: scale(.95);
+} */
+
 .small-card .card {
   border-radius: 3px;
   -webkit-box-shadow: none;
@@ -387,6 +398,7 @@ main .card .card-logo, .small-card .card-logo {
   background-repeat: no-repeat;
   background-position: top left;
   will-change: transform;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .small-card .card-logo {
@@ -430,16 +442,20 @@ main.error .card .card-logo svg path {
 }
 
 #onboarding {
-  margin-top: 40px;
+  margin-top: 28px;
   display: none;
   opacity: 0;
   text-align: center;
 }
 
 #onboarding svg {
-  height: 35px;
-  width: 35px;
+  height: 28px;
+  width: auto;
   margin: 0 auto 20px;
+}
+
+#onboarding svg path {
+  fill: #9B9B9B;
 }
 
 main.noCards #cardInfo {
@@ -458,13 +474,12 @@ main.loading .card .loading-animation {
   background-position: 0 100%!important;
 }
 
+/* From https://codepen.io/P1N2O/pen/pyBNzX */
 main.noCards .card .loading-animation {
   opacity: 1;
-  background: linear-gradient( 108.4deg,  rgba(253,44,56,1) 3.3%, rgba(176,2,12,1) 98.4% );
+  background: linear-gradient(-45deg, #FF4949, #FA1B1B);
   background-size: 400% 400%;
-  -webkit-animation: noCardsGradientAnimation 6s ease infinite;
-  -moz-animation: noCardsGradientAnimation 6s ease infinite;
-  animation: noCardsGradientAnimation 6s ease infinite;
+  animation: gradientBG 5s ease infinite;
 }
 
 main .card .loading-animation {
@@ -511,39 +526,15 @@ main .card .neutral-card-overlay {
   100% { background-position: -200% 0; }
 }
 
-@-webkit-keyframes noCardsGradientAnimation {
+@keyframes gradientBG {
   0% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 50%
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 0% 50%
-  }
-}
-
-@-moz-keyframes noCardsGradientAnimation {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
-  }
-}
-
-@keyframes noCardsGradientAnimation {
-  0% {
-    background-position: 0% 50%
-  }
-  50% {
-    background-position: 100% 50%
-  }
-  100% {
-    background-position: 0% 50%
+    background-position: 0% 50%;
   }
 }
 
@@ -720,7 +711,7 @@ section#primary {
 }
 
 /* section#primary h2 {
-  font-family: "SF Pro Rounded", system-ui;
+font-family: "SF Pro Rounded", system-ui;
 } */
 
 section.info {
@@ -938,21 +929,6 @@ section.info a, section.info .a {
   transform: scale(0.85);
 }
 
-.onboarding-svg-card {
-  transform-origin-x: 15px;
-  transform-origin-y: 7px;
-  transform: scale(1);
-  -webkit-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
-  will-change: transform;
-}
-
-.overlay-menus.addCard + main .onboarding-svg-card, .overlay-menus.myCards + main .onboarding-svg-card {
-  transform: scale(0.9);
-}
-
 main.fixed {
   position: fixed;
   left: 0;
@@ -1017,12 +993,11 @@ body, .content-wrapper, .overlay-menus {
   margin: -0.8em;
   height: 100%;
   opacity: 1;
+  font-size: 20px;
 }
 
 .menu .header button.close svg {
   margin: 0;
-  width: 18px;
-  height: 18px;
 }
 
 .menu .header button.close svg path {
@@ -1033,21 +1008,31 @@ body, .content-wrapper, .overlay-menus {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  position: fixed;
+  z-index: 1000;
+  bottom: 48px;
+  left: 0;
+  right: 0;
+  pointer-events: none;
 }
 
 .notifications .notification {
-  position: fixed;
-  bottom: 48px;
   padding: 10px 36px;
   box-sizing: border-box;
   transform: translateY(100px);
-  z-index: 1000;
+  max-width: 70vw;
 
   background: #FFFFFF;
   box-shadow: 0 0 30px 6px rgba(0,0,0,0.14);
   border-radius: 100px;
   transition: all 0.2s ease;
   -webkit-transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.notifications .notification h4 {
+  text-align: center;
 }
 
 .notifications.show .notification {
