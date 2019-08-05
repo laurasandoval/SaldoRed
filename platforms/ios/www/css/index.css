@@ -372,6 +372,7 @@ main .card .card-logo, .small-card .card-logo {
   width: 205px;
   background-repeat: no-repeat;
   background-position: top left;
+  will-change: transform;
 }
 
 .small-card .card-logo {
@@ -390,9 +391,8 @@ main.loading .card {
   transform: scale(0.85);
 }
 
-main.loading .card .card-logo {
-  -webkit-filter: brightness(0%); /* Safari 6.0 - 9.0 */
-  filter: brightness(0%);
+main.loading .card .card-logo svg path {
+  fill: rgba(0,0,0,1);
   opacity: 0.2;
 }
 
@@ -400,9 +400,8 @@ main.error .card {
   background-image: linear-gradient(0deg, #FFFFFF 0%, #F6F7F8 100%)!important;
 }
 
-main.error .card .card-logo {
-  -webkit-filter: brightness(0%); /* Safari 6.0 - 9.0 */
-  filter: brightness(0%);
+main.error .card .card-logo svg path {
+  fill: rgba(0,0,0,1);
   opacity: 0.1;
 }
 
@@ -534,12 +533,16 @@ main .card .neutral-card-overlay {
   }
 }
 
+main .card .card-logo svg {
+  opacity: 0;
+}
+
 /* Tarjeta Bip */
 main.card-bip .card, .small-card .bip {
   background-image: linear-gradient(0deg, #3C8BDE 0%, #1F38D6 100%);
 }
-main.card-bip .card .card-logo, .small-card .bip .card-logo {
-  background-image: url("card-logo-bip.svg");
+main.card-bip .card .card-logo svg {
+  opacity: 1;
 }
 main.card-bip .bip-hide {
   display: none;
@@ -555,8 +558,8 @@ main.card-bip .neutral-card-overlay {
 main.card-pase .card, .small-card .pase {
   background-image: linear-gradient(0deg, #3CC2DE 0%, #1FD689 100%);
 }
-main.card-pase .card .card-logo, .small-card .pase .card-logo {
-  background-image: url("card-logo-pase.svg");
+main.card-pase .card .card-logo svg {
+  opacity: 1;
 }
 main.card-pase .pase-hide {
   display: none;
@@ -572,8 +575,8 @@ main.card-pase .neutral-card-overlay {
 main.card-trencentral .card, .small-card .trencentral {
   background-image: radial-gradient( circle farthest-corner at 18% 18.8%,  rgba(4,150,255,0.63) 0%, rgba(4,150,255,1) 90% );
 }
-main.card-trencentral .card .card-logo, .small-card .trencentral .card-logo {
-  background-image: url("card-logo-trencentral.svg");
+main.card-trencentral .card .card-logo svg {
+  opacity: 1;
 }
 main.card-trencentral .trencentral-hide {
   display: none;
@@ -589,8 +592,8 @@ main.card-trencentral .neutral-card-overlay {
 main.card-merval .card, .small-card .merval {
   background-image: linear-gradient(0deg, #A08AFF 0%, #210CA8 100%);
 }
-main.card-merval .card .card-logo, .small-card .merval .card-logo {
-  background-image: url("card-logo-merval.svg");
+main.card-merval .card .card-logo svg {
+  opacity: 1;
 }
 main.card-merval .merval-hide {
   display: none;
@@ -606,8 +609,8 @@ main.card-merval .neutral-card-overlay {
 main.card-biotren .card, .small-card .biotren {
   background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(238, 164, 39) 0%, rgb(255, 149, 34) 44.7%, rgb(255, 119, 34) 90% );
 }
-main.card-biotren .card .card-logo, .small-card .biotren .card-logo {
-  background-image: url("card-logo-biotren.svg");
+main.card-biotren .card .card-logo svg {
+  opacity: 1;
 }
 main.card-biotren .biotren-hide {
   display: none;
