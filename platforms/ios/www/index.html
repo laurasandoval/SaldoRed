@@ -29,6 +29,9 @@
       })
 
       $("main").addClass("fixed");
+      setTimeout(function() {
+        showNotification("Recuerda validar tu carga en un tótem o InfoBip.", 5000);
+      }, 1000);
     } else if (specifiedMenu == "myCards") {
       TESelection = "start";
       TapticEngine.gestureSelectionStart();
@@ -228,12 +231,12 @@
           localStorage.setItem('data', JSON.stringify(data));
           setTimeout(function() {
             showNotification("<span class='txt-red'>Ojo.</span> Tu saldo podría tener hasta 24 hrs. de desfase", 5000);
-          }, 3000);
+          }, 2000);
         } else if ((data['savedCards'].find(obj => (obj.num === newCardNum && obj.type === newCardType)).type == newCardType) && (data['savedCards'].find(obj => (obj.num === newCardNum && obj.type === newCardType)).num == newCardNum)) {
           // La tarjeta ya existe.
           setTimeout(function() {
             showNotification("Esa tarjeta ya existe", 5000);
-          }, 1000);
+          }, 500);
         }
 
         getSavedCards();
