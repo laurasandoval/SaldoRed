@@ -33,6 +33,11 @@
 	<string></string>
 	<key>NSMainNibFile~ipad</key>
 	<string></string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIRequiresFullScreen</key>

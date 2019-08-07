@@ -30,7 +30,7 @@
 
       $("main").addClass("fixed");
       setTimeout(function() {
-        showNotification("Recuerda validar tu carga en un tótem o InfoBip.", 5000);
+        showNotification("Recuerda validar tu carga en un tótem o InfoBip", 5000);
       }, 1000);
     } else if (specifiedMenu == "myCards") {
       TESelection = "start";
@@ -415,8 +415,12 @@
       var formToken = iframe.contentDocument.getElementsByName("token_ws")[0].value
       console.log(formUrl)
       console.log(formToken)
+      iframe.src = "about:blank"
       iframe.contentWindow.location.href = "about:blank" // cancelamos la carga de la pagina luego de conseguir los valores importantes (para evitar que desaparezcan)
-      closeMenu('addMoney') // cerramos este menú
+      $("#tbk-container").empty();
+      $("#tbk-container").append('<iframe name="tbk" id="tbk" src=""></iframe>');
+      closeMenu('addMoney'); // cerramos este menú
+      console.log("adiós cariño me voy al trabajo");
 
       // Acá hacemos la llamada ajax
       console.log("haciendo llamada ajax...")
@@ -436,6 +440,10 @@
         var txData = JSON.parse(responseHTML[3].textContent.trim())
         // json tiene los datos de respuesta de haber hecho el pago. Acá puedes hacer lo que quieras con ellos! (como mandarlos a una función que los muestre en un modal)
         console.log(txData);
+        showNotification('<span class="icon txt-blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 15"><path fill="#1D73E8" d="M148.769531,761.056641 C145.132324,761.056641 142.13623,758.060547 142.13623,754.42334 C142.13623,750.786133 145.125977,747.783691 148.763184,747.783691 C152.400391,747.783691 155.402832,750.786133 155.402832,754.42334 C155.402832,758.060547 152.406738,761.056641 148.769531,761.056641 Z M147.912598,757.787598 C148.166504,757.787598 148.39502,757.660645 148.547363,757.425781 L151.771973,752.461914 C151.867188,752.30957 151.937012,752.138184 151.937012,751.98584 C151.937012,751.617676 151.613281,751.370117 151.26416,751.370117 C151.035645,751.370117 150.845215,751.490723 150.686523,751.738281 L147.893555,756.194336 L146.439941,754.391602 C146.274902,754.194824 146.103516,754.105957 145.887695,754.105957 C145.532227,754.105957 145.233887,754.391602 145.233887,754.759766 C145.233887,754.931152 145.297363,755.096191 145.424316,755.248535 L147.252441,757.444824 C147.436523,757.666992 147.645996,757.787598 147.912598,757.787598 Z" transform="translate(-142 -747)"/></svg></span> Tarjeta cargada', 4000);
+        setTimeout(function() {
+          showNotification("Recuerda validar tu carga en un tótem o InfoBip", 5000);
+        }, 4500);
       });
     } else {
       // Nothing, yet.
@@ -678,7 +686,7 @@
               <h3>Carga Directa</h3>
               <button class="close" ontouchend="closeMenu('addMoney');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M350,85 C344.516746,85 340,80.4854137 340,75.0047824 C340,69.5241511 344.507177,65 349.990431,65 C355.473684,65 360,69.5241511 360,75.0047824 C360,80.4854137 355.483254,85 350,85 Z M346.76555,79.2228599 C347.062201,79.2228599 347.301435,79.1272119 347.492823,78.926351 L349.990431,76.4299378 L352.507177,78.926351 C352.688995,79.1176471 352.937799,79.2228599 353.23445,79.2228599 C353.789474,79.2228599 354.229665,78.782879 354.229665,78.2185557 C354.229665,77.9507413 354.124402,77.7116212 353.933014,77.5203252 L351.416268,75.0143472 L353.933014,72.4796748 C354.143541,72.2883788 354.239234,72.0588235 354.239234,71.7910091 C354.239234,71.2266858 353.799043,70.7962697 353.23445,70.7962697 C352.956938,70.7962697 352.727273,70.8823529 352.526316,71.0927786 L349.990431,73.5987566 L347.473684,71.0927786 C347.291866,70.9014825 347.062201,70.8058345 346.76555,70.8058345 C346.200957,70.8058345 345.770335,71.2362506 345.770335,71.8005739 C345.770335,72.0588235 345.875598,72.3075084 346.066986,72.4892396 L348.583732,75.0143472 L346.066986,77.52989 C345.875598,77.7116212 345.770335,77.9603061 345.770335,78.2185557 C345.770335,78.782879 346.200957,79.2228599 346.76555,79.2228599 Z" transform="translate(-340 -65)"/></svg></span></button>
             </div>
-            <div class="webview">
+            <div class="webview" id="tbk-container">
               <iframe name="tbk" id="tbk" src=""></iframe>
             </div>
             <div class="web-buttons">

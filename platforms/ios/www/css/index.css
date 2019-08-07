@@ -1,5 +1,7 @@
-/* iPhone X and above */
+
 main {
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-top: env(safe-area-inset-top);
   margin-bottom: env(safe-area-inset-bottom);
 }
@@ -33,7 +35,7 @@ body, html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-text-size-adjust: 100%;
 
-  font-family: system-ui;
+  font-family: -apple-system, system-ui, sans-serif;
   -webkit-overflow-scrolling: touch!important;
   touch-action: manipulation!important;
   -webkit-touch-callout: none;
@@ -201,12 +203,12 @@ button.secondary, .button.secondary {
 /* Billetes */
 
 button.addMoney1000, .button.addMoney1000,
-button.addMoney1000, .button.addMoney2000,
-button.addMoney1000, .button.addMoney5000,
-button.addMoney1000, .button.addMoney10000,
-button.addMoney1000, .button.addMoney20000 {
+button.addMoney2000, .button.addMoney2000,
+button.addMoney5000, .button.addMoney5000,
+button.addMoney10000, .button.addMoney10000,
+button.addMoney20000, .button.addMoney20000 {
   border: none;
-  font-family: "SF Pro Rounded", system-ui;
+  font-family: "SF Pro Rounded", -apple-system, system-ui, sans-serif;
 }
 
 button.addMoney1000, .button.addMoney1000 {
@@ -879,7 +881,7 @@ section.info a, section.info .a {
   /* Intento por solucionar problema de Scrolling en Focus de TBK iFrame */
   padding-bottom: env(safe-area-inset-bottom);
 
-  height: 60px;
+  /* height: 60px; */
   width: 100%;
   background: #FFFFFF;
 }
@@ -888,6 +890,7 @@ section.info a, section.info .a {
 @media only screen and (min-width: 350px) {
   .menu {
     padding-top: 20px;
+    padding-bottom: 20px;
     padding-bottom: max(20px, env(safe-area-inset-bottom));
     padding-left: 20px;
     padding-right: 20px;
@@ -1031,8 +1034,15 @@ body, .content-wrapper, .overlay-menus {
   pointer-events: none;
 }
 
+@media (max-width: 350px) {
+  .notifications .notification {
+    max-width: 80vw;
+  }
+}
+
 .notifications .notification h4 {
   text-align: center;
+  /* display: flex; */
 }
 
 .notifications.show .notification {
