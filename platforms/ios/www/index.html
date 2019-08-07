@@ -20,6 +20,9 @@
   function openMenu(specifiedMenu) {
     $(".content-wrapper").animate({ scrollTop: 0 }, 300);
     $(".overlay-menus").removeClass().addClass("overlay-menus").addClass(specifiedMenu);
+    $("main").attr("aria-hidden","true");
+    $("#" + specifiedMenu).attr("aria-hidden","false");
+    $("main .card").attr("aria-pressed","true");
 
     if (specifiedMenu == "addMoney") {
       // Revisa la URL del iFrame cuando esta cambia para vincular eventos con app.
@@ -46,6 +49,9 @@
     $("iframe#tbk").attr("src","");
     $("#transitCard").val("");
     $("main").removeClass("fixed");
+    $("main").attr("aria-hidden","false");
+    $(".menu").attr("aria-hidden","true");
+    $("main .card").attr("aria-pressed","false");
 
     // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
     selectThisCard('Bip');
@@ -84,14 +90,14 @@
 
     $("main").attr("data-type", type);
     $("main").attr("data-num", num);
-    $(".saved-cards button").removeClass("selected");
-    $(".saved-cards button[data-type='" + type + "'][data-num='" + num + "']").addClass("selected");
+    $(".saved-cards button").removeClass("selected").attr("aria-pressed","false");
+    $(".saved-cards button[data-type='" + type + "'][data-num='" + num + "']").addClass("selected").attr("aria-pressed","true");
 
     // From https://stackoverflow.com/questions/7364150/find-object-by-id-in-an-array-of-javascript-objects
     var lastCardSaldo = data['savedCards'].find(obj => (obj.num === num && obj.type === type)).saldo;
     var lastCardLeftTrips = data['savedCards'].find(obj => (obj.num === num && obj.type === type)).leftTrips;
 
-    $('*[data-type="' + type + '"][data-num="' + num + '"] .saldo').html(lastCardSaldo);
+    $('*[data-type="' + type + '"][data-num="' + num + '"] .saldo').html(lastCardSaldo).attr("aria-label",lastCardSaldo.replace(/\D/gi, "") + " pesos.");
     $('*[data-type="' + type + '"][data-num="' + num + '"] .leftTrips').html(lastCardLeftTrips);
     data['lastCard'][0].type = type;
     data['lastCard'][0].num = num;
@@ -103,6 +109,7 @@
     setTimeout(function(){
       closeMenu();
     }, 200);
+    $("main .card").attr("aria-label","Tarjeta " + type);
   }
 
   function getTarifa() {
@@ -180,11 +187,11 @@
       data.savedCards.forEach(function(element) {
         if (element.status == "ok") {
           $(".saved-cards").append(
-            '<button data-type="' + element.type + '" data-num="' + element.num + '" class="saved-card card-selector" ontouchstart="setCurrentCard(\'' + element.type + '\', \'' + element.num + '\');"><figure class="small-card"><div class="card ' + element.type.toLowerCase() + '"><div class="card-logo">' + eval(element.type.toLowerCase() + "LogoSVG") + '</div></div></figure><div class="card-info"><span>' + element.type + '</span><p class="txt-gray"><span class="saldo">' + element.saldo + '</span> | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</p><p class="txt-red errorText">Error al consultar la tarjeta.</p></div></button>'
+            '<button aria-pressed="false" aria-label="Tarjeta ' + element.type + ' terminada en ' + element.num.replace(/\d(?=\d{3})/gi, "") + '. ' + element.saldo.replace(/\D/gi, "") + ' pesos." data-type="' + element.type + '" data-num="' + element.num + '" class="saved-card card-selector" ontouchstart="setCurrentCard(\'' + element.type + '\', \'' + element.num + '\');"><figure class="small-card"><div class="card ' + element.type.toLowerCase() + '"><div class="card-logo">' + eval(element.type.toLowerCase() + "LogoSVG") + '</div></div></figure><div class="card-info"><span>' + element.type + '</span><p class="txt-gray"><span class="saldo">' + element.saldo + '</span> | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</p><p class="txt-red errorText">Error al consultar la tarjeta.</p></div></button>'
           );
         } else if (element.status == "error") {
           $(".saved-cards").append(
-            '<button data-type="' + element.type + '" data-num="' + element.num + '" class="saved-card card-selector error" ontouchstart="setCurrentCard(\'' + element.type + '\', \'' + element.num + '\');"><figure class="small-card"><div class="card ' + element.type.toLowerCase() + '"><div class="card-logo">' + eval(element.type.toLowerCase() + "LogoSVG") + '</div></div></figure><div class="card-info"><span>' + element.type + '</span><p class="txt-gray"><span class="saldo">' + element.saldo + '</span> | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</p><p class="txt-red errorText">Error al consultar la tarjeta.</p></div></button>'
+            '<button aria-pressed="false" aria-label="Tarjeta ' + element.type + ' terminada en ' + element.num.replace(/\d(?=\d{3})/gi, "") + '. Error al consultar la tarjeta." data-type="' + element.type + '" data-num="' + element.num + '" class="saved-card card-selector error" ontouchstart="setCurrentCard(\'' + element.type + '\', \'' + element.num + '\');"><figure class="small-card"><div class="card ' + element.type.toLowerCase() + '"><div class="card-logo">' + eval(element.type.toLowerCase() + "LogoSVG") + '</div></div></figure><div class="card-info"><span>' + element.type + '</span><p class="txt-gray"><span class="saldo">' + element.saldo + '</span> | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</p><p class="txt-red errorText">Error al consultar la tarjeta.</p></div></button>'
           );
         }
       });
@@ -200,8 +207,8 @@
   }
 
   function selectThisCard(type) {
-    $("#addCard .card-options .card-selector").removeClass("selected");
-    $("#addCard .card-options .card-selector[data-type='" + type + "']").addClass("selected");
+    $("#addCard .card-options .card-selector").removeClass("selected").attr("aria-pressed","false");
+    $("#addCard .card-options .card-selector[data-type='" + type + "']").addClass("selected").attr("aria-pressed","true");
     newCardType = type;
   }
 
@@ -355,7 +362,7 @@
 
           element.status = "ok";
 
-          $('*[data-type="' + currentCardNoLowerCase + '"][data-num="' + element.num + '"] .saldo').html(element.saldo);
+          $('*[data-type="' + currentCardNoLowerCase + '"][data-num="' + element.num + '"] .saldo').html(element.saldo).attr("aria-label",element.saldo.replace(/\D/gi, "") + " pesos.");
           $('*[data-type="' + currentCardNoLowerCase + '"][data-num="' + element.num + '"] .leftTrips').html(element.leftTrips);
 
           // Si esta tarjeta es la "lastCardUsed", actualiza sus parámetros en la data.
@@ -461,13 +468,15 @@
 
   function copyCardNum() {
     cordova.plugins.clipboard.copy($("main").attr("data-num"));
-    showNotification("Copiado", 3000);
+    setTimeout(function() {
+      showNotification("Copiado", 3000);
+    }, 400);
   }
 
   $(document).ready(function() {
 
     var touchmoved;
-    $("figure.card").on("touchend", function(e){
+    $("button.card").on("touchend", function(e){
       if(touchmoved != true){
         openMenu("myCards");
       }
@@ -564,11 +573,11 @@
       getSaldo();
     }
 
-    $("input[type=text]").bind("touchstart", function(e) {
-      $("input[type=text]").focus();
-      e.stopPropagation();
-      e.preventDefault();
-      return false;
+    $(".inputfield").bind("touchstart", function(e) {
+      $(this).children("input").focus();
+      // e.stopPropagation();
+      // e.preventDefault();
+      // return false;
     });
 
     // Esto para que los clicks en los Menús no los cierren – como sí lo hacen los clicks en cualquier otra parte del overlay.
@@ -591,22 +600,21 @@
   <div class="app">
 
     <div class="notifications">
-      <div class="notification"><h4></h4></div>
+      <div class="notification"><h4 aria-live="polite" role="status"></h4></div>
     </div>
 
     <div class="content-wrapper">
 
       <div class="overlay-menus" ontouchstart="closeMenu();">
-        <div class="menu" id="addCard">
+        <div class="menu" aria-hidden="true" id="addCard">
           <div class="header">
             <h3>Agregar Tarjeta</h3>
-            <button class="close" ontouchend="closeMenu('addCard');"><span class="icon">
+            <button class="close" aria-label="Cerrar" ontouchend="closeMenu('addCard');"><span class="icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M350,85 C344.516746,85 340,80.4854137 340,75.0047824 C340,69.5241511 344.507177,65 349.990431,65 C355.473684,65 360,69.5241511 360,75.0047824 C360,80.4854137 355.483254,85 350,85 Z M346.76555,79.2228599 C347.062201,79.2228599 347.301435,79.1272119 347.492823,78.926351 L349.990431,76.4299378 L352.507177,78.926351 C352.688995,79.1176471 352.937799,79.2228599 353.23445,79.2228599 C353.789474,79.2228599 354.229665,78.782879 354.229665,78.2185557 C354.229665,77.9507413 354.124402,77.7116212 353.933014,77.5203252 L351.416268,75.0143472 L353.933014,72.4796748 C354.143541,72.2883788 354.239234,72.0588235 354.239234,71.7910091 C354.239234,71.2266858 353.799043,70.7962697 353.23445,70.7962697 C352.956938,70.7962697 352.727273,70.8823529 352.526316,71.0927786 L349.990431,73.5987566 L347.473684,71.0927786 C347.291866,70.9014825 347.062201,70.8058345 346.76555,70.8058345 C346.200957,70.8058345 345.770335,71.2362506 345.770335,71.8005739 C345.770335,72.0588235 345.875598,72.3075084 346.066986,72.4892396 L348.583732,75.0143472 L346.066986,77.52989 C345.875598,77.7116212 345.770335,77.9603061 345.770335,78.2185557 C345.770335,78.782879 346.200957,79.2228599 346.76555,79.2228599 Z" transform="translate(-340 -65)"/></svg></span></button>
             </div>
 
-            <label for="card-options" class="txt-black" style="margin-top: 20px;">Tipo de tarjeta</label>
             <div class="card-options" id="card-options">
-              <button data-type="Bip" ontouchend="selectThisCard('Bip');" class="card-selector selected">
+              <button data-type="Bip" ontouchend="selectThisCard('Bip');" class="card-selector selected" aria-pressed="true">
                 <figure class="small-card">
                   <div class="card bip">
                     <div class="card-logo">
@@ -615,7 +623,7 @@
                   </div>
                 </figure>Bip
               </button>
-              <button data-type="Pase" ontouchend="selectThisCard('Pase');" class="card-selector">
+              <button data-type="Pase" ontouchend="selectThisCard('Pase');" class="card-selector" aria-pressed="false">
                 <figure class="small-card">
                   <div class="card pase">
                     <div class="card-logo">
@@ -626,7 +634,7 @@
                   </div>
                 </figure>Pase
               </button>
-              <button data-type="TrenCentral" ontouchend="selectThisCard('TrenCentral');" class="card-selector">
+              <button data-type="TrenCentral" ontouchend="selectThisCard('TrenCentral');" class="card-selector" aria-pressed="false">
                 <figure class="small-card">
                   <div class="card trencentral">
                     <div class="card-logo">
@@ -637,7 +645,7 @@
                   </div>
                 </figure>TrenCentral
               </button>
-              <button data-type="MerVal" ontouchend="selectThisCard('MerVal');" class="card-selector merval">
+              <button data-type="MerVal" ontouchend="selectThisCard('MerVal');" class="card-selector merval" aria-pressed="false">
                 <figure class="small-card">
                   <div class="card merval">
                     <div class="card-logo">
@@ -648,7 +656,7 @@
                   </div>
                 </figure>MerVal
               </button>
-              <button data-type="BioTren" ontouchend="selectThisCard('BioTren');" class="card-selector">
+              <button data-type="BioTren" ontouchend="selectThisCard('BioTren');" class="card-selector" aria-pressed="false">
                 <figure class="small-card">
                   <div class="card biotren">
                     <div class="card-logo">
@@ -661,14 +669,16 @@
               </button>
             </div>
 
-            <label for="transitCard" class="txt-black">Número de tarjeta</label>
-            <input pattern="[0-9]*" autocomplete="off" id="transitCard" type="text" value="" placeholder="12345678" onkeydown="if (event.keyCode == 13) addCard()">
+            <div class="inputfield">
+              <input aria-label="Número de Tarjeta" required pattern="[0-9]*" autocomplete="off" id="transitCard" type="text" value="" placeholder="12345678" onkeydown="if (event.keyCode == 13) addCard()">
+            </div>
+
             <button class="big" ontouchend="addCard()">Agregar</button>
           </div>
-          <div class="menu" id="myCards">
+          <div class="menu" aria-hidden="true" id="myCards">
             <div class="header">
               <h3>Mis Tarjetas</h3>
-              <button class="close" ontouchend="closeMenu('myCards');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M350,85 C344.516746,85 340,80.4854137 340,75.0047824 C340,69.5241511 344.507177,65 349.990431,65 C355.473684,65 360,69.5241511 360,75.0047824 C360,80.4854137 355.483254,85 350,85 Z M346.76555,79.2228599 C347.062201,79.2228599 347.301435,79.1272119 347.492823,78.926351 L349.990431,76.4299378 L352.507177,78.926351 C352.688995,79.1176471 352.937799,79.2228599 353.23445,79.2228599 C353.789474,79.2228599 354.229665,78.782879 354.229665,78.2185557 C354.229665,77.9507413 354.124402,77.7116212 353.933014,77.5203252 L351.416268,75.0143472 L353.933014,72.4796748 C354.143541,72.2883788 354.239234,72.0588235 354.239234,71.7910091 C354.239234,71.2266858 353.799043,70.7962697 353.23445,70.7962697 C352.956938,70.7962697 352.727273,70.8823529 352.526316,71.0927786 L349.990431,73.5987566 L347.473684,71.0927786 C347.291866,70.9014825 347.062201,70.8058345 346.76555,70.8058345 C346.200957,70.8058345 345.770335,71.2362506 345.770335,71.8005739 C345.770335,72.0588235 345.875598,72.3075084 346.066986,72.4892396 L348.583732,75.0143472 L346.066986,77.52989 C345.875598,77.7116212 345.770335,77.9603061 345.770335,78.2185557 C345.770335,78.782879 346.200957,79.2228599 346.76555,79.2228599 Z" transform="translate(-340 -65)"/></svg></span></button>
+              <button class="close" aria-label="Cerrar" ontouchend="closeMenu('myCards');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M350,85 C344.516746,85 340,80.4854137 340,75.0047824 C340,69.5241511 344.507177,65 349.990431,65 C355.473684,65 360,69.5241511 360,75.0047824 C360,80.4854137 355.483254,85 350,85 Z M346.76555,79.2228599 C347.062201,79.2228599 347.301435,79.1272119 347.492823,78.926351 L349.990431,76.4299378 L352.507177,78.926351 C352.688995,79.1176471 352.937799,79.2228599 353.23445,79.2228599 C353.789474,79.2228599 354.229665,78.782879 354.229665,78.2185557 C354.229665,77.9507413 354.124402,77.7116212 353.933014,77.5203252 L351.416268,75.0143472 L353.933014,72.4796748 C354.143541,72.2883788 354.239234,72.0588235 354.239234,71.7910091 C354.239234,71.2266858 353.799043,70.7962697 353.23445,70.7962697 C352.956938,70.7962697 352.727273,70.8823529 352.526316,71.0927786 L349.990431,73.5987566 L347.473684,71.0927786 C347.291866,70.9014825 347.062201,70.8058345 346.76555,70.8058345 C346.200957,70.8058345 345.770335,71.2362506 345.770335,71.8005739 C345.770335,72.0588235 345.875598,72.3075084 346.066986,72.4892396 L348.583732,75.0143472 L346.066986,77.52989 C345.875598,77.7116212 345.770335,77.9603061 345.770335,78.2185557 C345.770335,78.782879 346.200957,79.2228599 346.76555,79.2228599 Z" transform="translate(-340 -65)"/></svg></span></button>
             </div>
             <div class="saved-cards">
             </div>
@@ -681,10 +691,10 @@
               <p>Saldo Red no recopila nada de ti, y utiliza el almacenamiento local de tu dispositivo para recordar tus tarjetas.</p>
             </div>
           </div>
-          <div class="menu webview" id="addMoney">
+          <div class="menu webview" aria-hidden="true" id="addMoney">
             <div class="header">
               <h3>Carga Directa</h3>
-              <button class="close" ontouchend="closeMenu('addMoney');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M350,85 C344.516746,85 340,80.4854137 340,75.0047824 C340,69.5241511 344.507177,65 349.990431,65 C355.473684,65 360,69.5241511 360,75.0047824 C360,80.4854137 355.483254,85 350,85 Z M346.76555,79.2228599 C347.062201,79.2228599 347.301435,79.1272119 347.492823,78.926351 L349.990431,76.4299378 L352.507177,78.926351 C352.688995,79.1176471 352.937799,79.2228599 353.23445,79.2228599 C353.789474,79.2228599 354.229665,78.782879 354.229665,78.2185557 C354.229665,77.9507413 354.124402,77.7116212 353.933014,77.5203252 L351.416268,75.0143472 L353.933014,72.4796748 C354.143541,72.2883788 354.239234,72.0588235 354.239234,71.7910091 C354.239234,71.2266858 353.799043,70.7962697 353.23445,70.7962697 C352.956938,70.7962697 352.727273,70.8823529 352.526316,71.0927786 L349.990431,73.5987566 L347.473684,71.0927786 C347.291866,70.9014825 347.062201,70.8058345 346.76555,70.8058345 C346.200957,70.8058345 345.770335,71.2362506 345.770335,71.8005739 C345.770335,72.0588235 345.875598,72.3075084 346.066986,72.4892396 L348.583732,75.0143472 L346.066986,77.52989 C345.875598,77.7116212 345.770335,77.9603061 345.770335,78.2185557 C345.770335,78.782879 346.200957,79.2228599 346.76555,79.2228599 Z" transform="translate(-340 -65)"/></svg></span></button>
+              <button class="close" aria-label="Cerrar" ontouchend="closeMenu('addMoney');"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M350,85 C344.516746,85 340,80.4854137 340,75.0047824 C340,69.5241511 344.507177,65 349.990431,65 C355.473684,65 360,69.5241511 360,75.0047824 C360,80.4854137 355.483254,85 350,85 Z M346.76555,79.2228599 C347.062201,79.2228599 347.301435,79.1272119 347.492823,78.926351 L349.990431,76.4299378 L352.507177,78.926351 C352.688995,79.1176471 352.937799,79.2228599 353.23445,79.2228599 C353.789474,79.2228599 354.229665,78.782879 354.229665,78.2185557 C354.229665,77.9507413 354.124402,77.7116212 353.933014,77.5203252 L351.416268,75.0143472 L353.933014,72.4796748 C354.143541,72.2883788 354.239234,72.0588235 354.239234,71.7910091 C354.239234,71.2266858 353.799043,70.7962697 353.23445,70.7962697 C352.956938,70.7962697 352.727273,70.8823529 352.526316,71.0927786 L349.990431,73.5987566 L347.473684,71.0927786 C347.291866,70.9014825 347.062201,70.8058345 346.76555,70.8058345 C346.200957,70.8058345 345.770335,71.2362506 345.770335,71.8005739 C345.770335,72.0588235 345.875598,72.3075084 346.066986,72.4892396 L348.583732,75.0143472 L346.066986,77.52989 C345.875598,77.7116212 345.770335,77.9603061 345.770335,78.2185557 C345.770335,78.782879 346.200957,79.2228599 346.76555,79.2228599 Z" transform="translate(-340 -65)"/></svg></span></button>
             </div>
             <div class="webview" id="tbk-container">
               <iframe name="tbk" id="tbk" src=""></iframe>
@@ -697,7 +707,7 @@
 
         <main class="">
 
-          <figure class="card" aria-label="Tarjeta" tabindex="0">
+          <button class="card" aria-label="Tarjeta" aria-pressed="false">
             <div class="neutral-card-overlay"></div>
             <div class="card-logo">
 
@@ -721,15 +731,15 @@
 
             </div>
             <div class="loading-animation"></div>
-          </figure>
+          </button>
 
           <div id="cardInfo">
             <section id="primary">
-              <div>
+              <div tabindex="0" aria-label="Hola amigo cómo estás cómo va la chamba.">
                 <h4 class="txt-black">Saldo</h4>
                 <h2 class="saldo" class="saldo txt-black">···</h2>
               </div>
-              <div class="trencentral-hide merval-hide biotren-hide">
+              <div class="trencentral-hide merval-hide biotren-hide" tabindex="0" aria-label="Qué te importa.">
                 <h4 class="txt-black">Viajes Restantes</h4>
                 <h2 class="leftTrips" class="saldo txt-black">···</h2>
               </div>
@@ -755,11 +765,11 @@
             <div class="trencentral-hide merval-hide biotren-hide">
               <h3 class="txt-black" style="margin: 20px 0 -10px 0;">Carga Directa</h3>
               <section class="buttons">
-                <button class="secondary addMoney1000">$1.000</button>
-                <button class="secondary addMoney2000">$2.000</button>
-                <button class="secondary addMoney5000">$5.000</button>
-                <button class="secondary addMoney10000">$10.000</button>
-                <button class="secondary addMoney20000">$20.000</button>
+                <button class="secondary addMoney1000" aria-label="Cargar 1000 pesos">$1.000</button>
+                <button class="secondary addMoney2000" aria-label="Cargar 2000 pesos">$2.000</button>
+                <button class="secondary addMoney5000" aria-label="Cargar 5000 pesos">$5.000</button>
+                <button class="secondary addMoney10000" aria-label="Cargar 10000 pesos">$10.000</button>
+                <button class="secondary addMoney20000" aria-label="Cargar 20000 pesos">$20.000</button>
               </section>
             </div>
 

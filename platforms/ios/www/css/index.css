@@ -147,7 +147,7 @@ a, .a {
   display: none;
 }
 
-button, .button {
+button:not(.card), .button:not(.card) {
   -webkit-appearance:none;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
@@ -354,7 +354,12 @@ img {
   margin: 0 8px 0 0;
 }
 
+main .card {
+  display: block;
+}
+
 main .card, .small-card .card {
+  -webkit-appearance:none;
   background-color: #EBEBEB;
 
   width: 100%;
@@ -633,6 +638,19 @@ label {
   margin: 0 0 10px 0;
 }
 
+.inputfield {
+  position: relative;
+  width: 100%;
+  display: flex;
+  border-radius: 10px;
+  border: none;
+  background: #EBEBEB;
+  font-family: inherit;
+  text-align: left;
+  z-index: 50;
+  display: block;
+}
+
 input[type=text] {
   z-index: 5;
   width: 100%;
@@ -856,6 +874,7 @@ section.info a, section.info .a {
 
   padding: 16px;
   grid-row: 1/2;
+  margin-bottom: 0;
 }
 
 .menu.webview .webview {
@@ -988,6 +1007,7 @@ body, .content-wrapper, .overlay-menus {
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+  margin-bottom: 20px;
 }
 
 .menu .header button.close {
