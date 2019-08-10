@@ -13,7 +13,7 @@
 	function getPaymentURL() {
 		$.ajax({
 			type: "GET",
-			url: "https://redbip.transituc.com/v1/bip/charge_cyc/?bip=" + tarjeta + "&amount=" + monto + "&email=" + email + "&token=" + token,
+			url: "https://redbip.transituc.com/v1/bip/charge_cyc/?bip=" + tarjeta + "&amount=" + monto + "&email=" + encodeURIComponent(email) + "&token=" + token,
 			success: function(response) {
 				window.location.href = response.payment_url;
 			}
