@@ -185,7 +185,6 @@ button:not(.card), .button:not(.card) {
   text-decoration: none;
   border: none;
   outline: none;
-  will-change: transform;
 
   -webkit-transition: all 0.2s ease;
   -moz-transition: all 0.2s ease;

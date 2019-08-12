@@ -5,6 +5,42 @@
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, viewport-fit=cover" />
 
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script>
+
+	token = undefined;
+
+	function getPaymentURL() {
+		$.ajax({
+			type: "GET",
+			url: "https://redbip.transituc.com/v1/bip/charge_cyc/?bip=" + tarjeta + "&amount=" + monto + "&email=" + encodeURIComponent(email) + "&token=" + token,
+			success: function(response) {
+				window.location.href = response.payment_url;
+			}
+		});
+	}
+
+	$(document).ready(function() {
+
+		urlParameters = new URL(window.location.href);
+		tarjeta = urlParameters.searchParams.get("tarjeta");
+		email = urlParameters.searchParams.get("email");
+		monto = urlParameters.searchParams.get("monto");
+
+		$.ajax({
+			type: "POST",
+			url: "https://redbip.transituc.com/v1/devices/register",
+			data: { application: "Redbip", phone_id: "9774d56d682e549c", os: "Android" },
+			success: function(response) {
+				token = response.security;
+				getPaymentURL();
+			}
+		});
+
+	});
+
+	</script>
+
 	<style>
 	body, html {
 		margin: 0;

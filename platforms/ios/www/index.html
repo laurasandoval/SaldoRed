@@ -718,7 +718,7 @@
     <div class="statusbar"></div>
 
     <div class="notifications">
-      <div class="notification"><h4 aria-live="polite" role="status"></h4></div>
+      <div class="notification"><h4 aria-live="polite" role="alert"></h4></div>
     </div>
 
     <div class="content-wrapper">
@@ -888,13 +888,13 @@
 
         <div id="cardInfo">
           <section id="primary">
-            <div>
+            <div aria-live="polite" role="status">
               <h4 aria-hidden="true" class="txt-black">Saldo</h4>
-              <h2 class="saldo" class="saldo txt-black" aria-label="Saldo: Cargando">···</h2>
+              <h2 class="saldo txt-black" aria-label="Saldo: Cargando">···</h2>
             </div>
-            <div class="trencentral-hide merval-hide biotren-hide">
+            <div class="trencentral-hide merval-hide biotren-hide" aria-live="polite" role="status">
               <h4 aria-hidden="true" class="txt-black">Viajes Restantes</h4>
-              <h2 class="leftTrips" class="saldo txt-black" aria-label="Viajes Restantes: Cargando">···</h2>
+              <h2 class="leftTrips txt-black" aria-label="Viajes Restantes: Cargando">···</h2>
             </div>
           </section>
           <section class="buttons">
