@@ -111,7 +111,7 @@
     data['lastCard'][0].saldo = lastCardSaldo;
     data['lastCard'][0].leftTrips = lastCardLeftTrips;
     localStorage.setItem('data', JSON.stringify(data));
-    $("html, body, .content-wrapper").animate({ scrollTop: 0 }, 200);
+    $(".content-wrapper").animate({ scrollTop: 0 }, 300);
     getTarifa();
     checkEmail();
     setTimeout(function(){
@@ -547,6 +547,16 @@
     }, 400);
   }
 
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+    // StatusBar.styleDefault();
+  }
+
+  window.addEventListener('statusTap', function() {
+    //scroll-up or do whatever you want
+    $(".content-wrapper").animate({ scrollTop: 0 }, 300);
+  });
+
   $(document).ready(function() {
 
     $(".menu.fullscreen").each(function() {
@@ -554,16 +564,6 @@
     });
 
     var touchmoved;
-    $(".statusbar").on("touchend", function(e){
-      if(touchmoved != true){
-        alert("holi");
-      }
-    }).on("touchmove", function(e){
-      touchmoved = true;
-    }).on("touchstart", function(){
-      touchmoved = false;
-    });
-
     $("button.card").on("touchend", function(e){
       if(touchmoved != true){
         openMenu("myCards");
@@ -839,7 +839,7 @@
             </div>
 
             <div class="inputfield">
-              <input aria-label="Correo electrónico" required autocomplete id="email" type="text" value="" placeholder="francisca@ejemplo.com" onkeydown="if (event.keyCode == 13) setEmail()">
+              <input aria-label="Correo electrónico" required autocomplete="email" id="email" type="text" value="" placeholder="francisca@ejemplo.com" onkeydown="if (event.keyCode == 13) setEmail()">
             </div>
           </div>
         </div>

@@ -24,12 +24,21 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "cordova.plugins.clipboard"
       ]
+    },
+    {
+      "id": "cordova-plugin-statusbar.statusbar",
+      "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+      "pluginId": "cordova-plugin-statusbar",
+      "clobbers": [
+        "window.StatusBar"
+      ]
     }
   ];
   module.exports.metadata = {
     "cordova-plugin-whitelist": "1.3.3",
     "cordova-plugin-taptic-engine": "2.1.0",
     "cordova-plugin-inappbrowser": "3.0.0",
-    "cordova-clipboard": "1.3.0"
+    "cordova-clipboard": "1.3.0",
+    "cordova-plugin-statusbar": "2.4.3"
   };
 });
