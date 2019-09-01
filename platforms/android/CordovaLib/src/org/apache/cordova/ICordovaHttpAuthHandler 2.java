@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -18,17 +16,23 @@
        specific language governing permissions and limitations
        under the License.
 */
+package org.apache.cordova;
 
-var emulators = require('./emulator');
-
-// Usage support for when args are given
-require('./check_reqs').check_android().then(function () {
-    emulators.list_started().then(function (emulator_list) {
-        emulator_list && emulator_list.forEach(function (emu) {
-            console.log(emu);
-        });
-    }, function (err) {
-        console.error('ERROR: ' + err);
-        process.exit(2);
-    });
-});
+/**
+ * Specifies interface for HTTP auth handler object which is used to handle auth requests and
+ * specifying user credentials.
+ */
+ public interface ICordovaHttpAuthHandler {
+    /**
+     * Instructs the WebView to cancel the authentication request.
+     */
+    public void cancel ();
+    
+    /**
+     * Instructs the WebView to proceed with the authentication with the given credentials.
+     * 
+     * @param username The user name
+     * @param password The password
+     */
+    public void proceed (String username, String password);
+}

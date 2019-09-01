@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -18,25 +16,36 @@
        specific language governing permissions and limitations
        under the License.
 */
+package org.apache.cordova;
 
-var device = require('./device');
-var args = process.argv;
+import android.webkit.HttpAuthHandler;
 
-if (args.length > 2) {
-    var install_target;
-    if (args[2].substring(0, 9) === '--target=') {
-        install_target = args[2].substring(9, args[2].length);
-        device.install(install_target).catch(function (err) {
-            console.error('ERROR: ' + err);
-            process.exit(2);
-        });
-    } else {
-        console.error('ERROR : argument \'' + args[2] + '\' not recognized.');
-        process.exit(2);
+/**
+ * Specifies interface for HTTP auth handler object which is used to handle auth requests and
+ * specifying user credentials.
+ */
+public class CordovaHttpAuthHandler implements ICordovaHttpAuthHandler {
+
+    private final HttpAuthHandler handler;
+
+    public CordovaHttpAuthHandler(HttpAuthHandler handler) {
+        this.handler = handler;
     }
-} else {
-    device.install().catch(function (err) {
-        console.error('ERROR: ' + err);
-        process.exit(2);
-    });
+    
+    /**
+     * Instructs the WebView to cancel the authentication request.
+     */
+    public void cancel () {
+        this.handler.cancel();
+    }
+    
+    /**
+     * Instructs the WebView to proceed with the authentication with the given credentials.
+     * 
+     * @param username
+     * @param password
+     */
+    public void proceed (String username, String password) {
+        this.handler.proceed(username, password);
+    }
 }

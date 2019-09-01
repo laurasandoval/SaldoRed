@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -19,20 +17,17 @@
        under the License.
 */
 
-var emulator = require('./emulator');
-var args = process.argv;
+package org.apache.cordova;
 
-var install_target;
-if (args.length > 2) {
-    if (args[2].substring(0, 9) === '--target=') {
-        install_target = args[2].substring(9, args[2].length);
-    } else {
-        console.error('ERROR : argument \'' + args[2] + '\' not recognized.');
-        process.exit(2);
-    }
-}
+public interface ICordovaCookieManager {
 
-emulator.install(install_target).catch(function (err) {
-    console.error('ERROR: ' + err);
-    process.exit(2);
-});
+    public void setCookiesEnabled(boolean accept);
+
+    public void setCookie(final String url, final String value);
+
+    public String getCookie(final String url);
+
+    public void clearCookies();
+
+    public void flush();
+};
