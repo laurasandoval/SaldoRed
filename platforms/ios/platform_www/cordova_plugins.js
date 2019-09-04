@@ -9,14 +9,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-3dtouch.ThreeDeeTouch",
-      "file": "plugins/cordova-plugin-3dtouch/www/ThreeDeeTouch.js",
-      "pluginId": "cordova-plugin-3dtouch",
-      "clobbers": [
-        "ThreeDeeTouch"
-      ]
-    },
-    {
       "id": "cordova-plugin-inappbrowser.inappbrowser",
       "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
       "pluginId": "cordova-plugin-inappbrowser",

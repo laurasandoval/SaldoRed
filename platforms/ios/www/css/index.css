@@ -963,17 +963,21 @@ section.info a, section.info .a {
 }
 
 @media (max-width: 350px) {
-  .menu.feature img {
-    width: 80px;
+  .menu.fullscreen .content {
+    padding-top: 20px!important;
   }
 
-  .menu.feature p {
-    font-size: 15px;
+  .menu.feature img {
+    width: 120px;
   }
 
   .menu.feature .feature-summary h2 {
-    font-size: 20px;
-    margin: 0 auto 6px auto;
+    font-size: 28px;
+    margin: 0 auto 4px auto;
+  }
+
+  .menu.feature .feature-summary p {
+    font-size: 15px;
   }
 
   .menu.feature .inputfield {
