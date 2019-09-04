@@ -1,0 +1,56 @@
+{
+  "_from": "cordova-plugin-ios-faceid",
+  "_id": "cordova-plugin-ios-faceid@1.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-AmA0ltzyAlwe3/mGvV1XTAig/WyIiKyJxr83+H4L/6MaXEdz4cmQDDA3UJWvjyGLy7rWDMaw7vaiY3DNozwxMQ==",
+  "_location": "/cordova-plugin-ios-faceid",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-ios-faceid",
+    "name": "cordova-plugin-ios-faceid",
+    "escapedName": "cordova-plugin-ios-faceid",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-ios-faceid/-/cordova-plugin-ios-faceid-1.0.2.tgz",
+  "_shasum": "d26467a3b6f0a9da498f7588910c71dec68df6b2",
+  "_spec": "cordova-plugin-ios-faceid",
+  "_where": "/Users/eljoseurena/Desktop/Proyectos/Saldo Red/01-Code",
+  "author": {
+    "name": "Cheney Hu"
+  },
+  "bugs": {
+    "url": "https://github.com/Cheney925/cordova-plugin-ios-faceid/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-ios-faceid",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "deprecated": false,
+  "description": "A cordova plugin for iOS face and touch identification",
+  "homepage": "https://github.com/Cheney925/cordova-plugin-ios-faceid#readme",
+  "keywords": [
+    "cordova",
+    "plugin",
+    "ios",
+    "faceid",
+    "touchid"
+  ],
+  "license": "ISC",
+  "name": "cordova-plugin-ios-faceid",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Cheney925/cordova-plugin-ios-faceid.git"
+  },
+  "version": "1.0.2"
+}
