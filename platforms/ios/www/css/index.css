@@ -228,7 +228,6 @@ button.secondary.red, .button.secondary.red {
 }
 
 /* Billetes */
-
 button.addMoney1000, .button.addMoney1000,
 button.addMoney2000, .button.addMoney2000,
 button.addMoney5000, .button.addMoney5000,
@@ -549,9 +548,7 @@ div#main .card .loading-animation {
   animation-timing-function: linear!important;
 
   -webkit-transition: all 0.4s ease;
-  -moz-transition: all 0.4s ease;
-  -ms-transition: all 0.4s ease;
-  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
 }
 
 div#main.loading .card .loading-animation {
@@ -866,6 +863,7 @@ section.info.feature-banner .full-height-icon svg {
   from {opacity: 1.0;}
   to {opacity: 0.0;}
 }
+
 .blink{
   text-decoration: blink;
   -webkit-animation-name: blinker;
