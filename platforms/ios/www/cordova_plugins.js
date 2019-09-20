@@ -32,6 +32,14 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "window.StatusBar"
       ]
+    },
+    {
+      "id": "cordova-plugin-dialogs.notification",
+      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+      "pluginId": "cordova-plugin-dialogs",
+      "merges": [
+        "navigator.notification"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -39,6 +47,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-taptic-engine": "2.1.0",
     "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-clipboard": "1.3.0",
-    "cordova-plugin-statusbar": "2.4.3"
+    "cordova-plugin-statusbar": "2.4.3",
+    "cordova-plugin-dialogs": "2.0.2"
   };
 });
