@@ -1,3 +1,4 @@
 {
-    "AudioToolbox.framework": 2
+    "AudioToolbox.framework": 2,
+    "CoreLocation.framework": 1
 }

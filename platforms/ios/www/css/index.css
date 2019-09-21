@@ -675,7 +675,6 @@ and (max-device-height: 568px) {
 section, section.info {
   margin: var(--saldored-padding-big) 0 0 0;
   transform: translate3d(0,0,0);
-  zoom: 1.02;
 }
 
 .modal .content section:nth-child(1) {

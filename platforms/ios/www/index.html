@@ -26,11 +26,47 @@
       savedCards: [], lastCard: [{type: "undefined", num: "undefined", name: "undefined", saldo: "···", leftTrips: "···", status: "ok"}]
     };
 
+    internalData = {
+      availableCards:[
+      {
+        full_name: "Tarjeta Bip",
+        short_name: "Bip",
+        company: "Metro de Santiago",
+        state: "Región Metropolitana de Santiago"
+      },{
+        full_name: "Pase Escolar",
+        short_name: "Pase",
+        company: "Ministerio de Educación",
+        state: "Región Metropolitana de Santiago"
+      },{
+        full_name: "Tarjeta Adulto Mayor",
+        short_name: "TAM",
+        company: "Metro de Santiago",
+        state: "Región Metropolitana de Santiago"
+      },{
+        full_name: "TrenCentral",
+        short_name: "TrenCentral",
+        company: "TrenCentral",
+        state: "Región del Libertador General Bernardo O'Higgins"
+      },{
+        full_name: "MerVal",
+        short_name: "MerVal",
+        company: "Metro de Valparaíso",
+        state: "Región de Valparaíso"
+      },{
+        full_name: "BioTren",
+        short_name: "BioTren",
+        company: "Ferrocarriles del Sur",
+        state: "Región del Biobío"
+      }]
+    };
+
     email = "undefined";
 
     spinner = '<svg class="spinner" viewBox="0 0 64 64"><g stroke-width="4" stroke-linecap="round"><line y1="12" y2="20" transform="translate(32,32) rotate(180)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(210)"><animate attributeName="stroke-opacity" dur="750ms" values="0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(240)"><animate attributeName="stroke-opacity" dur="750ms" values=".1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(270)"><animate attributeName="stroke-opacity" dur="750ms" values=".15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(300)"><animate attributeName="stroke-opacity" dur="750ms" values=".25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(330)"><animate attributeName="stroke-opacity" dur="750ms" values=".35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(0)"><animate attributeName="stroke-opacity" dur="750ms" values=".45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(30)"><animate attributeName="stroke-opacity" dur="750ms" values=".55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(60)"><animate attributeName="stroke-opacity" dur="750ms" values=".65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(90)"><animate attributeName="stroke-opacity" dur="750ms" values=".7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(120)"><animate attributeName="stroke-opacity" dur="750ms" values=".85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(150)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line></g></svg>'
 
     TESelection = "end";
+
     function openModal(modal) {
       $("#app, .modal").animate({ scrollTop: 0 }, 300);
       StatusBar.styleBlackTranslucent();
@@ -64,6 +100,7 @@
       $("#transitCard, #email").val("");
       $(".modal .content").animate({ scrollTop: 0 }, 300);
       $(".futureSaldo").html(spinner);
+      selectThisCard($("#availableCards .card-selector").first().attr("data-type"));
       if (modal == null) {
         $(".modal").attr("aria-hidden","true").attr("data-open","false").attr("data-focused","false");
         $("#app").attr("aria-hidden","false");
@@ -276,6 +313,89 @@
       });
     }
 
+    function getAvailableCards() {
+
+      var onSuccess = function(position) {
+
+        availableCardsUpdateCounter = 0;
+        $.ajax({
+          "async": true,
+          "crossDomain": true,
+          // API
+          "url": "https://nominatim.openstreetmap.org/reverse?lat=" + position.coords.latitude + "&lon=" + position.coords.longitude + "&format=json&accept-language=es"
+        }).done(function (openstreetmap) {
+          $("#availableCards").html("");
+
+          console.log(openstreetmap.address.state);
+          console.log(position.coords.latitude);
+          console.log(position.coords.longitude);
+
+          internalData.availableCards.forEach(function(availableCard) {
+            if (availableCard.state == openstreetmap.address.state) {
+              $("#availableCards").append(
+              '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
+              );
+            }
+
+            availableCardsUpdateCounter++;
+            if (availableCardsUpdateCounter == internalData.availableCards.length) {
+              // Terminaron de revisarse todas las tarjetas.
+              internalData.availableCards.forEach(function(availableCard) {
+                if (availableCard.state != openstreetmap.address.state) {
+                  $("#availableCards").append(
+                  '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
+                  );
+                }
+              });
+              selectThisCard($("#availableCards .card-selector").first().attr("data-type"));
+
+              $("#addCard .card-selector").on("touchend", function(e) {
+                if(touchmoved != true){
+                  selectThisCard($(this).attr("data-type"));
+                }
+              }).on("touchmove", function(e) {
+                touchmoved = true;
+              }).on("touchstart", function() {
+                touchmoved = false;
+              });
+            }
+          });
+        });
+
+        // alert('Latitude: '          + position.coords.latitude          + '\n' +
+        // 'Longitude: '         + position.coords.longitude         + '\n' +
+        // 'Altitude: '          + position.coords.altitude          + '\n' +
+        // 'Accuracy: '          + position.coords.accuracy          + '\n' +
+        // 'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+        // 'Heading: '           + position.coords.heading           + '\n' +
+        // 'Speed: '             + position.coords.speed             + '\n' +
+        // 'Timestamp: '         + position.timestamp                + '\n');
+      };
+
+      function onError(error) {
+        $("#availableCards").html("");
+        internalData.availableCards.forEach(function(availableCard) {
+          $("#availableCards").append(
+          '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
+          );
+        });
+        selectThisCard($("#availableCards .card-selector").first().attr("data-type"));
+
+        $("#addCard .card-selector").on("touchend", function(e) {
+          if(touchmoved != true){
+            selectThisCard($(this).attr("data-type"));
+          }
+        }).on("touchmove", function(e) {
+          touchmoved = true;
+        }).on("touchstart", function() {
+          touchmoved = false;
+        });
+      }
+
+      // Pedimos la localización para saber qué tarjetas priorizar
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+
     function cardLoading(evt) {
       if (evt == "start") {
         $("#main-info figcaption").html("Cargando");
@@ -322,7 +442,7 @@
           setCurrentCard(newCardType, newCardNum);
           getSaldo();
           // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
-          selectThisCard('Bip');
+          // selectThisCard('Bip');
 
         } else {
           $("#transitCard").removeClass("shake");
@@ -350,7 +470,7 @@
         setCurrentCard(type, num);
         getSaldo();
         // Para que al volver a agregar una tarjeta no quede marcada la última que se agregó.
-        selectThisCard('Bip');
+        // selectThisCard('Bip');
       }
     }
 
@@ -385,7 +505,7 @@
       // getAccuracy();
 
       // PENDIENTE: Cambiar APIs por nueva api.saldo.red/…
-      ctr = 0;
+      saldoUpdateCounter = 0;
       data.savedCards.forEach(function(element, index, array) {
         var currentCard = element.type;
         if (currentCard == "Bip") {
@@ -419,8 +539,8 @@
           var APISaldo = '$' + response.saldo;
           var APISaldoWithDots = APISaldo.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
-          ctr++;
-          if (ctr === array.length) {
+          saldoUpdateCounter++;
+          if (saldoUpdateCounter === array.length) {
             // Terminaron de cargar todos los saldos.
           }
 
@@ -460,9 +580,11 @@
               $("#main-info .saldo").html(element.saldo);
               $("#main-info .leftTrips").html(element.leftTrips);
               cardLoading('stop');
-              TapticEngine.notification({
-                type: "success" // success | warning | error
-              });
+              if ($("#app").attr("aria-hidden") == "false") {
+                TapticEngine.notification({
+                  type: "success" // success | warning | error
+                });
+              }
               data['lastCard'][0].saldo = element.saldo;
               data['lastCard'][0].leftTrips = element.leftTrips;
 
@@ -501,8 +623,8 @@
         }, 800);
 
         setTimeout(function() {
-  				showNotification("Recuerda validar tu carga en un tótem o InfoBip", 5000);
-  			}, 1000);
+          showNotification("Recuerda validar tu carga en un tótem o InfoBip", 5000);
+        }, 1000);
       }
     }
 
@@ -642,6 +764,7 @@
     document.addEventListener("deviceready", onDeviceReady, false);
     function onDeviceReady() {
       $("body").addClass("loaded");
+      getAvailableCards();
     }
 
     window.addEventListener('statusTap', function() {
@@ -650,7 +773,7 @@
 
     $(document).ready(function() {
 
-      selectThisCard('Bip');
+      // selectThisCard('Bip');
 
       if (localStorage.getItem('data') == null) {
 
@@ -764,16 +887,6 @@
       $("#myCards").on("touchend", ".card-selector", function(e) {
         if(touchmoved != true){
           setCurrentCard($(this).attr("data-type"),$(this).attr("data-num"));
-        }
-      }).on("touchmove", function(e) {
-        touchmoved = true;
-      }).on("touchstart", function() {
-        touchmoved = false;
-      });
-
-      $("#addCard .card-selector").on("touchend", function(e) {
-        if(touchmoved != true){
-          selectThisCard($(this).attr("data-type"));
         }
       }).on("touchmove", function(e) {
         touchmoved = true;
@@ -1042,49 +1155,7 @@
     </div>
     <div class="content">
 
-      <section>
-        <button aria-pressed="true" data-type="Bip" class="card-selector selected" aria-label="Tarjeta Bip. Emitida por Metro de Santiago">
-          <img class="card-thumbnail" aria-hidden="true" src="card-bip.png" alt="Tarjeta Bip">
-          <div class="card-info">
-            <h4 aria-hidden="true">Tarjeta Bip</h4>
-            <p aria-hidden="true">Metro de Santiago</p>
-          </div>
-        </button>
-        <button aria-pressed="false" data-type="Pase" class="card-selector" aria-label="Tarjeta Pase. Emitida por Ministerio de Educación">
-          <img class="card-thumbnail" aria-hidden="true" src="card-pase.png" alt="Tarjeta Pase">
-          <div class="card-info">
-            <h4 aria-hidden="true">Pase Escolar</h4>
-            <p aria-hidden="true">Ministerio de Educación</p>
-          </div>
-        </button>
-        <button aria-pressed="false" data-type="TAM" class="card-selector" aria-label="Tarjeta TAM (Tarjeta Adulto Mayor). Emitida por Metro de Santiago">
-          <img class="card-thumbnail" aria-hidden="true" src="card-tam.png" alt="Tarjeta TAM">
-          <div class="card-info">
-            <h4 aria-hidden="true">TAM</h4>
-            <p aria-hidden="true">Metro de Santiago</p>
-          </div>
-        </button>
-        <button aria-pressed="false" data-type="TrenCentral" class="card-selector" aria-label="Tarjeta TrenCentral. Emitida por TrenCentral">
-          <img class="card-thumbnail" aria-hidden="true" src="card-trencentral.png" alt="Tarjeta TrenCentral">
-          <div class="card-info">
-            <h4 aria-hidden="true">TrenCentral</h4>
-            <p aria-hidden="true">TrenCentral</p>
-          </div>
-        </button>
-        <button aria-pressed="false" data-type="MerVal" class="card-selector" aria-label="Tarjeta MerVal. Emitida por Metro de Valparaíso">
-          <img class="card-thumbnail" aria-hidden="true" src="card-merval.png" alt="Tarjeta MerVal">
-          <div class="card-info">
-            <h4 aria-hidden="true">MerVal</h4>
-            <p aria-hidden="true">Metro de Valparaíso</p>
-          </div>
-        </button>
-        <button aria-pressed="false" data-type="BioTren" class="card-selector" aria-label="Tarjeta BioTren. Emitida por Ferrocarriles del Sur">
-          <img class="card-thumbnail" aria-hidden="true" src="card-biotren.png" alt="Tarjeta BioTren">
-          <div class="card-info">
-            <h4 aria-hidden="true">BioTren</h4>
-            <p aria-hidden="true">Ferrocarriles del Sur</p>
-          </div>
-        </button>
+      <section id="availableCards">
       </section>
 
       <section class="inputfield">
