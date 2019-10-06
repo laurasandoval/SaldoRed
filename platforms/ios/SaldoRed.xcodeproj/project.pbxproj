@@ -5,6 +5,7 @@
 	};
 	objectVersion = 51;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
@@ -12,18 +13,19 @@
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
-		39F9F393930A412082D26E99 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */; };
 		479EA1A622A4F1770072DFF4 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 479EA1A522A4F1770072DFF4 /* Launch Screen.storyboard */; };
 		479EA1A822A4F18F0072DFF4 /* SaldoRed-Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 479EA1A722A4F18F0072DFF4 /* SaldoRed-Icon.png */; };
 		62CFE9D1A6A54CE2BD82363C /* CDVClipboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A3C632DAEC04CC696FC4A14 /* CDVClipboard.m */; };
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
 		74CA93092FC948DF8084A247 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 66526246E8C74C50A34927E4 /* CDVStatusBar.m */; };
+		9FF1A6E84A7243C18374B848 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3BDA3B84742959D357CFA /* CoreLocation.framework */; };
 		B24C86C071B94ACA811EC384 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A63099459C04C0E916F013E /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CB7F980A0EB547AD9D4E9429 /* CDVNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 59BB1B6150B14F0DA23E6661 /* CDVNotification.m */; };
+		D649F9ACA7F04185B3A74070 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95651FCC953A4FBEBA9A0CA1 /* SafariServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		E979B3965F2C42A987D68D07 /* TapticEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = FE249256CE9B45E59D996A1F /* TapticEngine.m */; };
-		F3A5A94423AD405DA93914E8 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0586563C9ED744ED87CC869A /* CDVNotification.bundle */; };
 		F029BA0FEB8347CEBFB8290F /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = D063862D0A53438BBCF35297 /* CDVLocation.m */; };
-		9FF1A6E84A7243C18374B848 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA3BDA3B84742959D357CFA /* CoreLocation.framework */; };
+		F0393BE61A7B47DABBD9D32B /* SafariViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8C81DB4512E4D2EACA14AA1 /* SafariViewController.m */; };
+		F3A5A94423AD405DA93914E8 /* CDVNotification.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 0586563C9ED744ED87CC869A /* CDVNotification.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,7 +56,6 @@
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SaldoRed/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		0586563C9ED744ED87CC869A /* CDVNotification.bundle */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.plug-in"; path = CDVNotification.bundle; sourceTree = "<group>"; };
 		0B1E5D850F734A50990BE270 /* TapticEngine.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = TapticEngine.h; path = "cordova-plugin-taptic-engine/TapticEngine.h"; sourceTree = "<group>"; };
-		0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* SaldoRed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SaldoRed.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,22 +73,24 @@
 		479EA1A522A4F1770072DFF4 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		479EA1A722A4F18F0072DFF4 /* SaldoRed-Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SaldoRed-Icon.png"; sourceTree = "<group>"; };
 		4A63099459C04C0E916F013E /* AudioToolbox.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4DFDA3D7FBCA40A5B5E684C3 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
 		59BB1B6150B14F0DA23E6661 /* CDVNotification.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVNotification.m; path = "cordova-plugin-dialogs/CDVNotification.m"; sourceTree = "<group>"; };
+		5DA3BDA3B84742959D357CFA /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		66526246E8C74C50A34927E4 /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = SaldoRed/CDVLaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* SaldoRed-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "SaldoRed-Info.plist"; path = "SaldoRed/SaldoRed-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
-		9259A83A3EA249FDAEC781F2 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; };
+		95651FCC953A4FBEBA9A0CA1 /* SafariServices.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		B83C5DD1D276449D9EFD39FC /* CDVClipboard.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVClipboard.h; path = "cordova-clipboard/CDVClipboard.h"; sourceTree = "<group>"; };
 		C3E3E2DD2FEB4BE9A463D6F1 /* CDVNotification.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVNotification.h; path = "cordova-plugin-dialogs/CDVNotification.h"; sourceTree = "<group>"; };
+		C4086F16E1EB4CA2B1BD7340 /* SafariViewController.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = SafariViewController.h; path = "cordova-plugin-safariviewcontroller/SafariViewController.h"; sourceTree = "<group>"; };
+		C8C81DB4512E4D2EACA14AA1 /* SafariViewController.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = SafariViewController.m; path = "cordova-plugin-safariviewcontroller/SafariViewController.m"; sourceTree = "<group>"; };
+		D063862D0A53438BBCF35297 /* CDVLocation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocation.m; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; };
 		E1FEF54EC3A846E68C94BC92 /* CDVStatusBar.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = SaldoRed/config.xml; sourceTree = "<group>"; };
 		FE249256CE9B45E59D996A1F /* TapticEngine.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = TapticEngine.m; path = "cordova-plugin-taptic-engine/TapticEngine.m"; sourceTree = "<group>"; };
-		D063862D0A53438BBCF35297 /* CDVLocation.m */ = {isa = PBXFileReference; name = "CDVLocation.m"; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		4DFDA3D7FBCA40A5B5E684C3 /* CDVLocation.h */ = {isa = PBXFileReference; name = "CDVLocation.h"; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
-		5DA3BDA3B84742959D357CFA /* CoreLocation.framework */ = {isa = PBXFileReference; name = "CoreLocation.framework"; path = "System/Library/Frameworks/CoreLocation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,7 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				B24C86C071B94ACA811EC384 /* AudioToolbox.framework in Frameworks */,
 				9FF1A6E84A7243C18374B848 /* CoreLocation.framework in Frameworks */,
+				D649F9ACA7F04185B3A74070 /* SafariServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +177,7 @@
 			children = (
 				4A63099459C04C0E916F013E /* AudioToolbox.framework */,
 				5DA3BDA3B84742959D357CFA /* CoreLocation.framework */,
+				95651FCC953A4FBEBA9A0CA1 /* SafariServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,8 +206,6 @@
 			children = (
 				FE249256CE9B45E59D996A1F /* TapticEngine.m */,
 				0B1E5D850F734A50990BE270 /* TapticEngine.h */,
-				0E73497CBF584AA19320EB0A /* CDVInAppBrowser.m */,
-				9259A83A3EA249FDAEC781F2 /* CDVInAppBrowser.h */,
 				2A3C632DAEC04CC696FC4A14 /* CDVClipboard.m */,
 				B83C5DD1D276449D9EFD39FC /* CDVClipboard.h */,
 				66526246E8C74C50A34927E4 /* CDVStatusBar.m */,
@@ -211,6 +214,8 @@
 				C3E3E2DD2FEB4BE9A463D6F1 /* CDVNotification.h */,
 				D063862D0A53438BBCF35297 /* CDVLocation.m */,
 				4DFDA3D7FBCA40A5B5E684C3 /* CDVLocation.h */,
+				C8C81DB4512E4D2EACA14AA1 /* SafariViewController.m */,
+				C4086F16E1EB4CA2B1BD7340 /* SafariViewController.h */,
 			);
 			name = Plugins;
 			path = SaldoRed/Plugins;
@@ -344,11 +349,11 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				E979B3965F2C42A987D68D07 /* TapticEngine.m in Sources */,
-				39F9F393930A412082D26E99 /* CDVInAppBrowser.m in Sources */,
 				62CFE9D1A6A54CE2BD82363C /* CDVClipboard.m in Sources */,
 				74CA93092FC948DF8084A247 /* CDVStatusBar.m in Sources */,
 				CB7F980A0EB547AD9D4E9429 /* CDVNotification.m in Sources */,
 				F029BA0FEB8347CEBFB8290F /* CDVLocation.m in Sources */,
+				F0393BE61A7B47DABBD9D32B /* SafariViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +379,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L3FVAEPEHR;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -404,7 +409,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = L3FVAEPEHR;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SaldoRed/SaldoRed-Prefix.pch";

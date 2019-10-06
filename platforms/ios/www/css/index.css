@@ -922,32 +922,32 @@ button.card-selector[data-status="error"] .ok-text {
 
 /* Tarjeta Bip */
 body[data-card-type="Bip"] .bip-hide {
-  display: none;
+  display: none!important;
 }
 
 /* Pase Escolar */
 body[data-card-type="Pase"] .pase-hide {
-  display: none;
+  display: none!important;
 }
 
 /* TAM */
 body[data-card-type="TAM"] .tam-hide {
-  display: none;
+  display: none!important;
 }
 
 /* Tarjeta TrenCentral */
 body[data-card-type="TrenCentral"] .trencentral-hide {
-  display: none;
+  display: none!important;
 }
 
 /* Tarjeta MerVal */
 body[data-card-type="MerVal"] .merval-hide {
-  display: none;
+  display: none!important;
 }
 
 /* Tarjeta BioTren */
 body[data-card-type="BioTren"] .biotren-hide {
-  display: none;
+  display: none!important;
 }
 
 .info {
