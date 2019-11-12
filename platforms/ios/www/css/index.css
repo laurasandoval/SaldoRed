@@ -953,8 +953,8 @@ body[data-card-type="BioTren"] .biotren-hide {
 .info {
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: auto 1fr;
-  grid-gap: 0 16px;
+  grid-template-columns: 6px 1fr;
+  grid-gap: 16px;
   border: 1px solid var(--ios-primary-fill-color);
   border-radius: 10px;
   background: var(--ios-system-grouped-background-secondary);
@@ -963,12 +963,20 @@ body[data-card-type="BioTren"] .biotren-hide {
   margin: var(--saldored-padding-small) 0 0;
 }
 
-.info svg {
+.info::before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--ios-primary-fill-color);
+}
+
+/* .info svg {
   grid-column: 1;
   width: 20px;
   height: auto;
   margin: auto;
-}
+} */
 
 .info svg {
   fill: var(--ios-system-grey-2);
@@ -990,7 +998,7 @@ body[data-error="true"] .info.error {
 }
 
 #fares {
-  grid-template-columns: auto auto 1fr auto;
+  grid-template-columns: 6px auto auto 1fr auto;
   font-weight: 400;
 }
 
@@ -1005,8 +1013,9 @@ body[data-error="true"] .info.error {
 
 #fares .blink {
   fill: var(--ios-system-grey-2);
-  grid-column: 4;
+  grid-column: 5;
   width: 6px;
+  margin: auto;
 }
 
 .info.saldoAccuracy .info-high, .info.saldoAccuracy .info-low {
