@@ -11,12 +11,12 @@
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript">
 
-    data = {
-      "savedCards": [], "lastCard": [{"type": "undefined", "num": "undefined", "name": "undefined", "saldo": "···", "leftTrips": "···", "status": "ok"}]
-    };
+  data = {
+    "savedCards": [], "lastCard": [{"type": "undefined", "num": "undefined", "name": "undefined", "saldo": "···", "leftTrips": "···", "status": "ok"}]
+  };
 
-    internalData = {
-      "availableCards":[
+  internalData = {
+    "availableCards":[
       {
         "full_name": "Tarjeta Bip",
         "short_name": "Bip",
@@ -206,24 +206,24 @@
         if ((7 * 60) <= now && now <= (8 * 60 + 59) || (18 * 60) <= now && now <= (19 * 60 + 59)) {
           // Entre 7:00 y 8:59 hrs. o 18:00 y 19:59 hrs.
           block = "Horario Punta";
-          tarifaBip = "830";
+          tarifaBip = "800";
         } else if ((6 * 60) <= now && now <= (6 * 60 + 59) || (20 * 60 + 45) <= now && now <= (23 * 60)) {
           // Entre 6:00 y 6:59 hrs. o 20:45 y 23:00 hrs.
           block = "Horario Bajo";
-          tarifaBip = "710";
+          tarifaBip = "700";
         } else if ((9 * 60) <= now && now <= (17 * 60 + 59) || (20 * 60) <= now && now <= (20 * 60 + 44)) {
           // Entre 9:00 y 17:59 hrs. o 20:00 y 20:44 hrs.
           block = "Horario Valle";
-          tarifaBip = "750";
+          tarifaBip = "720";
         } else {
           // El resto del tiempo (#LaNoche).
           block = "Nocturno";
-          tarifaBip = "710";
+          tarifaBip = "640";
         }
       } else {
         // Fin de semana
         block = "Fin de Semana";
-        tarifaBip = "750";
+        tarifaBip = "720";
       }
 
       tarifaPase = "230";
@@ -282,7 +282,7 @@
 
         data.savedCards.forEach(function(element) {
           $("#savedCards").append(
-          '<button aria-pressed="false" aria-label="Tarjeta ' + element.name + ', terminada en ' + element.num.replace(/\d(?=\d{3})/gi, "") + '. ' + element.saldo.replace(/\D/gi, "") + ' pesos." data-type="' + element.type + '" data-num="' + element.num + '" data-name="' + element.name + '" data-status="' + element.status + '" class="card-selector"><img class="card-thumbnail" aria-hidden="true" src="card-' + element.type.toLowerCase() + '.png" alt="Tarjeta ' + element.type + '"><div class="card-info"><h4>' + element.name + '</h4><p><span class="ok-text">' + element.saldo + ' | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</span><span class="error-text">Error al consultar la tarjeta.</span></p></div></button>'
+            '<button aria-pressed="false" aria-label="Tarjeta ' + element.name + ', terminada en ' + element.num.replace(/\d(?=\d{3})/gi, "") + '. ' + element.saldo.replace(/\D/gi, "") + ' pesos." data-type="' + element.type + '" data-num="' + element.num + '" data-name="' + element.name + '" data-status="' + element.status + '" class="card-selector"><img class="card-thumbnail" aria-hidden="true" src="card-' + element.type.toLowerCase() + '.png" alt="Tarjeta ' + element.type + '"><div class="card-info"><h4>' + element.name + '</h4><p><span class="ok-text">' + element.saldo + ' | ' + element.num.replace(/\d(?=\d{3})/g, "•") + '</span><span class="error-text">Error al consultar la tarjeta.</span></p></div></button>'
           );
         });
       }
@@ -321,7 +321,7 @@
           internalData.availableCards.forEach(function(availableCard) {
             if (availableCard.state == openstreetmap.address.state) {
               $("#availableCards").append(
-              '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
+                '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
               );
             }
 
@@ -331,7 +331,7 @@
               internalData.availableCards.forEach(function(availableCard) {
                 if (availableCard.state != openstreetmap.address.state) {
                   $("#availableCards").append(
-                  '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
+                    '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
                   );
                 }
               });
@@ -358,7 +358,7 @@
         $("#availableCards").html("");
         internalData.availableCards.forEach(function(availableCard) {
           $("#availableCards").append(
-          '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
+            '<button aria-pressed="false" data-type="' + availableCard.short_name + '" class="card-selector" aria-label="' + availableCard.full_name + '. Emitida por ' + availableCard.company + '"><img class="card-thumbnail" aria-hidden="true" src="card-' + availableCard.short_name.toLowerCase() + '.png" alt="' + availableCard.full_name + '"><div class="card-info"><h4 aria-hidden="true">' + availableCard.full_name + '</h4><p aria-hidden="true">' + availableCard.company + '</p></div></button>'
           );
         });
         selectThisCard($("#availableCards .card-selector").first().attr("data-type"));
@@ -484,6 +484,7 @@
 
       cardLoading("start");
       getTarifa();
+      getStatus();
       // getAccuracy();
 
       // PENDIENTE: Cambiar APIs por nueva api.saldo.red/…
@@ -700,10 +701,15 @@
     function showNotification(notificationText, notificationTime) {
       $("#notification-message h4").html(notificationText);
       $("#notifications").addClass("show");
+
       setTimeout(function() {
-        $("#notifications").removeClass("show");
-        $("#notification-message h4").html("");
+        dismissNotification();
       }, notificationTime);
+    }
+
+    function dismissNotification() {
+      $("#notifications").removeClass("show");
+      $("#notification-message h4").html("");
     }
 
     function copyCardNum() {
@@ -716,19 +722,19 @@
     function renameThisCard() {
       if ($("body").attr("data-card-type") == $("body").attr("data-card-name")) {
         navigator.notification.prompt(
-        $("body").attr("data-card-type") + ' | ' + $("body").attr("data-card-num").replace(/\d(?=\d{3})/g, "•"),  // message
-        saveCardName,                  // callback to invoke
-        'Renombrar Tarjeta',            // title
-        ['Cancelar','Guardar'],
-        ''
+          $("body").attr("data-card-type") + ' | ' + $("body").attr("data-card-num").replace(/\d(?=\d{3})/g, "•"),  // message
+          saveCardName,                  // callback to invoke
+          'Renombrar Tarjeta',            // title
+          ['Cancelar','Guardar'],
+          ''
         );
       } else {
         navigator.notification.prompt(
-        $("body").attr("data-card-type") + ' | ' + $("body").attr("data-card-num").replace(/\d(?=\d{3})/g, "•"),  // message
-        saveCardName,                  // callback to invoke
-        'Renombrar Tarjeta',            // title
-        ['Cancelar','Guardar'],
-        $("body").attr("data-card-name")
+          $("body").attr("data-card-type") + ' | ' + $("body").attr("data-card-num").replace(/\d(?=\d{3})/g, "•"),  // message
+          saveCardName,                  // callback to invoke
+          'Renombrar Tarjeta',            // title
+          ['Cancelar','Guardar'],
+          $("body").attr("data-card-name")
         );
       }
 
@@ -759,8 +765,7 @@
       SafariViewController.isAvailable(function (available) {
         if (available) {
           SafariViewController.show({
-            url: url,
-            enterReaderModeIfAvailable: readerMode, // default false
+            url: url
           },
           // this success handler will be invoked for the lifecycle events 'opened', 'loaded' and 'closed'
           function(result) {
@@ -786,9 +791,36 @@
       SafariViewController.hide()
     }
 
-    $(document).ready(function() {
+    function getStatus() {
+      $.ajax({
+        "async": true,
+        "crossDomain": true,
+        "url": "https://api.adderou.cl/metro/"
+      }).done(function (response) {
+        console.log(response);
+        // Por cada línea…
+        $.each(response, function(i, content) {
+          currentLine = i.toUpperCase();
+          closedStations = 0;
+          content.stations.forEach(function(station) {
+            if (station.status_id != 1) {
+              closedStations++;
+            }
+            if (closedStations > 0) {
+              if (closedStations == content.stations.length) {
+                $(".lineStatus." + currentLine + " .status").addClass("red").html("Cerrada");
+              } else {
+                $(".lineStatus." + currentLine + " .status").addClass("red").html(closedStations + " Estaciones cerradas");
+              }
+            } else {
+              $(".lineStatus." + currentLine + " .status").addClass("green").html("Disponible");
+            }
+          });
+        });
+      });
+    }
 
-      // selectThisCard('Bip');
+    $(document).ready(function() {
 
       if (localStorage.getItem('data') == null) {
 
@@ -824,6 +856,7 @@
       // Actualiza la tarifa cada 1 minuto.
       setInterval(function() {
         getTarifa();
+        getStatus();
         // getAccuracy();
       }, 60 * 1000); // 60 * 1000 milsec
 
@@ -852,6 +885,16 @@
       $(".addCardButton").on("touchend", function(e) {
         if(touchmoved != true){
           openModal("addCard");
+        }
+      }).on("touchmove", function(e) {
+        touchmoved = true;
+      }).on("touchstart", function() {
+        touchmoved = false;
+      });
+
+      $(".openMap").on("touchend", function(e) {
+        if(touchmoved != true){
+          openUrl("https://saldo.red/estadoRed");
         }
       }).on("touchmove", function(e) {
         touchmoved = true;
@@ -991,11 +1034,9 @@
         touchmoved = false;
       });
 
-      $("a[target=_blank]").on("touchend", function(e) {
+      $("span.a").on("touchend", function(e) {
         if(touchmoved != true){
-          e.preventDefault();
-          return false;
-          openUrl($(this).attr('href'), false);
+          openUrl($(this).attr('data-href'));
         }
       }).on("touchmove", function(e) {
         touchmoved = true;
@@ -1003,378 +1044,399 @@
         touchmoved = false;
       });
 
+      $("#notification-message").on("touchstart", function() {
+        dismissNotification();
+      });
+
     });
 
-  </script>
-</head>
-<body data-card-type="Pase" data-card-name="El pase…" data-card-num="77200982" data-status="ok">
+    </script>
+  </head>
+  <body data-card-type="Pase" data-card-name="El pase…" data-card-num="77200982" data-status="ok">
 
-  <!-- Notificaciones In-App -->
-  <div id="notifications">
-    <div id="notification-message"><h4 aria-live="polite" role="alert"></h4></div>
-  </div>
+    <!-- Notificaciones In-App -->
+    <div id="notifications">
+      <div id="notification-message"><h4 aria-live="polite" role="alert"></h4></div>
+    </div>
 
-  <!-- Menús -->
-  <div id="cargaDirecta" class="modal" aria-hidden="true" data-open="false" data-focused="false">
-    <div class="header">
-      <div class="left">
-        <img class="thumbnail" src="cargadirecta-feature.png" alt="Icono de Carga Directa">
-        <div class="text">
-          <h2 class="apple-system-headline">Carga Directa</h2>
-          <p class="apple-system-footnote">Tu saldo quedará en
-            <span class="futureSaldo">
-              <svg class="spinner" viewBox="0 0 64 64">
-                <g stroke-width="4" stroke-linecap="round">
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(180)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(210)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values="0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(240)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(270)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(300)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(330)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(0)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(30)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(60)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(90)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(120)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values=".85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85" repeatCount="indefinite"></animate>
-                  </line>
-                  <line y1="12" y2="20" transform="translate(32,32) rotate(150)">
-                    <animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate>
-                  </line>
-                </g>
-              </svg>
-            </span>
-          </p>
+    <!-- Menús -->
+    <div id="cargaDirecta" class="modal" aria-hidden="true" data-open="false" data-focused="false">
+      <div class="header">
+        <div class="left">
+          <img class="thumbnail" src="cargadirecta-feature.png" alt="Icono de Carga Directa">
+          <div class="text">
+            <h2 class="apple-system-headline">Carga Directa</h2>
+            <p class="apple-system-footnote">Tu saldo quedará en
+              <span class="futureSaldo">
+                <svg class="spinner" viewBox="0 0 64 64">
+                  <g stroke-width="4" stroke-linecap="round">
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(180)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(210)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values="0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(240)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(270)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(300)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(330)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(0)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(30)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(60)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(90)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(120)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values=".85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85" repeatCount="indefinite"></animate>
+                    </line>
+                    <line y1="12" y2="20" transform="translate(32,32) rotate(150)">
+                      <animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate>
+                    </line>
+                  </g>
+                </svg>
+              </span>
+            </p>
+          </div>
         </div>
-      </div>
-      <div class="right">
-        <button aria-label="Cerrar" class="close" ontouchstart="closeModal('cargaDirecta')">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-            <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="content">
-      <iframe id="tbk" src=""></iframe>
-    </div>
-  </div>
-  <div id="cargaDirectaSetup" class="modal feature" aria-hidden="true" data-open="false" data-focused="false">
-    <div class="header noborder">
-      <div class="left"></div>
-      <div class="right">
-        <button aria-label="Cerrar" class="close" ontouchstart="closeModal('cargaDirectaSetup')">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-            <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="content">
-
-      <section>
-        <img class="feature-img" src="cargadirecta-feature.png" alt="Ícono de Carga Directa">
-        <h2 class="feature-title">Carga Directa</h2>
-        <p class="feature-description">Configura Carga Directa para cargar tu tarjeta Bip o Pase sin salir de Saldo Red.</p>
-      </section>
-
-      <section class="inputfield">
-        <input aria-label="Correo electrónico" required autocomplete="email" id="email" type="text" value="" placeholder="francisca@ejemplo.com" onkeydown="if (event.keyCode == 13) setEmail()">
-      </section>
-
-      <div class="modal-bottom-float">
-        <div class="privacy-note">
-          <svg class="privacy-note-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 7">
-            <path d="M3.07285714,0.471679688 C3.92832589,0.471679688 4.73398996,1.07226562 4.73398996,2.33789062 L4.73398996,3.09960938 C5.04453683,3.14648438 5.19395089,3.35449219 5.19395089,3.73828125 L5.19395089,6.00878906 C5.19395089,6.45996094 4.99180246,6.66503906 4.57578683,6.66503906 L1.56699777,6.66503906 C1.15391183,6.66503906 0.948833705,6.45996094 0.948833705,6.00878906 L0.948833705,3.74121094 C0.948833705,3.35742188 1.10117746,3.15527344 1.40879464,3.10546875 L1.40879464,2.33789062 C1.40879464,1.07226562 2.21738839,0.471679688 3.07285714,0.471679688 Z M2.07090402,2.28808594 L2.07090402,3.09082031 L4.07481027,3.08789062 L4.07481027,2.28808594 C4.07481027,1.50585938 3.61777902,1.10742188 3.07285714,1.10742188 C2.52500558,1.10742188 2.07090402,1.50585938 2.07090402,2.28808594 Z"/>
-          </svg>
-          <h4 class="privacy-note-title">Algunos datos administrados por Metro</h4>
-          <p class="privacy-note-description">Carga Directa requiere que compartas tu correo electrónico con Metro de Santiago S.A. para enviar tus boletas. <a href="https://saldo.red/privacidad" target="_blank" rel="noopener" class="inline">Conoce las medidas adicionales de Saldo Red para proteger tu privacidad.</a></p>
-        </div>
-        <button class="big modal-bottom-float-button">Finalizar</button>
-      </div>
-
-    </div>
-  </div>
-  <div id="myCards" class="modal" aria-hidden="true" data-open="false" data-focused="false">
-    <div class="header">
-      <div class="left">
-        <h2 class="apple-system-headline">Mis Tarjetas</h2>
-      </div>
-      <div class="right">
-        <button aria-label="Cerrar" class="close" ontouchstart="closeModal('myCards')">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-            <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="content">
-
-      <section id="savedCards">
-      </section>
-
-      <section class="info" id="noSavedCards">
-        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-          <path d="M37.4906863,28 C42.6784314,28 47,32.3122549 47,37.5 C47,42.6970588 42.6877451,47 37.5,47 C32.3029412,47 28,42.6970588 28,37.5 C28,32.3122549 32.2936275,28 37.4906863,28 Z M37.3696078,39.6926074 C35.0411765,39.6926074 33.597549,41.3411368 33.597549,41.9558427 C33.597549,42.0862348 33.6813725,42.1328035 33.7838235,42.0582937 C34.4544118,41.5180976 35.6745098,40.9033917 37.3696078,40.9033917 C39.0647059,40.9033917 40.247549,41.4901564 40.9460784,42.0676074 C41.0485294,42.1421172 41.1416667,42.0862348 41.1416667,41.9558427 C41.1416667,41.3411368 39.6887255,39.6926074 37.3696078,39.6926074 Z M34.5848039,34.2215686 C34.0259804,34.2215686 33.5602941,34.7151961 33.5602941,35.4137255 C33.5602941,36.1215686 34.0259804,36.6151961 34.5848039,36.6151961 C35.1529412,36.6151961 35.6279412,36.1215686 35.6279412,35.4137255 C35.6279412,34.7151961 35.1529412,34.2215686 34.5848039,34.2215686 Z M40.1916667,34.2215686 C39.6235294,34.2215686 39.1578431,34.7151961 39.1578431,35.4137255 C39.1578431,36.1215686 39.6235294,36.6151961 40.1916667,36.6151961 C40.7504902,36.6151961 41.2254902,36.1215686 41.2254902,35.4137255 C41.2254902,34.7151961 40.7504902,34.2215686 40.1916667,34.2215686 Z" transform="translate(-28 -28)"/>
-        </svg> -->
-        <div>
-          <h4>Nada por aquí</h4>
-          <p>Parece que no tienes tarjetas guardadas en Saldo Red. ¿Qué tal si agregamos una?</p>
-        </div>
-      </section>
-
-      <section>
-        <button class="big secondary addCardButton">
-          <span class="icon">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-              <path d="M112,34 C107.065072,34 103,29.9368723 103,25.0043042 C103,20.071736 107.056459,16 111.991388,16 C116.926316,16 121,20.071736 121,25.0043042 C121,29.9368723 116.934928,34 112,34 Z M111.982775,29.2654232 C112.542584,29.2654232 112.921531,28.8694405 112.921531,28.2926829 L112.921531,25.9340029 L115.427751,25.9340029 C116.004785,25.9340029 116.400957,25.5724534 116.400957,25.0129125 C116.400957,24.4447633 116.013397,24.0832138 115.427751,24.0832138 L112.921531,24.0832138 L112.921531,21.6040172 C112.921531,21.0272597 112.542584,20.6312769 111.982775,20.6312769 C111.422967,20.6312769 111.061244,21.035868 111.061244,21.6040172 L111.061244,24.0832138 L108.563636,24.0832138 C107.986603,24.0832138 107.581818,24.4447633 107.581818,25.0129125 C107.581818,25.5724534 107.995215,25.9340029 108.563636,25.9340029 L111.061244,25.9340029 L111.061244,28.2926829 C111.061244,28.8608321 111.422967,29.2654232 111.982775,29.2654232 Z" transform="translate(-103 -16)"/>
+        <div class="right">
+          <button aria-label="Cerrar" class="close" ontouchstart="closeModal('cargaDirecta')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+              <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
             </svg>
-          </span>Agregar Tarjeta
-        </button>
-      </section>
-
-    </div>
-  </div>
-  <div id="addCard" class="modal" aria-hidden="true" data-open="false" data-focused="false">
-    <div class="header">
-      <div class="left">
-        <h2 class="apple-system-headline">Agregar Tarjeta</h2>
+          </button>
+        </div>
       </div>
-      <div class="right">
-        <button aria-label="Cerrar" class="close" ontouchstart="closeModal('addCard')">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-            <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
-          </svg>
-        </button>
+      <div class="content">
+        <iframe id="tbk" src=""></iframe>
       </div>
     </div>
-    <div class="content">
+    <div id="cargaDirectaSetup" class="modal feature" aria-hidden="true" data-open="false" data-focused="false">
+      <div class="header noborder">
+        <div class="left"></div>
+        <div class="right">
+          <button aria-label="Cerrar" class="close" ontouchstart="closeModal('cargaDirectaSetup')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+              <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="content">
 
-      <section id="availableCards">
-      </section>
-
-      <section class="inputfield">
-        <input aria-label="Número de Tarjeta" required pattern="[0-9]*" autocomplete="off" id="transitCard" type="text" value="" placeholder="12345678" onkeydown="if (event.keyCode == 13) addCard()">
-      </section>
-
-      <section>
-        <button class="big">Agregar</button>
-      </section>
-
-    </div>
-  </div>
-
-  <!-- Interfaz Principal -->
-  <div id="app" aria-hidden="false">
-    <div id="app-content">
-
-      <button id="card" class="loading" aria-label="">
-        <img aria-hidden="true" src="" alt="" id="card-img">
-        <img aria-hidden="true" src="" alt="" id="card-shadow">
-        <div id="loading-animation"></div>
-      </button>
-
-      <div id="card-set-info">
         <section>
-          <figure id="main-info">
-            <figcaption aria-live="polite" role="alert">Cargando…</figcaption>
-            <div>
-              <h4 aria-hidden="true">Saldo</h4>
-              <h2 class="saldo" aria-hidden="true"></h2>
-            </div>
-            <div class="trencentral-hide merval-hide biotren-hide">
-              <h4 aria-hidden="true">Viajes Restantes</h4>
-              <h2 class="leftTrips" aria-hidden="true"></h2>
-            </div>
-          </figure>
-          <div class="buttons">
-            <button class="primary" id="getSaldo" aria-label="Actualizar saldo">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 18"><path d="M7.265625,9.09375 C6.78125,9.09375 6.3984375,8.7109375 6.3984375,8.21875 C6.3984375,7.984375 6.4921875,7.796875 6.6484375,7.6328125 L8.609375,5.6953125 C8.25,5.640625 7.84375,5.609375 7.3984375,5.609375 C4.484375,5.609375 2.1875,7.9453125 2.1875,10.90625 C2.1875,13.8203125 4.5234375,16.171875 7.4453125,16.171875 C10.359375,16.171875 12.7109375,13.8203125 12.7109375,10.90625 C12.7109375,10.359375 13.0625,9.984375 13.5859375,9.984375 C14.1171875,9.984375 14.4921875,10.359375 14.4921875,10.90625 C14.4921875,14.8125 11.34375,17.9609375 7.4453125,17.9609375 C3.5390625,17.9609375 0.3984375,14.8125 0.3984375,10.90625 C0.3984375,6.9921875 3.5,3.8828125 7.3984375,3.8828125 C7.7109375,3.8828125 8.03125,3.90625 8.34375,3.9453125 L6.640625,2.28125 C6.4921875,2.1171875 6.3984375,1.9296875 6.3984375,1.6875 C6.3984375,1.1953125 6.78125,0.796875 7.265625,0.796875 C7.515625,0.796875 7.71875,0.8828125 7.875,1.0546875 L11.078125,4.3125 C11.2578125,4.4921875 11.359375,4.7265625 11.359375,4.9609375 C11.359375,5.2109375 11.265625,5.4296875 11.078125,5.6171875 L7.875,8.8515625 C7.71875,9.015625 7.515625,9.09375 7.265625,9.09375 Z"/>
-                </svg>
-              </span>Actualizar
-            </button>
-            <button class="secondary copyCardNum" aria-label="Copiar número de tarjeta">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 22"><path d="M2.6484375,21.171875 C0.921875,21.171875 0,20.25 0,18.5078125 L0,6.7734375 C0,5.0390625 0.9296875,4.109375 2.6484375,4.109375 L4.1875,4.109375 L4.1875,2.71875 C4.1875,0.9375 5.109375,0 6.8671875,0 L10.796875,0 C11.7578125,0 12.4921875,0.2578125 13.109375,0.875 L16.96875,4.8125 C17.609375,5.46875 17.84375,6.171875 17.84375,7.2578125 L17.84375,14.515625 C17.84375,16.296875 16.921875,17.234375 15.15625,17.234375 L13.640625,17.234375 L13.640625,18.5078125 C13.640625,20.2421875 12.71875,21.171875 11,21.171875 L2.6484375,21.171875 Z M13.640625,11.484375 L13.640625,15.4453125 L15.0859375,15.4453125 C15.7421875,15.4453125 16.0546875,15.125 16.0546875,14.4921875 L16.0546875,7.0546875 L12.4609375,7.0546875 C11.4453125,7.0546875 10.8671875,6.4765625 10.8671875,5.453125 L10.8671875,1.7890625 L6.9453125,1.7890625 C6.28125,1.7890625 5.9765625,2.1171875 5.9765625,2.7421875 L5.9765625,4.109375 L6.3984375,4.109375 C7.40625,4.109375 7.984375,4.265625 8.640625,4.9375 L12.8203125,9.1640625 C13.5,9.8515625 13.640625,10.390625 13.640625,11.484375 Z M12.65625,5.640625 L15.765625,5.640625 L12.28125,2.1015625 L12.28125,5.2578125 C12.28125,5.5234375 12.390625,5.640625 12.65625,5.640625 Z M2.8359375,19.3828125 L10.8046875,19.3828125 C11.515625,19.3828125 11.8515625,19.0234375 11.8515625,18.34375 L11.8515625,11.7734375 L7.8671875,11.7734375 C6.6328125,11.7734375 6.03125,11.1796875 6.03125,9.9375 L6.03125,5.8984375 L2.84375,5.8984375 C2.1328125,5.8984375 1.7890625,6.265625 1.7890625,6.9375 L1.7890625,18.34375 C1.7890625,19.0234375 2.1328125,19.3828125 2.8359375,19.3828125 Z M8.0234375,10.265625 L11.671875,10.265625 L7.5390625,6.078125 L7.5390625,9.78125 C7.5390625,10.1171875 7.6875,10.265625 8.0234375,10.265625 Z"/>
-                </svg>
-              </span>Copiar
-            </button>
-            <button class="secondary renameThisCard" aria-label="Renombrar tarjeta">
-              <span class="icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17"><path d="M16.0560283,2.33344854 L14.6547135,0.945735171 L15.3384876,0.289271961 C15.6845955,-0.0431144748 16.2079781,-0.109591762 16.5118777,0.197865691 L16.7566857,0.438845857 C17.1027936,0.779541953 17.069027,1.29474093 16.7229191,1.65205635 L16.0560283,2.33344854 Z M6.58449111,10.6264901 C6.36500807,10.7095867 6.10331676,10.4686065 6.20461662,10.235936 L6.9643656,8.5241459 L14.0469144,1.55234042 L15.4566708,2.93174412 L8.37412203,9.9035496 L6.58449111,10.6264901 Z M2.87860445,17 C1.01299863,17 0,16.01946 0,14.183025 L0,4.69339223 C0,2.86526683 1.01299863,1.88472685 2.87860445,1.88472685 L11.4722095,1.88472685 L9.53907045,3.78763919 L3.05587921,3.78763919 C2.32989685,3.78763919 1.93313906,4.14495461 1.93313906,4.90113375 L1.93313906,13.9752834 C1.93313906,14.7314626 2.32989685,15.0970877 3.05587921,15.0970877 L12.4683248,15.0970877 C13.0254741,15.0970877 13.4222319,14.7314626 13.4222319,13.9752834 L13.4222319,7.13643253 L15.3553709,5.23352019 L15.3553709,14.183025 C15.3553709,16.01946 14.3592556,17 12.6455996,17 L2.87860445,17 Z"/>
-                </svg>
-              </span>Renombrar
-            </button>
+          <img class="feature-img" src="cargadirecta-feature.png" alt="Ícono de Carga Directa">
+          <h2 class="feature-title">Carga Directa</h2>
+          <p class="feature-description">Configura Carga Directa para cargar tu tarjeta Bip o Pase sin salir de Saldo Red.</p>
+        </section>
+
+        <section class="inputfield">
+          <input aria-label="Correo electrónico" required autocomplete="email" id="email" type="text" value="" placeholder="francisca@ejemplo.com" onkeydown="if (event.keyCode == 13) setEmail()">
+        </section>
+
+        <div class="modal-bottom-float">
+          <div class="privacy-note">
+            <svg class="privacy-note-lock" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 7">
+              <path d="M3.07285714,0.471679688 C3.92832589,0.471679688 4.73398996,1.07226562 4.73398996,2.33789062 L4.73398996,3.09960938 C5.04453683,3.14648438 5.19395089,3.35449219 5.19395089,3.73828125 L5.19395089,6.00878906 C5.19395089,6.45996094 4.99180246,6.66503906 4.57578683,6.66503906 L1.56699777,6.66503906 C1.15391183,6.66503906 0.948833705,6.45996094 0.948833705,6.00878906 L0.948833705,3.74121094 C0.948833705,3.35742188 1.10117746,3.15527344 1.40879464,3.10546875 L1.40879464,2.33789062 C1.40879464,1.07226562 2.21738839,0.471679688 3.07285714,0.471679688 Z M2.07090402,2.28808594 L2.07090402,3.09082031 L4.07481027,3.08789062 L4.07481027,2.28808594 C4.07481027,1.50585938 3.61777902,1.10742188 3.07285714,1.10742188 C2.52500558,1.10742188 2.07090402,1.50585938 2.07090402,2.28808594 Z"/>
+            </svg>
+            <h4 class="privacy-note-title">Algunos datos administrados por Metro</h4>
+            <p class="privacy-note-description">Carga Directa requiere que compartas tu correo electrónico con Metro de Santiago S.A. para enviar tus boletas. <span class="a" data-href="https://saldo.red/privacidad" class="inline">Conoce las medidas adicionales de Saldo Red para proteger tu privacidad.</span></p>
+          </div>
+          <button class="big modal-bottom-float-button">Finalizar</button>
+        </div>
+
+      </div>
+    </div>
+    <div id="myCards" class="modal" aria-hidden="true" data-open="false" data-focused="false">
+      <div class="header">
+        <div class="left">
+          <h2 class="apple-system-headline">Mis Tarjetas</h2>
+        </div>
+        <div class="right">
+          <button aria-label="Cerrar" class="close" ontouchstart="closeModal('myCards')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+              <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="content">
+
+        <section id="savedCards">
+        </section>
+
+        <section class="info" id="noSavedCards">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
+            <path d="M37.4906863,28 C42.6784314,28 47,32.3122549 47,37.5 C47,42.6970588 42.6877451,47 37.5,47 C32.3029412,47 28,42.6970588 28,37.5 C28,32.3122549 32.2936275,28 37.4906863,28 Z M37.3696078,39.6926074 C35.0411765,39.6926074 33.597549,41.3411368 33.597549,41.9558427 C33.597549,42.0862348 33.6813725,42.1328035 33.7838235,42.0582937 C34.4544118,41.5180976 35.6745098,40.9033917 37.3696078,40.9033917 C39.0647059,40.9033917 40.247549,41.4901564 40.9460784,42.0676074 C41.0485294,42.1421172 41.1416667,42.0862348 41.1416667,41.9558427 C41.1416667,41.3411368 39.6887255,39.6926074 37.3696078,39.6926074 Z M34.5848039,34.2215686 C34.0259804,34.2215686 33.5602941,34.7151961 33.5602941,35.4137255 C33.5602941,36.1215686 34.0259804,36.6151961 34.5848039,36.6151961 C35.1529412,36.6151961 35.6279412,36.1215686 35.6279412,35.4137255 C35.6279412,34.7151961 35.1529412,34.2215686 34.5848039,34.2215686 Z M40.1916667,34.2215686 C39.6235294,34.2215686 39.1578431,34.7151961 39.1578431,35.4137255 C39.1578431,36.1215686 39.6235294,36.6151961 40.1916667,36.6151961 C40.7504902,36.6151961 41.2254902,36.1215686 41.2254902,35.4137255 C41.2254902,34.7151961 40.7504902,34.2215686 40.1916667,34.2215686 Z" transform="translate(-28 -28)"/>
+          </svg>
+          <div>
+            <h4>Nada por aquí</h4>
+            <p>Parece que no tienes tarjetas guardadas en Saldo Red. ¿Qué tal si agregamos una?</p>
           </div>
         </section>
 
-        <!-- <section class="info saldoAccuracy high trencentral-hide merval-hide biotren-hide">
-        <svg class="info-high" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
-        <path d="M212.003174,774.891602 C208.461182,774.891602 205.528564,771.958984 205.528564,768.416992 C205.528564,764.881348 208.454834,761.942383 211.996826,761.942383 C215.532471,761.942383 218.477783,764.881348 218.477783,768.416992 C218.477783,771.958984 215.538818,774.891602 212.003174,774.891602 Z M210.016357,767.813965 C210.403564,767.813965 210.727295,767.477539 210.727295,766.995117 C210.727295,766.519043 210.403564,766.182617 210.016357,766.182617 C209.635498,766.182617 209.318115,766.519043 209.318115,766.995117 C209.318115,767.477539 209.635498,767.813965 210.016357,767.813965 Z M213.837646,767.813965 C214.218506,767.813965 214.542236,767.477539 214.542236,766.995117 C214.542236,766.519043 214.218506,766.182617 213.837646,766.182617 C213.450439,766.182617 213.133057,766.519043 213.133057,766.995117 C213.133057,767.477539 213.450439,767.813965 213.837646,767.813965 Z M211.914307,771.552734 C213.494873,771.552734 214.485107,770.429199 214.485107,770.010254 C214.485107,769.921387 214.421631,769.883301 214.351807,769.934082 C213.875732,770.327637 213.06958,770.727539 211.914307,770.727539 C210.759033,770.727539 209.92749,770.308594 209.470459,769.94043 C209.400635,769.889648 209.343506,769.921387 209.343506,770.010254 C209.343506,770.429199 210.327393,771.552734 211.914307,771.552734 Z" transform="translate(-205 -761)"/>
-      </svg>
-      <svg class="info-low" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-      <path d="M37.4906863,28 C42.6784314,28 47,32.3122549 47,37.5 C47,42.6970588 42.6877451,47 37.5,47 C32.3029412,47 28,42.6970588 28,37.5 C28,32.3122549 32.2936275,28 37.4906863,28 Z M37.3696078,39.6926074 C35.0411765,39.6926074 33.597549,41.3411368 33.597549,41.9558427 C33.597549,42.0862348 33.6813725,42.1328035 33.7838235,42.0582937 C34.4544118,41.5180976 35.6745098,40.9033917 37.3696078,40.9033917 C39.0647059,40.9033917 40.247549,41.4901564 40.9460784,42.0676074 C41.0485294,42.1421172 41.1416667,42.0862348 41.1416667,41.9558427 C41.1416667,41.3411368 39.6887255,39.6926074 37.3696078,39.6926074 Z M34.5848039,34.2215686 C34.0259804,34.2215686 33.5602941,34.7151961 33.5602941,35.4137255 C33.5602941,36.1215686 34.0259804,36.6151961 34.5848039,36.6151961 C35.1529412,36.6151961 35.6279412,36.1215686 35.6279412,35.4137255 C35.6279412,34.7151961 35.1529412,34.2215686 34.5848039,34.2215686 Z M40.1916667,34.2215686 C39.6235294,34.2215686 39.1578431,34.7151961 39.1578431,35.4137255 C39.1578431,36.1215686 39.6235294,36.6151961 40.1916667,36.6151961 C40.7504902,36.6151961 41.2254902,36.1215686 41.2254902,35.4137255 C41.2254902,34.7151961 40.7504902,34.2215686 40.1916667,34.2215686 Z" transform="translate(-28 -28)"/>
-    </svg>
-    <div class="info-high">
-    <h4>Probablemente Actualizado</h4>
-    <p>Si aún no has hecho ningún viaje, es probable que tu saldo esté actualizado. ¡Yay!. <span class="a inline">Más información.</span></p>
-  </div>
-  <div class="info-low">
-  <h4>Probablemente Desfasado</h4>
-  <p>Si ya viajaste en transporte público, es probable que tu saldo esté desfasado. <span class="a inline">Más información.</span></p>
-</div>
-</section> -->
+        <section>
+          <button class="big secondary addCardButton">
+            <span class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+                <path d="M112,34 C107.065072,34 103,29.9368723 103,25.0043042 C103,20.071736 107.056459,16 111.991388,16 C116.926316,16 121,20.071736 121,25.0043042 C121,29.9368723 116.934928,34 112,34 Z M111.982775,29.2654232 C112.542584,29.2654232 112.921531,28.8694405 112.921531,28.2926829 L112.921531,25.9340029 L115.427751,25.9340029 C116.004785,25.9340029 116.400957,25.5724534 116.400957,25.0129125 C116.400957,24.4447633 116.013397,24.0832138 115.427751,24.0832138 L112.921531,24.0832138 L112.921531,21.6040172 C112.921531,21.0272597 112.542584,20.6312769 111.982775,20.6312769 C111.422967,20.6312769 111.061244,21.035868 111.061244,21.6040172 L111.061244,24.0832138 L108.563636,24.0832138 C107.986603,24.0832138 107.581818,24.4447633 107.581818,25.0129125 C107.581818,25.5724534 107.995215,25.9340029 108.563636,25.9340029 L111.061244,25.9340029 L111.061244,28.2926829 C111.061244,28.8608321 111.422967,29.2654232 111.982775,29.2654232 Z" transform="translate(-103 -16)"/>
+              </svg>
+            </span>Agregar Tarjeta
+          </button>
+        </section>
 
-<section class="info feature-banner trencentral-hide merval-hide biotren-hide" id="cargaDirectaSetupBanner" role="button" aria-label="Carga Directa. Configura Carga Directa para cargar tu tarjeta Bip o Pase escolar sin salir de Saldo Red.">
-  <img class="feature-banner-img" src="cargadirecta-feature.png" aria-hidden="true">
-  <div class="feature-banner-summary">
-    <h4>Carga Directa</h4>
-    <p>Carga tu tarjeta Bip o Pase sin salir de Saldo Red.</p>
-  </div>
-  <div class="full-height-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 9">
-      <path d="M0.928710938,8.86914062 C0.552734375,8.86914062 0.245117188,8.56640625 0.245117188,8.19042969 C0.245117188,8.00488281 0.323242188,7.82910156 0.459960938,7.69238281 L3.78027344,4.46972656 L0.459960938,1.2421875 C0.323242188,1.10546875 0.245117188,0.9296875 0.245117188,0.744140625 C0.245117188,0.368164062 0.552734375,0.0654296875 0.928710938,0.0654296875 C1.11425781,0.0654296875 1.27050781,0.133789062 1.40234375,0.260742188 L5.14746094,3.92285156 C5.31835938,4.08398438 5.39648438,4.25976562 5.39648438,4.46972656 C5.39648438,4.6796875 5.31347656,4.85058594 5.14746094,5.01660156 L1.40234375,8.67382812 C1.27539062,8.80078125 1.11914062,8.86914062 0.928710938,8.86914062 Z"/>
-    </svg>
-  </div>
-</section>
-
-<section class="cargaDirecta trencentral-hide merval-hide biotren-hide">
-  <h2 class="apple-system-headline">Carga Directa</h2>
-  <div class="buttons">
-    <button class="secondary addMoney1000" aria-label="Cargar 1000 pesos">$1.000</button>
-    <button class="secondary addMoney2000" aria-label="Cargar 2000 pesos">$2.000</button>
-    <button class="secondary addMoney5000" aria-label="Cargar 5000 pesos">$5.000</button>
-    <button class="secondary addMoney10000" aria-label="Cargar 10000 pesos">$10.000</button>
-    <button class="secondary addMoney20000" aria-label="Cargar 20000 pesos">$20.000</button>
-    <button class="tertiary red unlinkEmail">
-      <span class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 15"><path d="M137,602.056641 C133.362793,602.056641 130.366699,599.060547 130.366699,595.42334 C130.366699,591.786133 133.356445,588.783691 136.993652,588.783691 C140.630859,588.783691 143.633301,591.786133 143.633301,595.42334 C143.633301,599.060547 140.637207,602.056641 137,602.056641 Z M137,600.564941 C139.850098,600.564941 142.147949,598.273438 142.141628,595.42334 C142.141628,592.573242 139.84375,590.275391 136.993652,590.275391 C134.143555,590.275391 131.858398,592.573242 131.858398,595.42334 C131.858398,598.273438 134.149902,600.564941 137,600.564941 Z M134.511719,596.077148 C134.111816,596.077148 133.819824,595.823242 133.819824,595.436035 C133.819824,595.036133 134.105469,594.775879 134.511719,594.775879 L139.481934,594.775879 C139.894531,594.775879 140.16748,595.036133 140.16748,595.436035 C140.16748,595.823242 139.881836,596.077148 139.481934,596.077148 L134.511719,596.077148 Z" transform="translate(-130 -588)"/>
-        </svg>
-      </span>Desvincular Correo
-    </button>
-  </div>
-</section>
-
-<section>
-  <h2 class="apple-system-headline">Información General</h2>
-
-  <figure id="fares" class="info trencentral-hide merval-hide biotren-hide">
-    <figcaption></figcaption>
-    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19">
-      <path d="M37.5,47 C32.2909091,47 28,42.711143 28,37.5045433 C28,32.2979436 32.2818182,28 37.4909091,28 C42.7,28 47,32.2979436 47,37.5045433 C47,42.711143 42.7090909,47 37.5,47 Z M37.4818182,43.001913 C37.7363636,43.001913 37.9272727,42.8110952 37.9272727,42.5475849 L37.9272727,41.9115256 C39.6090909,41.7661406 40.8181818,40.8211382 40.8181818,39.2945959 C40.8181818,37.9406982 39.9363636,37.2137733 38.2181818,36.8230512 L37.9272727,36.7685318 L37.9272727,34.5423242 C38.4909091,34.6422764 38.8818182,34.9784792 39.0636364,35.4964132 C39.2454545,35.8507891 39.4909091,36.0416069 39.8727273,36.0416069 C40.3272727,36.0416069 40.6272727,35.7599235 40.6272727,35.3419417 C40.6272727,35.2147298 40.6,35.0875179 40.5727273,34.9693926 C40.3,33.988044 39.3090909,33.2520325 37.9272727,33.1157341 L37.9272727,32.4705882 C37.9272727,32.207078 37.7363636,32.0162602 37.4818182,32.0162602 C37.2272727,32.0162602 37.0454545,32.1979914 37.0454545,32.4705882 L37.0454545,33.1157341 C35.4272727,33.2520325 34.2636364,34.2242946 34.2636364,35.6417982 C34.2636364,36.9684362 35.1454545,37.7226208 36.7909091,38.1042563 L37.0454545,38.1496891 L37.0454545,40.494022 C36.3272727,40.3940698 35.9,40.0124342 35.7454545,39.4945002 C35.5909091,39.1219512 35.3363636,38.9311334 34.9545455,38.9311334 C34.4727273,38.9311334 34.1727273,39.2400765 34.1727273,39.6762315 C34.1727273,39.7943568 34.2,39.9215686 34.2454545,40.057867 C34.5272727,41.0392157 35.5454545,41.7934003 37.0454545,41.902439 L37.0454545,42.5475849 C37.0454545,42.8110952 37.2272727,43.001913 37.4818182,43.001913 Z M37.0454545,36.5504543 L36.9727273,36.5322812 C36.2454545,36.3414634 35.9272727,36.0052606 35.9272727,35.5327594 C35.9272727,35.0329986 36.3545455,34.6331899 37.0454545,34.5332377 L37.0454545,36.5504543 Z M37.9272727,38.3586801 L38.0090909,38.3859397 C38.8545455,38.6221903 39.1636364,38.9038737 39.1636364,39.4399809 C39.1636364,40.0033477 38.7363636,40.4031564 37.9272727,40.494022 L37.9272727,38.3586801 Z" transform="translate(-28 -28)"/>
-    </svg> -->
-    <div>
-      <h4 aria-hidden="true">Tarifa</h4>
-      <h3 aria-hidden="true" class="currentFare"></h3>
+      </div>
     </div>
-    <div>
-      <h4 aria-hidden="true">Bloque</h4>
-      <h3 aria-hidden="true" class="currentBlock"></h3>
-    </div>
-    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" class="blink">
-      <circle cx="331" cy="589" r="4" fill-rule="evenodd" transform="translate(-327 -585)"></circle>
-    </svg>
-  </figure>
+    <div id="addCard" class="modal" aria-hidden="true" data-open="false" data-focused="false">
+      <div class="header">
+        <div class="left">
+          <h2 class="apple-system-headline">Agregar Tarjeta</h2>
+        </div>
+        <div class="right">
+          <button aria-label="Cerrar" class="close" ontouchstart="closeModal('addCard')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
+              <path fill-rule="evenodd" d="M0.325302291,10.0435256 L4.36373747,6.00435256 L0.325302291,1.96517954 C-0.10117039,1.53862894 -0.118577438,0.77257889 0.334005815,0.328618063 C0.777885544,-0.115342764 1.54379566,-0.0979325354 1.96156482,0.319912949 L6,4.35908596 L10.0384352,0.328618063 C10.4736114,-0.10663765 11.2221145,-0.115342764 11.6659942,0.337323177 C12.1098739,0.781284004 12.1098739,1.52992383 11.6746977,1.96517954 L7.63626253,6.00435256 L11.6746977,10.0348205 C12.1098739,10.4700762 12.1098739,11.218716 11.6659942,11.6626768 C11.2221145,12.1153428 10.4736114,12.1066376 10.0384352,11.6713819 L6,7.64091404 L1.96156482,11.6800871 C1.54379566,12.0979325 0.777885544,12.1153428 0.334005815,11.6713819 C-0.118577438,11.2274211 -0.10117039,10.4613711 0.325302291,10.0435256 Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="content">
 
-  <figure class="info">
-    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
-      <path d="M290.61084,791.904297 C287.068848,791.904297 284.13623,788.965332 284.13623,785.429688 C284.13623,781.887695 287.0625,778.955078 290.604492,778.955078 C294.140137,778.955078 297.085449,781.887695 297.085449,785.429688 C297.085449,788.965332 294.146484,791.904297 290.61084,791.904297 Z M293.429199,782.478027 C292.648438,781.697266 291.683594,781.760742 290.775879,782.668457 L289.849121,783.588867 C288.928711,784.515625 288.846191,785.493164 289.633301,786.273926 C289.836426,786.483398 290.077637,786.635742 290.268066,786.66748 C290.452148,786.540527 290.648926,786.305664 290.744141,786.102539 C290.464844,786.051758 290.249023,785.956543 290.103027,785.804199 C289.60791,785.321777 289.69043,784.674316 290.318848,784.039551 L291.226562,783.144531 C291.835938,782.535156 292.477051,782.458984 292.96582,782.941406 C293.460938,783.430176 293.391113,784.071289 292.769043,784.680664 L292.12793,785.321777 C292.229492,785.562988 292.23584,785.918457 292.146973,786.223145 L293.23877,785.125 C294.146484,784.223633 294.216309,783.258789 293.429199,782.478027 Z M287.563965,788.343262 C288.344727,789.124023 289.30957,789.060547 290.217285,788.152832 L291.144043,787.226074 C292.064453,786.299316 292.146973,785.328125 291.366211,784.547363 C291.156738,784.337891 290.915527,784.185547 290.725098,784.153809 C290.541016,784.280762 290.344238,784.515625 290.249023,784.71875 C290.52832,784.769531 290.744141,784.864746 290.890137,785.01709 C291.385254,785.499512 291.302734,786.146973 290.674316,786.781738 L289.766602,787.676758 C289.163574,788.286133 288.516113,788.362305 288.027344,787.879883 C287.532227,787.391113 287.602051,786.743652 288.224121,786.140625 L288.865234,785.499512 C288.763672,785.258301 288.757324,784.902832 288.852539,784.598145 L287.760742,785.696289 C286.84668,786.597656 286.776855,787.5625 287.563965,788.343262 Z" transform="translate(-284 -778)"/>
-    </svg> -->
-    <!-- Enlaces de Interés Bip -->
-    <div class="pase-hide tam-hide trencentral-hide merval-hide biotren-hide">
-      <h4>Enlaces de Interés</h4>
-      <a href="https://www.metro.cl/tu-viaje/tarifas" target="_blank" rel="noopener">Tarifas</a>
-      <a href="https://saldo.red/privacidad" target="_blank" rel="noopener">Privacidad</a>
-    </div>
-    <!-- Enlaces de Interés Pase -->
-    <div class="bip-hide tam-hide trencentral-hide merval-hide biotren-hide">
-      <h4>Enlaces de Interés</h4>
-      <a href="https://www.metro.cl/tu-viaje/tarifas" target="_blank" rel="noopener">Tarifas</a>
-      <a href="https://www.tne.cl/" target="_blank" rel="noopener">Tarjeta Nacional Estudiantil</a>
-      <a href="https://saldo.red/privacidad" target="_blank" rel="noopener">Privacidad</a>
-    </div>
-    <!-- Enlaces de Interés TAM -->
-    <div class="bip-hide pase-hide trencentral-hide merval-hide biotren-hide">
-      <h4>Enlaces de Interés</h4>
-      <a href="https://www.metro.cl/tu-viaje/tarifas" target="_blank" rel="noopener">Tarifas</a>
-      <a href="http://www.tarjetabip.cl/tam-tarjeta-adulto-mayor.php" target="_blank" rel="noopener">Tarjeta Adulto Mayor</a>
-      <a href="https://saldo.red/privacidad" target="_blank" rel="noopener">Privacidad</a>
-    </div>
-    <!-- Enlaces de Interés TrenCentral -->
-    <div class="bip-hide pase-hide tam-hide merval-hide biotren-hide">
-      <h4>Enlaces de Interés</h4>
-      <a href="https://www.trencentral.cl/" target="_blank" rel="noopener">TrenCentral</a>
-      <a href="https://saldo.red/privacidad" target="_blank" rel="noopener">Privacidad</a>
-    </div>
-    <!-- Enlaces de Interés MerVal -->
-    <div class="bip-hide pase-hide tam-hide trencentral-hide biotren-hide">
-      <h4>Enlaces de Interés</h4>
-      <a href="https://www.metrovalparaiso.cl/" target="_blank" rel="noopener">Metro de Valparaíso</a>
-      <a href="https://www.metrovalparaiso.cl/tarifas/" target="_blank" rel="noopener">Tarifas</a>
-      <a href="https://saldo.red/privacidad" target="_blank" rel="noopener">Privacidad</a>
-    </div>
-    <!-- Enlaces de Interés BioTren -->
-    <div class="bip-hide pase-hide tam-hide trencentral-hide merval-hide">
-      <h4>Enlaces de Interés</h4>
-      <a href="http://www.fesur.cl/" target="_blank" rel="noopener">FeSur</a>
-      <a href="http://www.fesur.cl/fesur/planificatuviaje/#seccion-horarios?SERVICIO=BIOTREN" target="_blank" rel="noopener">Planifica tu Viaje</a>
-      <a href="https://saldo.red/privacidad" target="_blank" rel="noopener">Privacidad</a>
-    </div>
-  </figure>
+        <section id="availableCards">
+        </section>
 
-  <figure class="info">
-    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14">
-      <path d="M304.61084,807.904297 C301.068848,807.904297 298.13623,804.965332 298.13623,801.429688 C298.13623,797.887695 301.0625,794.955078 304.604492,794.955078 C308.140137,794.955078 311.085449,797.887695 311.085449,801.429688 C311.085449,804.965332 308.146484,807.904297 304.61084,807.904297 Z M302.306641,803.791016 C302.306641,804.26709 302.516113,804.48291 302.960449,804.48291 L306.26123,804.48291 C306.699219,804.48291 306.908691,804.26709 306.908691,803.791016 L306.908691,801.251953 C306.908691,800.833008 306.75,800.623535 306.413574,800.572754 L306.413574,799.811035 C306.413574,798.573242 305.664551,797.773438 304.61084,797.773438 C303.557129,797.773438 302.808105,798.573242 302.808105,799.811035 L302.808105,800.579102 C302.465332,800.629883 302.306641,800.839355 302.306641,801.251953 L302.306641,803.791016 Z M303.468262,800.566406 L303.468262,799.741211 C303.468262,798.941406 303.925293,798.414551 304.61084,798.414551 C305.296387,798.414551 305.753418,798.941406 305.753418,799.741211 L305.753418,800.560059 L303.468262,800.566406 Z" transform="translate(-298 -794)"/>
-    </svg> -->
-    <div>
-      <h4>Tu información está protegida</h4>
-      <p>Saldo Red no recopila nada de ti, y utiliza el almacenamiento local de tu dispositivo para recordar tus tarjetas.</p>
+        <section class="inputfield">
+          <input aria-label="Número de Tarjeta" required pattern="[0-9]*" autocomplete="off" id="transitCard" type="text" value="" placeholder="12345678" onkeydown="if (event.keyCode == 13) addCard()">
+        </section>
+
+        <section>
+          <button class="big">Agregar</button>
+        </section>
+
+      </div>
     </div>
-  </figure>
 
-</section>
+    <!-- Interfaz Principal -->
+    <div id="app" aria-hidden="false">
+      <div id="app-content">
 
-<section>
-  <h2 class="apple-system-headline thisCardTitle">Pase (•••••982)</h2>
-  <button class="big tertiary renameThisCard">Renombrar Tarjeta</button>
-  <!-- <button class="big tertiary">Marcar como Perdida</button> -->
-  <button class="big tertiary addCardButton">Agregar Tarjeta</button>
-  <button class="big tertiary red deleteThisCard">Eliminar Tarjeta</button>
-</section>
-</div>
+        <button id="card" class="loading" aria-label="">
+          <img aria-hidden="true" src="" alt="" id="card-img">
+          <img aria-hidden="true" src="" alt="" id="card-shadow">
+          <div id="loading-animation"></div>
+        </button>
 
-<section id="card-unset-info">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 34">
-    <path d="M187.905273,355.947266 C178.641602,355.947266 170.97168,348.277344 170.97168,339.013672 C170.97168,329.766602 178.625,322.080078 187.888672,322.080078 C197.135742,322.080078 204.838867,329.766602 204.838867,339.013672 C204.838867,348.277344 197.152344,355.947266 187.905273,355.947266 Z M187.905273,329.700195 C187.506836,329.700195 187.208008,329.849609 186.842773,330.214844 L180.716797,336.34082 C180.484375,336.573242 180.351562,336.888672 180.351562,337.270508 C180.351562,338.017578 180.899414,338.598633 181.663086,338.598633 C182.044922,338.598633 182.393555,338.432617 182.625977,338.200195 L184.867188,335.942383 L186.676758,333.767578 L186.543945,337.585938 L186.543945,346.999023 C186.543945,347.795898 187.108398,348.34375 187.905273,348.34375 C188.702148,348.34375 189.266602,347.795898 189.266602,346.999023 L189.266602,337.585938 L189.117188,333.750977 L190.959961,335.942383 L193.18457,338.200195 C193.416992,338.449219 193.749023,338.598633 194.147461,338.598633 C194.894531,338.598633 195.475586,338.017578 195.475586,337.270508 C195.475586,336.888672 195.30957,336.573242 195.09375,336.34082 L188.984375,330.214844 C188.619141,329.866211 188.303711,329.700195 187.905273,329.700195 Z" transform="translate(-170 -322)"/>
-  </svg>
-  <h4>Toca para ver tus tarjetas guardadas en Saldo Red</h4>
-</section>
+        <div id="card-set-info">
+          <section>
+            <figure id="main-info">
+              <figcaption aria-live="polite" role="alert">Cargando…</figcaption>
+              <div>
+                <h4 aria-hidden="true">Saldo</h4>
+                <h2 class="saldo" aria-hidden="true"></h2>
+              </div>
+              <div class="trencentral-hide merval-hide biotren-hide">
+                <h4 aria-hidden="true">Viajes Restantes</h4>
+                <h2 class="leftTrips" aria-hidden="true"></h2>
+              </div>
+            </figure>
+            <div class="buttons">
+              <button class="primary" id="getSaldo" aria-label="Actualizar saldo">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 18"><path d="M7.265625,9.09375 C6.78125,9.09375 6.3984375,8.7109375 6.3984375,8.21875 C6.3984375,7.984375 6.4921875,7.796875 6.6484375,7.6328125 L8.609375,5.6953125 C8.25,5.640625 7.84375,5.609375 7.3984375,5.609375 C4.484375,5.609375 2.1875,7.9453125 2.1875,10.90625 C2.1875,13.8203125 4.5234375,16.171875 7.4453125,16.171875 C10.359375,16.171875 12.7109375,13.8203125 12.7109375,10.90625 C12.7109375,10.359375 13.0625,9.984375 13.5859375,9.984375 C14.1171875,9.984375 14.4921875,10.359375 14.4921875,10.90625 C14.4921875,14.8125 11.34375,17.9609375 7.4453125,17.9609375 C3.5390625,17.9609375 0.3984375,14.8125 0.3984375,10.90625 C0.3984375,6.9921875 3.5,3.8828125 7.3984375,3.8828125 C7.7109375,3.8828125 8.03125,3.90625 8.34375,3.9453125 L6.640625,2.28125 C6.4921875,2.1171875 6.3984375,1.9296875 6.3984375,1.6875 C6.3984375,1.1953125 6.78125,0.796875 7.265625,0.796875 C7.515625,0.796875 7.71875,0.8828125 7.875,1.0546875 L11.078125,4.3125 C11.2578125,4.4921875 11.359375,4.7265625 11.359375,4.9609375 C11.359375,5.2109375 11.265625,5.4296875 11.078125,5.6171875 L7.875,8.8515625 C7.71875,9.015625 7.515625,9.09375 7.265625,9.09375 Z"/>
+                  </svg>
+                </span>Actualizar
+              </button>
+              <button class="secondary copyCardNum" aria-label="Copiar número de tarjeta">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 22"><path d="M2.6484375,21.171875 C0.921875,21.171875 0,20.25 0,18.5078125 L0,6.7734375 C0,5.0390625 0.9296875,4.109375 2.6484375,4.109375 L4.1875,4.109375 L4.1875,2.71875 C4.1875,0.9375 5.109375,0 6.8671875,0 L10.796875,0 C11.7578125,0 12.4921875,0.2578125 13.109375,0.875 L16.96875,4.8125 C17.609375,5.46875 17.84375,6.171875 17.84375,7.2578125 L17.84375,14.515625 C17.84375,16.296875 16.921875,17.234375 15.15625,17.234375 L13.640625,17.234375 L13.640625,18.5078125 C13.640625,20.2421875 12.71875,21.171875 11,21.171875 L2.6484375,21.171875 Z M13.640625,11.484375 L13.640625,15.4453125 L15.0859375,15.4453125 C15.7421875,15.4453125 16.0546875,15.125 16.0546875,14.4921875 L16.0546875,7.0546875 L12.4609375,7.0546875 C11.4453125,7.0546875 10.8671875,6.4765625 10.8671875,5.453125 L10.8671875,1.7890625 L6.9453125,1.7890625 C6.28125,1.7890625 5.9765625,2.1171875 5.9765625,2.7421875 L5.9765625,4.109375 L6.3984375,4.109375 C7.40625,4.109375 7.984375,4.265625 8.640625,4.9375 L12.8203125,9.1640625 C13.5,9.8515625 13.640625,10.390625 13.640625,11.484375 Z M12.65625,5.640625 L15.765625,5.640625 L12.28125,2.1015625 L12.28125,5.2578125 C12.28125,5.5234375 12.390625,5.640625 12.65625,5.640625 Z M2.8359375,19.3828125 L10.8046875,19.3828125 C11.515625,19.3828125 11.8515625,19.0234375 11.8515625,18.34375 L11.8515625,11.7734375 L7.8671875,11.7734375 C6.6328125,11.7734375 6.03125,11.1796875 6.03125,9.9375 L6.03125,5.8984375 L2.84375,5.8984375 C2.1328125,5.8984375 1.7890625,6.265625 1.7890625,6.9375 L1.7890625,18.34375 C1.7890625,19.0234375 2.1328125,19.3828125 2.8359375,19.3828125 Z M8.0234375,10.265625 L11.671875,10.265625 L7.5390625,6.078125 L7.5390625,9.78125 C7.5390625,10.1171875 7.6875,10.265625 8.0234375,10.265625 Z"/>
+                  </svg>
+                </span>Copiar
+              </button>
+              <button class="secondary renameThisCard" aria-label="Renombrar tarjeta">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 17"><path d="M16.0560283,2.33344854 L14.6547135,0.945735171 L15.3384876,0.289271961 C15.6845955,-0.0431144748 16.2079781,-0.109591762 16.5118777,0.197865691 L16.7566857,0.438845857 C17.1027936,0.779541953 17.069027,1.29474093 16.7229191,1.65205635 L16.0560283,2.33344854 Z M6.58449111,10.6264901 C6.36500807,10.7095867 6.10331676,10.4686065 6.20461662,10.235936 L6.9643656,8.5241459 L14.0469144,1.55234042 L15.4566708,2.93174412 L8.37412203,9.9035496 L6.58449111,10.6264901 Z M2.87860445,17 C1.01299863,17 0,16.01946 0,14.183025 L0,4.69339223 C0,2.86526683 1.01299863,1.88472685 2.87860445,1.88472685 L11.4722095,1.88472685 L9.53907045,3.78763919 L3.05587921,3.78763919 C2.32989685,3.78763919 1.93313906,4.14495461 1.93313906,4.90113375 L1.93313906,13.9752834 C1.93313906,14.7314626 2.32989685,15.0970877 3.05587921,15.0970877 L12.4683248,15.0970877 C13.0254741,15.0970877 13.4222319,14.7314626 13.4222319,13.9752834 L13.4222319,7.13643253 L15.3553709,5.23352019 L15.3553709,14.183025 C15.3553709,16.01946 14.3592556,17 12.6455996,17 L2.87860445,17 Z"/>
+                  </svg>
+                </span>Renombrar
+              </button>
+            </div>
+          </section>
 
-</div>
-</div>
+          <section class="info feature-banner trencentral-hide merval-hide biotren-hide" id="cargaDirectaSetupBanner" role="button" aria-label="Carga Directa. Configura Carga Directa para cargar tu tarjeta Bip o Pase escolar sin salir de Saldo Red.">
+            <img class="feature-banner-img" src="cargadirecta-feature.png" aria-hidden="true">
+            <div class="feature-banner-summary">
+              <h4>Carga Directa</h4>
+              <p>Carga tu tarjeta Bip o Pase sin salir de Saldo Red.</p>
+            </div>
+            <div class="full-height-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 6 9">
+                <path d="M0.928710938,8.86914062 C0.552734375,8.86914062 0.245117188,8.56640625 0.245117188,8.19042969 C0.245117188,8.00488281 0.323242188,7.82910156 0.459960938,7.69238281 L3.78027344,4.46972656 L0.459960938,1.2421875 C0.323242188,1.10546875 0.245117188,0.9296875 0.245117188,0.744140625 C0.245117188,0.368164062 0.552734375,0.0654296875 0.928710938,0.0654296875 C1.11425781,0.0654296875 1.27050781,0.133789062 1.40234375,0.260742188 L5.14746094,3.92285156 C5.31835938,4.08398438 5.39648438,4.25976562 5.39648438,4.46972656 C5.39648438,4.6796875 5.31347656,4.85058594 5.14746094,5.01660156 L1.40234375,8.67382812 C1.27539062,8.80078125 1.11914062,8.86914062 0.928710938,8.86914062 Z"/>
+              </svg>
+            </div>
+          </section>
 
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
-</body>
-</html>
+          <section class="cargaDirecta trencentral-hide merval-hide biotren-hide">
+            <h2 class="apple-system-headline">Carga Directa</h2>
+            <div class="buttons">
+              <button class="secondary addMoney1000" aria-label="Cargar 1000 pesos">$1.000</button>
+              <button class="secondary addMoney2000" aria-label="Cargar 2000 pesos">$2.000</button>
+              <button class="secondary addMoney5000" aria-label="Cargar 5000 pesos">$5.000</button>
+              <button class="secondary addMoney10000" aria-label="Cargar 10000 pesos">$10.000</button>
+              <button class="secondary addMoney20000" aria-label="Cargar 20000 pesos">$20.000</button>
+              <button class="tertiary red unlinkEmail">
+                <span class="icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 15"><path d="M137,602.056641 C133.362793,602.056641 130.366699,599.060547 130.366699,595.42334 C130.366699,591.786133 133.356445,588.783691 136.993652,588.783691 C140.630859,588.783691 143.633301,591.786133 143.633301,595.42334 C143.633301,599.060547 140.637207,602.056641 137,602.056641 Z M137,600.564941 C139.850098,600.564941 142.147949,598.273438 142.141628,595.42334 C142.141628,592.573242 139.84375,590.275391 136.993652,590.275391 C134.143555,590.275391 131.858398,592.573242 131.858398,595.42334 C131.858398,598.273438 134.149902,600.564941 137,600.564941 Z M134.511719,596.077148 C134.111816,596.077148 133.819824,595.823242 133.819824,595.436035 C133.819824,595.036133 134.105469,594.775879 134.511719,594.775879 L139.481934,594.775879 C139.894531,594.775879 140.16748,595.036133 140.16748,595.436035 C140.16748,595.823242 139.881836,596.077148 139.481934,596.077148 L134.511719,596.077148 Z" transform="translate(-130 -588)"/>
+                  </svg>
+                </span>Desvincular Correo
+              </button>
+            </div>
+          </section>
+
+          <section>
+            <h2 class="apple-system-headline">Información General</h2>
+
+            <figure id="estadoRed" class="info trencentral-hide merval-hide biotren-hide">
+              <header>
+                <h2>Estado de Red de Metro</h2>
+                <span class="blink"></span>
+              </header>
+              <div class="lineStatus L1">
+                <h3 class="apple-system-headline">Línea 1</h3>
+                <h4>San Pablo a Los Dominicos</h4>
+                <p class="status">Cargando…</p>
+              </div>
+              <div class="lineStatus L2">
+                <h3 class="apple-system-headline">Línea 2</h3>
+                <h4>La Cisterna a Vespucio Norte</h4>
+                <p class="status">Cargando…</p>
+              </div>
+              <div class="lineStatus L3">
+                <h3 class="apple-system-headline">Línea 3</h3>
+                <h4>Los Libertadores a Fernando Castillo Velasco</h4>
+                <p class="status">Cargando…</p>
+              </div>
+              <div class="lineStatus L4">
+                <h3 class="apple-system-headline">Línea 4</h3>
+                <h4>Tobalaba a Plaza de Puente Alto</h4>
+                <p class="status">Cargando…</p>
+              </div>
+              <div class="lineStatus L4A">
+                <h3 class="apple-system-headline">Línea 4A</h3>
+                <h4>Vicuña Mackenna a La Cisterna</h4>
+                <p class="status">Cargando…</p>
+              </div>
+              <div class="lineStatus L5">
+                <h3 class="apple-system-headline">Línea 5</h3>
+                <p>Plaza de Maipú a Vicente Valdés</p>
+                <p class="status">Cargando…</p>
+              </div>
+              <div class="lineStatus L6">
+                <h3 class="apple-system-headline">Línea 6</h3>
+                <h4>Cerrillos a Los Leones</h4>
+                <p class="status">Cargando…</p>
+              </div>
+              <button class="big tertiary openMap">Ver Mapa</button>
+              <footer>
+                <h2>Información de metro.cl</h2>
+              </footer>
+            </figure>
+
+            <figure id="fares" class="info trencentral-hide merval-hide biotren-hide">
+              <figcaption></figcaption>
+              <div>
+                <h4 aria-hidden="true">Tarifa</h4>
+                <h3 aria-hidden="true" class="currentFare"></h3>
+              </div>
+              <div>
+                <h4 aria-hidden="true">Bloque</h4>
+                <h3 aria-hidden="true" class="currentBlock"></h3>
+              </div>
+              <span class="blink"></span>
+            </figure>
+
+            <figure class="info">
+              <!-- Enlaces de Interés Bip -->
+              <div class="pase-hide tam-hide trencentral-hide merval-hide biotren-hide">
+                <h4>Enlaces de Interés</h4>
+                <span class="a" data-href="https://www.metro.cl/tu-viaje/tarifas">Tarifas</span>
+                <span class="a" data-href="https://saldo.red/privacidad">Privacidad</span>
+              </div>
+              <!-- Enlaces de Interés Pase -->
+              <div class="bip-hide tam-hide trencentral-hide merval-hide biotren-hide">
+                <h4>Enlaces de Interés</h4>
+                <span class="a" data-href="https://www.metro.cl/tu-viaje/tarifas">Tarifas</span>
+                <span class="a" data-href="https://www.tne.cl/">Tarjeta Nacional Estudiantil</span>
+                <span class="a" data-href="https://saldo.red/privacidad">Privacidad</span>
+              </div>
+              <!-- Enlaces de Interés TAM -->
+              <div class="bip-hide pase-hide trencentral-hide merval-hide biotren-hide">
+                <h4>Enlaces de Interés</h4>
+                <span class="a" data-href="https://www.metro.cl/tu-viaje/tarifas">Tarifas</span>
+                <span class="a" data-href="http://www.tarjetabip.cl/tam-tarjeta-adulto-mayor.php">Tarjeta Adulto Mayor</span>
+                <span class="a" data-href="https://saldo.red/privacidad">Privacidad</span>
+              </div>
+              <!-- Enlaces de Interés TrenCentral -->
+              <div class="bip-hide pase-hide tam-hide merval-hide biotren-hide">
+                <h4>Enlaces de Interés</h4>
+                <span class="a" data-href="https://www.trencentral.cl/">TrenCentral</span>
+                <span class="a" data-href="https://saldo.red/privacidad">Privacidad</span>
+              </div>
+              <!-- Enlaces de Interés MerVal -->
+              <div class="bip-hide pase-hide tam-hide trencentral-hide biotren-hide">
+                <h4>Enlaces de Interés</h4>
+                <span class="a" data-href="https://www.metrovalparaiso.cl/">Metro de Valparaíso</span>
+                <span class="a" data-href="https://www.metrovalparaiso.cl/tarifas/">Tarifas</span>
+                <span class="a" data-href="https://saldo.red/privacidad">Privacidad</span>
+              </div>
+              <!-- Enlaces de Interés BioTren -->
+              <div class="bip-hide pase-hide tam-hide trencentral-hide merval-hide">
+                <h4>Enlaces de Interés</h4>
+                <span class="a" data-href="http://www.fesur.cl/">FeSur</span>
+                <span class="a" data-href="http://www.fesur.cl/fesur/planificatuviaje/#seccion-horarios?SERVICIO=BIOTREN">Planifica tu Viaje</span>
+                <span class="a" data-href="https://saldo.red/privacidad">Privacidad</span>
+              </div>
+            </figure>
+
+            <figure class="info">
+              <div>
+                <h4>Tu información está protegida</h4>
+                <p>Saldo Red no recopila nada de ti, y utiliza el almacenamiento local de tu dispositivo para recordar tus tarjetas.</p>
+              </div>
+            </figure>
+
+          </section>
+
+          <section>
+            <h2 class="apple-system-headline thisCardTitle">Pase (•••••982)</h2>
+            <button class="big tertiary renameThisCard">Renombrar Tarjeta</button>
+            <button class="big tertiary addCardButton">Agregar Tarjeta</button>
+            <button class="big tertiary red deleteThisCard">Eliminar Tarjeta</button>
+          </section>
+        </div>
+
+        <section id="card-unset-info">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 34">
+            <path d="M187.905273,355.947266 C178.641602,355.947266 170.97168,348.277344 170.97168,339.013672 C170.97168,329.766602 178.625,322.080078 187.888672,322.080078 C197.135742,322.080078 204.838867,329.766602 204.838867,339.013672 C204.838867,348.277344 197.152344,355.947266 187.905273,355.947266 Z M187.905273,329.700195 C187.506836,329.700195 187.208008,329.849609 186.842773,330.214844 L180.716797,336.34082 C180.484375,336.573242 180.351562,336.888672 180.351562,337.270508 C180.351562,338.017578 180.899414,338.598633 181.663086,338.598633 C182.044922,338.598633 182.393555,338.432617 182.625977,338.200195 L184.867188,335.942383 L186.676758,333.767578 L186.543945,337.585938 L186.543945,346.999023 C186.543945,347.795898 187.108398,348.34375 187.905273,348.34375 C188.702148,348.34375 189.266602,347.795898 189.266602,346.999023 L189.266602,337.585938 L189.117188,333.750977 L190.959961,335.942383 L193.18457,338.200195 C193.416992,338.449219 193.749023,338.598633 194.147461,338.598633 C194.894531,338.598633 195.475586,338.017578 195.475586,337.270508 C195.475586,336.888672 195.30957,336.573242 195.09375,336.34082 L188.984375,330.214844 C188.619141,329.866211 188.303711,329.700195 187.905273,329.700195 Z" transform="translate(-170 -322)"/>
+          </svg>
+          <h4>Toca para ver tus tarjetas guardadas en Saldo Red</h4>
+        </section>
+
+      </div>
+    </div>
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+  </html>
