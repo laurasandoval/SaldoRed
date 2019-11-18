@@ -351,7 +351,7 @@
         })
         .fail(function() {
           onError();
-        })
+        });
       };
 
       function onError(error) {
@@ -530,20 +530,7 @@
           }
 
           if (response.saldo == undefined || response.saldo == null || response.saldo === "") {
-            element.status = "error";
-            if (currentCard == data['lastCard'][0].type && element.num == data['lastCard'][0].num) {
-              $("#main-info figcaption").html("Error al consultar la tarjeta.");
-              cardLoading("stop");
-              TapticEngine.notification({
-                type: "error" // success | warning | error
-              });
-              data['lastCard'][0].saldo = "···";
-              data['lastCard'][0].leftTrips = "···";
-
-              console.log("estamos en getSaldo y la data la vamos a guardar así:");
-              localStorage.setItem('data', JSON.stringify(data));
-              console.log(localStorage.getItem("data"));
-            }
+            onError(element, index, array);
           } else {
             element.status = "ok";
             element.saldo = APISaldoWithDots;
@@ -585,7 +572,29 @@
           console.log("estamos en getSaldo y voy a pasar a updateSavedCards…");
           updateSavedCards();
 
+        })
+        .fail(function() {
+          onError(element, index, array);
         });
+
+        function onError(element, index, array) {
+          element.status = "error";
+          if (currentCard == data['lastCard'][0].type && element.num == data['lastCard'][0].num) {
+            $("#main-info figcaption").html("Error al consultar la tarjeta.");
+            cardLoading("stop");
+            TapticEngine.notification({
+              type: "error" // success | warning | error
+            });
+            data['lastCard'][0].saldo = "···";
+            data['lastCard'][0].leftTrips = "···";
+
+            showNotification("Ocurrió un error al consultar tu tarjeta", 5000);
+
+            console.log("estamos en getSaldo y la data la vamos a guardar así:");
+            localStorage.setItem('data', JSON.stringify(data));
+            console.log(localStorage.getItem("data"));
+          }
+        }
       });
     }
 
@@ -792,6 +801,9 @@
     }
 
     function getStatus() {
+
+      $(".lineStatus .status").removeClass("red").removeClass("green").html("Cargando…")
+
       $.ajax({
         "async": true,
         "crossDomain": true,
