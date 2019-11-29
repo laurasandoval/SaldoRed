@@ -181,7 +181,7 @@
       setTimeout(function() {
         closeModal();
       }, 200);
-      $("#card").attr("aria-label","Tarjeta " + card.name + ". Toca para ver tus tarjetas guardadas en Saldo Red.")
+      $("#card").attr("aria-label","Tarjeta " + card.name + ". Toca dos veces para ver tus tarjetas guardadas en Saldo Red.")
     }
 
     function getTarifa() {
@@ -264,7 +264,7 @@
         });
         $("#app, .modal").animate({ scrollTop: 0 }, 300);
 
-        $("#card").attr("aria-label","Tarjeta en blanco. Toca para ver tus tarjetas guardadas en Saldo Red.");
+        $("#card").attr("aria-label","Tarjeta en blanco. Toca dos veces para ver tus tarjetas guardadas en Saldo Red.");
         $("#card-img, #card-shadow").attr({
           "src": "card-null.png",
           "alt": "Tarjeta en blanco"
@@ -631,7 +631,7 @@
         checkEmail();
         closeModal("cargaDirectaSetup");
         setTimeout(function() {
-          showNotification('<span class="icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 15"><path fill="#1D73E8" d="M148.769531,761.056641 C145.132324,761.056641 142.13623,758.060547 142.13623,754.42334 C142.13623,750.786133 145.125977,747.783691 148.763184,747.783691 C152.400391,747.783691 155.402832,750.786133 155.402832,754.42334 C155.402832,758.060547 152.406738,761.056641 148.769531,761.056641 Z M147.912598,757.787598 C148.166504,757.787598 148.39502,757.660645 148.547363,757.425781 L151.771973,752.461914 C151.867188,752.30957 151.937012,752.138184 151.937012,751.98584 C151.937012,751.617676 151.613281,751.370117 151.26416,751.370117 C151.035645,751.370117 150.845215,751.490723 150.686523,751.738281 L147.893555,756.194336 L146.439941,754.391602 C146.274902,754.194824 146.103516,754.105957 145.887695,754.105957 C145.532227,754.105957 145.233887,754.391602 145.233887,754.759766 C145.233887,754.931152 145.297363,755.096191 145.424316,755.248535 L147.252441,757.444824 C147.436523,757.666992 147.645996,757.787598 147.912598,757.787598 Z" transform="translate(-142 -747)"/></svg></span> Correo Vinculado', 4000);
+          showNotification('<span class="icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><path fill-rule="nonzero" d="M7.003174 13.891602c-3.541992 0-6.47461-2.932618-6.47461-6.47461 0-3.535644 2.92627-6.474609 6.468262-6.474609 3.535645 0 6.480957 2.938965 6.480957 6.474609 0 3.541992-2.938965 6.47461-6.474609 6.47461zM5.016357 6.813965c.387207 0 .710938-.336426.710938-.818848 0-.476074-.323731-.8125-.710938-.8125-.380859 0-.698242.336426-.698242.8125 0 .482422.317383.818848.698242.818848zm3.821289 0c.38086 0 .70459-.336426.70459-.818848 0-.476074-.32373-.8125-.70459-.8125-.387207 0-.704589.336426-.704589.8125 0 .482422.317382.818848.704589.818848zm-1.923339 3.738769c1.580566 0 2.5708-1.123535 2.5708-1.54248 0-.088867-.063476-.126953-.1333-.076172-.476075.393555-1.282227.793457-2.4375.793457-1.155274 0-1.986817-.418945-2.443848-.787109-.069824-.050782-.126953-.019043-.126953.069824 0 .418945.983887 1.54248 2.570801 1.54248z"/></svg></span> Correo Vinculado', 4000);
         }, 400);
       } else {
         $("#email").removeClass("shake");
@@ -674,6 +674,10 @@
       var iframeURL = iframe.contentWindow.location.href;
       if (iframeURL.match(/(https:\/\/cargatubip\.metro\.cl\/CargaTuBipRest\/falloCarga\.xhtml).*/gi)) {
         closeModal("cargaDirecta");
+        showNotification('Ocurrió un error al cargar tu tarjeta', 4000);
+        setTimeout(function() {
+          showNotification("Si ves algún cobro en tu banco, este debería ser devuelto en algunas horas", 6000);
+        }, 4500);
       } else if (iframeURL.match(/(https:\/\/webpay3g\.transbank\.cl\/webpayserver\/auth_emisor\.cgi).*/gi)) {
         var formUrl = iframe.contentDocument.getElementById("paso").action;
         var formToken = iframe.contentDocument.getElementsByName("token_ws")[0].value;
@@ -699,7 +703,7 @@
           var txData = JSON.parse(responseHTML[3].textContent.trim())
           // JSON tiene los datos de respuesta de haber hecho el pago. Acá puedes hacer lo que quieras con ellos! (como mandarlos a una función que los muestre en un modal)
           console.log(txData);
-          showNotification('<span class="icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 15"><path fill="#1D73E8" d="M148.769531,761.056641 C145.132324,761.056641 142.13623,758.060547 142.13623,754.42334 C142.13623,750.786133 145.125977,747.783691 148.763184,747.783691 C152.400391,747.783691 155.402832,750.786133 155.402832,754.42334 C155.402832,758.060547 152.406738,761.056641 148.769531,761.056641 Z M147.912598,757.787598 C148.166504,757.787598 148.39502,757.660645 148.547363,757.425781 L151.771973,752.461914 C151.867188,752.30957 151.937012,752.138184 151.937012,751.98584 C151.937012,751.617676 151.613281,751.370117 151.26416,751.370117 C151.035645,751.370117 150.845215,751.490723 150.686523,751.738281 L147.893555,756.194336 L146.439941,754.391602 C146.274902,754.194824 146.103516,754.105957 145.887695,754.105957 C145.532227,754.105957 145.233887,754.391602 145.233887,754.759766 C145.233887,754.931152 145.297363,755.096191 145.424316,755.248535 L147.252441,757.444824 C147.436523,757.666992 147.645996,757.787598 147.912598,757.787598 Z" transform="translate(-142 -747)"/></svg></span> Tarjeta Cargada', 4000);
+          showNotification('<span class="icon blue"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14"><path fill-rule="nonzero" d="M7.003174 13.891602c-3.541992 0-6.47461-2.932618-6.47461-6.47461 0-3.535644 2.92627-6.474609 6.468262-6.474609 3.535645 0 6.480957 2.938965 6.480957 6.474609 0 3.541992-2.938965 6.47461-6.474609 6.47461zM5.016357 6.813965c.387207 0 .710938-.336426.710938-.818848 0-.476074-.323731-.8125-.710938-.8125-.380859 0-.698242.336426-.698242.8125 0 .482422.317383.818848.698242.818848zm3.821289 0c.38086 0 .70459-.336426.70459-.818848 0-.476074-.32373-.8125-.70459-.8125-.387207 0-.704589.336426-.704589.8125 0 .482422.317382.818848.704589.818848zm-1.923339 3.738769c1.580566 0 2.5708-1.123535 2.5708-1.54248 0-.088867-.063476-.126953-.1333-.076172-.476075.393555-1.282227.793457-2.4375.793457-1.155274 0-1.986817-.418945-2.443848-.787109-.069824-.050782-.126953-.019043-.126953.069824 0 .418945.983887 1.54248 2.570801 1.54248z"/></svg></span> Tarjeta Cargada', 4000);
           setTimeout(function() {
             showNotification("Recuerda validar tu carga en un tótem o InfoBip", 5000);
           }, 4500);
@@ -820,9 +824,9 @@
             }
             if (closedStations > 0) {
               if (closedStations == content.stations.length) {
-                $(".lineStatus." + currentLine + " .status").addClass("red").html("Cerrada");
+                $(".lineStatus." + currentLine + " .status").addClass("red").html("No disponible");
               } else {
-                $(".lineStatus." + currentLine + " .status").addClass("red").html(closedStations + " Estaciones cerradas");
+                $(".lineStatus." + currentLine + " .status").addClass("red").html(closedStations + " Estaciones afectadas");
               }
             } else {
               $(".lineStatus." + currentLine + " .status").addClass("green").html("Disponible");
@@ -865,12 +869,12 @@
         getSaldo();
       }
 
-      // Actualiza la tarifa cada 1 minuto.
+      // Actualiza la tarifa cada 2 minutos.
       setInterval(function() {
         getTarifa();
         getStatus();
         // getAccuracy();
-      }, 60 * 1000); // 60 * 1000 milsec
+      }, 60 * 2000); // 60 * 2000 milsec
 
       var touchmoved;
 

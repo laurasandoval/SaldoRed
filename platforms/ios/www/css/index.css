@@ -70,6 +70,7 @@
 
   /* Other */
   --saldored-modal-bottom-float-background: rgba(255,255,255,.8);
+  --saldored-custom-green-rgb: 65,163,17;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -642,6 +643,41 @@ and (max-device-height: 568px) {
   }
 }
 
+/* iPad Mini and above */
+@media only screen
+and (min-device-width : 768px)
+and (min-device-height : 1024px),
+only screen
+and (min-device-height : 768px)
+and (min-device-width : 1024px) {
+  #app {
+    border-radius: 0;
+  }
+
+  #app-content {
+    display: block!important;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .modal[data-open="true"] ~ #app, .modal[data-open="true"][data-focused="false"], .modal[data-open="true"] ~ .modal[data-open="true"] ~ #app {
+    -webkit-transform: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  .modal {
+    max-width: 420px;
+    margin: auto;
+    height: 80vh;
+  }
+
+  .modal[data-open="true"][data-focused="true"] {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
 #card {
   -webkit-appearance: none;
   border: none;
@@ -848,30 +884,45 @@ button.big:active, .button.big:active {
   color: var(--ios-system-blue);
 }
 
+.icon.red {
+  fill: var(--ios-system-red);
+  color: var(--ios-system-red);
+}
+
+.icon.green {
+  fill: rgba(var(--saldored-custom-green-rgb),1);
+  color: rgba(var(--saldored-custom-green-rgb),1);
+}
+
 /* Billetes */
 button.addMoney1000, .button.addMoney1000 {
-  background: rgba(78,139,12,0.15);
-  color: rgba(78,139,12,1);
+  background: rgba(var(--saldored-custom-green-rgb),.15);
+  color: rgba(var(--saldored-custom-green-rgb),1);
+  font-family: SF Pro Rounded, system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;;
 }
 
 button.addMoney2000, .button.addMoney2000 {
-  background: rgba(124,48,190,0.15);
+  background: rgba(124,48,190,.15);
   color: rgba(124,48,190,1);
+  font-family: SF Pro Rounded, system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;;
 }
 
 button.addMoney5000, .button.addMoney5000 {
-  background: rgba(208,2,65,0.15);
+  background: rgba(208,2,65,.15);
   color: rgba(208,2,65,1);
+  font-family: SF Pro Rounded, system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;;
 }
 
 button.addMoney10000, .button.addMoney10000 {
-  background: rgba(2,64,208,0.15);
+  background: rgba(2,64,208,.15);
   color: rgba(2,64,208,1);
+  font-family: SF Pro Rounded, system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;;
 }
 
 button.addMoney20000, .button.addMoney20000 {
-  background: rgba(207,89,44,0.15);
+  background: rgba(207,89,44,.15);
   color: rgba(207,89,44,1);
+  font-family: SF Pro Rounded, system-ui, -apple-system, -apple-system-font, 'Segoe UI', 'Roboto', sans-serif;;
 }
 
 button.card-selector {
@@ -981,7 +1032,7 @@ body[data-card-type="BioTren"] .biotren-hide {
 }
 
 #noSavedCards.info svg {
-  fill: var(--ios-secondary-label-color);
+  fill: var(--ios-tertiary-label-color);
   grid-column: 1;
   width: 20px;
   height: auto;
@@ -1088,7 +1139,7 @@ body[data-error="true"] .info.error {
 }
 
 #estadoRed .lineStatus .status.green {
-  color: var(--ios-system-green);
+  color: rgba(var(--saldored-custom-green-rgb),1);
 }
 
 #estadoRed .lineStatus .status.red {
@@ -1100,7 +1151,7 @@ body[data-error="true"] .info.error {
 }
 
 .info.saldoAccuracy svg.info-high path {
-  fill: var(--ios-system-green);
+  fill: rgba(var(--saldored-custom-green-rgb),1);
 }
 
 .info.saldoAccuracy.high .info-high {
@@ -1138,7 +1189,7 @@ a.inline, .a.inline {
   display: inline-block;
   width: 6px;
   height: 6px;
-  background: var(--ios-secondary-label-color);
+  background: var(--ios-tertiary-label-color);
   border-radius: 100px;
   text-decoration: blink;
   -webkit-animation-name: blinker;
