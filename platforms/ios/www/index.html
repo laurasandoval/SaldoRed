@@ -492,13 +492,13 @@
       data.savedCards.forEach(function(element, index, array) {
         var currentCard = element.type;
         if (currentCard == "Bip") {
-          var APIUrl = "https://api.adderou.cl/bip/new.php?n=";
+          var APIUrl = "https://api.xor.cl/bip/new.php?n=";
           var tarifa = tarifaBip;
         } else if (currentCard == "Pase") {
-          var APIUrl = "https://api.adderou.cl/bip/new.php?n=";
+          var APIUrl = "https://api.xor.cl/bip/new.php?n=";
           var tarifa = tarifaPase;
         } else if (currentCard == "TAM") {
-          var APIUrl = "https://api.adderou.cl/bip/new.php?n=";
+          var APIUrl = "https://api.xor.cl/bip/new.php?n=";
           var tarifa = tarifaPase;
         } else if (currentCard == "TrenCentral") {
           var APIUrl = "https://saldo.red/api/trencentral/?tarjeta=";
@@ -811,7 +811,7 @@
       $.ajax({
         "async": true,
         "crossDomain": true,
-        "url": "https://api.adderou.cl/metro/"
+        "url": "https://api.xor.cl/metro/"
       }).done(function (response) {
         console.log(response);
         // Por cada línea…
@@ -826,7 +826,11 @@
               if (closedStations == content.stations.length) {
                 $(".lineStatus." + currentLine + " .status").addClass("red").html("No disponible");
               } else {
-                $(".lineStatus." + currentLine + " .status").addClass("red").html(closedStations + " Estaciones afectadas");
+                if (closedStations == 1) {
+                  $(".lineStatus." + currentLine + " .status").addClass("red").html(closedStations + " estación afectada");
+                } else {
+                  $(".lineStatus." + currentLine + " .status").addClass("red").html(closedStations + " estaciones afectadas");
+                }
               }
             } else {
               $(".lineStatus." + currentLine + " .status").addClass("green").html("Disponible");
@@ -1153,11 +1157,11 @@
       </div>
       <div class="content">
 
-        <section>
+        <!-- <section>
           <img class="feature-img" src="cargadirecta-feature.png" alt="Ícono de Carga Directa">
           <h2 class="feature-title">Carga Directa</h2>
           <p class="feature-description">Configura Carga Directa para cargar tu tarjeta Bip o Pase sin salir de Saldo Red.</p>
-        </section>
+        </section> -->
 
         <section class="inputfield">
           <input aria-label="Correo electrónico" required autocomplete="email" id="email" type="text" value="" placeholder="francisca@ejemplo.com" onkeydown="if (event.keyCode == 13) setEmail()">
@@ -1303,7 +1307,7 @@
             </div>
           </section>
 
-          <section class="cargaDirecta trencentral-hide merval-hide biotren-hide">
+          <!-- <section class="cargaDirecta trencentral-hide merval-hide biotren-hide">
             <h2 class="apple-system-headline">Carga Directa</h2>
             <div class="buttons">
               <button class="secondary addMoney1000" aria-label="Cargar 1000 pesos">$1.000</button>
@@ -1318,7 +1322,7 @@
                 </span>Desvincular Correo
               </button>
             </div>
-          </section>
+          </section> -->
 
           <section>
             <h2 class="apple-system-headline">Información General</h2>
