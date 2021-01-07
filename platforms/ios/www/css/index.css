@@ -368,7 +368,7 @@ body.loaded {
 .close {
   position: relative;
   width: 28px;
-  height: auto;
+  height: 28px;
   display: grid;
   background: var(--ios-tertiary-fill-color);
   border-radius: 100px;
