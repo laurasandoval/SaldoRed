@@ -504,7 +504,7 @@
           var APIUrl = "https://saldo.red/api/trencentral/?tarjeta=";
           var tarifa = 0;
         } else if (currentCard == "MerVal") {
-          var APIUrl = "https://saldo.red/api/merval/?tarjeta=";
+          var APIUrl = "https://ms5.metrovalparaiso.cl/api/metroVal/getBalance/?cardNumber=";
           var tarifa = 0;
         } else if (currentCard == "BioTren") {
           var APIUrl = "https://saldo.red/api/biotren/?tarjeta=";
@@ -512,70 +512,78 @@
         };
 
         $.ajax({
-          "async": true,
-          "crossDomain": true,
-          // API
-          "url": APIUrl + element.num
-        }).done(function (response) {
+          async: true,
+          url: APIUrl + element.num,
+          type: 'GET',
+          contentType: 'application/json; charset=utf-8',
+          headers: {
+            Authorization: 'token=OVBKVfrH1$:^8[Nt[`cdj2rX*r*3lx'
+          },
+          success: function (response) {
 
-          console.log(response);
+            console.log(response);
 
-          var rawSaldo = response.saldo;
-          var APISaldo = '$' + response.saldo;
-          var APISaldoWithDots = APISaldo.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+            var saldoRoute = currentCard === "MerVal" ? response.data.nSaldo : response.saldo;
 
-          saldoUpdateCounter++;
-          if (saldoUpdateCounter === array.length) {
-            // Terminaron de cargar todos los saldos.
-          }
+            var rawSaldo = saldoRoute;
+            var APISaldo = '$' + saldoRoute;
+            var APISaldoWithDots = APISaldo.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
 
-          if (response.saldo == undefined || response.saldo == null || response.saldo === "") {
-            onError(element, index, array);
-          } else {
-            element.status = "ok";
-            element.saldo = APISaldoWithDots;
+            console.log("WENA MALDITO MADAFAKAAAAA: " + saldoRoute);
 
-            if (rawSaldo >= 0 && tarifa > 1) {
-              element.leftTrips = Math.floor(rawSaldo / tarifa);
-            } else if (rawSaldo <= 0 && tarifa > 1) {
-              element.leftTrips = 0;
-            } else {
-              element.leftTrips = null;
-            };
-
-            if (currentCard == data['lastCard'][0].type && element.num == data['lastCard'][0].num) {
-              if (element.leftTrips != null) {
-                $("#main-info figcaption").html("Saldo: " + element.saldo.replace(/\D/gi, "") + " pesos. " + element.leftTrips + " viajes restantes.");
-              } else {
-                $("#main-info figcaption").html("Saldo: " + element.saldo.replace(/\D/gi, "") + " pesos.");
-              }
-              $("#main-info .saldo").html(element.saldo);
-              $("#main-info .leftTrips").html(element.leftTrips);
-              cardLoading('stop');
-              if ($("#app").attr("aria-hidden") == "false") {
-                TapticEngine.notification({
-                  type: "success" // success | warning | error
-                });
-              }
-              data['lastCard'][0].saldo = element.saldo;
-              data['lastCard'][0].leftTrips = element.leftTrips;
-
-              console.log("estamos en getSaldo y la data la vamos a guardar así:");
-              localStorage.setItem('data', JSON.stringify(data));
-              console.log(localStorage.getItem("data"));
-
+            saldoUpdateCounter++;
+            if (saldoUpdateCounter === array.length) {
+              // Terminaron de cargar todos los saldos.
             }
+
+            if (saldoRoute == undefined || saldoRoute == null || saldoRoute === "") {
+              onError(element, index, array);
+            } else {
+              element.status = "ok";
+              element.saldo = APISaldoWithDots;
+
+              if (rawSaldo >= 0 && tarifa > 1) {
+                element.leftTrips = Math.floor(rawSaldo / tarifa);
+              } else if (rawSaldo <= 0 && tarifa > 1) {
+                element.leftTrips = 0;
+              } else {
+                element.leftTrips = null;
+              };
+
+              if (currentCard == data['lastCard'][0].type && element.num == data['lastCard'][0].num) {
+                if (element.leftTrips != null) {
+                  $("#main-info figcaption").html("Saldo: " + element.saldo.replace(/\D/gi, "") + " pesos. " + element.leftTrips + " viajes restantes.");
+                } else {
+                  $("#main-info figcaption").html("Saldo: " + element.saldo.replace(/\D/gi, "") + " pesos.");
+                }
+                $("#main-info .saldo").html(element.saldo);
+                $("#main-info .leftTrips").html(element.leftTrips);
+                cardLoading('stop');
+                if ($("#app").attr("aria-hidden") == "false") {
+                  TapticEngine.notification({
+                    type: "success" // success | warning | error
+                  });
+                }
+                data['lastCard'][0].saldo = element.saldo;
+                data['lastCard'][0].leftTrips = element.leftTrips;
+
+                console.log("estamos en getSaldo y la data la vamos a guardar así:");
+                localStorage.setItem('data', JSON.stringify(data));
+                console.log(localStorage.getItem("data"));
+
+              }
+            }
+
+            $("body").attr("data-status",element.status);
+            // Para actualizar los estados en las tarjetas guardadas.
+            console.log("estamos en getSaldo y voy a pasar a updateSavedCards…");
+            updateSavedCards();
+
+          },
+          error: function() {
+            onError(element, index, array);
           }
-
-          $("body").attr("data-status",element.status);
-          // Para actualizar los estados en las tarjetas guardadas.
-          console.log("estamos en getSaldo y voy a pasar a updateSavedCards…");
-          updateSavedCards();
-
         })
-        .fail(function() {
-          onError(element, index, array);
-        });
 
         function onError(element, index, array) {
           element.status = "error";
