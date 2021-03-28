@@ -186,6 +186,57 @@ body.loaded {
   color: var(--ios-system-red);
 }
 
+#timeToDieOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-flow: column;
+  background: var(--ios-system-background-primary);
+  transition: opacity 1s ease 0s;
+  padding: 32px;
+  box-sizing: border-box;
+  z-index: 9999999;
+}
+
+#timeToDieOverlay[data-its-time-to-die="true"] {
+  opacity: 1;
+  visibility: visible;
+}
+
+#timeToDieOverlay .app-icon {
+  width: 75px;
+  height: auto;
+  margin-bottom: 21px;
+}
+
+#timeToDieOverlayTitle {
+  font: -apple-system-title0;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+#timeToDieOverlayDescription {
+  font: -apple-system-body;
+  color: var(--ios-secondary-label-color);
+  margin-bottom: 21px;
+}
+
+#timeToDieOverlay[data-hide-siblings="true"] ~ * {
+  display: none;
+}
+
+#timeToDieOverlayAction {
+  font: -apple-system-headline;
+}
+
 #notifications {
   display: flex;
   align-items: center;

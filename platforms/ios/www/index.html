@@ -11,6 +11,8 @@
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript">
 
+  timeToDie = false
+
   data = {
     "savedCards": [], "lastCard": [{"type": "undefined", "num": "undefined", "name": "undefined", "saldo": "···", "leftTrips": "···", "status": "ok"}]
   };
@@ -55,6 +57,33 @@
     spinner = '<svg class="spinner" viewBox="0 0 64 64"><g stroke-width="4" stroke-linecap="round"><line y1="12" y2="20" transform="translate(32,32) rotate(180)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(210)"><animate attributeName="stroke-opacity" dur="750ms" values="0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(240)"><animate attributeName="stroke-opacity" dur="750ms" values=".1;0;1;.85;.7;.65;.55;.45;.35;.25;.15;.1" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(270)"><animate attributeName="stroke-opacity" dur="750ms" values=".15;.1;0;1;.85;.7;.65;.55;.45;.35;.25;.15" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(300)"><animate attributeName="stroke-opacity" dur="750ms" values=".25;.15;.1;0;1;.85;.7;.65;.55;.45;.35;.25" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(330)"><animate attributeName="stroke-opacity" dur="750ms" values=".35;.25;.15;.1;0;1;.85;.7;.65;.55;.45;.35" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(0)"><animate attributeName="stroke-opacity" dur="750ms" values=".45;.35;.25;.15;.1;0;1;.85;.7;.65;.55;.45" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(30)"><animate attributeName="stroke-opacity" dur="750ms" values=".55;.45;.35;.25;.15;.1;0;1;.85;.7;.65;.55" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(60)"><animate attributeName="stroke-opacity" dur="750ms" values=".65;.55;.45;.35;.25;.15;.1;0;1;.85;.7;.65" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(90)"><animate attributeName="stroke-opacity" dur="750ms" values=".7;.65;.55;.45;.35;.25;.15;.1;0;1;.85;.7" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(120)"><animate attributeName="stroke-opacity" dur="750ms" values=".85;.7;.65;.55;.45;.35;.25;.15;.1;0;1;.85" repeatCount="indefinite"></animate></line><line y1="12" y2="20" transform="translate(32,32) rotate(150)"><animate attributeName="stroke-opacity" dur="750ms" values="1;.85;.7;.65;.55;.45;.35;.25;.15;.1;0;1" repeatCount="indefinite"></animate></line></g></svg>'
 
     TESelection = "end";
+
+    // This endpoint will tell us if its time to update to the native version of Saldo Red or not.
+    // Funniest function title I've ever made, I gotta admit.
+    function checkIfItsTimeToDie() {
+      $.ajax({
+          "async": true,
+          "crossDomain": true,
+          // API
+          "url": "https://saldo.red/api/legacy-update/"
+        }).done(function (response) {
+          timeToDie = response.legacyAppIsDeprecated
+          console.log("IS IT TIME TO DIE????")
+          console.log(response.legacyAppIsDeprecated)
+          
+          $("#timeToDieOverlayTitle").html(response.downloadNewAppTitle)
+          $("#timeToDieOverlayDescription").html(response.downloadNewAppDescription)
+          $("#timeToDieOverlayAction").attr("data-url", response.downloadNewAppURL)
+          $("#timeToDieOverlayAction").html(response.downloadNewAppActionTitle)
+          $("#timeToDieOverlay").attr("data-its-time-to-die", response.legacyAppIsDeprecated)
+          setTimeout(() => {
+            $("#timeToDieOverlay").attr("data-hide-siblings", response.legacyAppIsDeprecated)
+          }, 1000)
+        })
+        .fail(function() {
+          console.log("An error ocurred while checking if it was time to die or not.")
+        });
+    }
 
     function openModal(modal) {
       $("#app, .modal").animate({ scrollTop: 0 }, 300);
@@ -431,9 +460,9 @@
           showNotification("Número Inválido", 3000);
           setTimeout(function() {
             $("#transitCard").addClass("shake");
-            TapticEngine.notification({
-              type: "error" // success | warning | error
-            });
+            // TapticEngine.notification({
+            //   type: "error" // success | warning | error
+            // });
           }, 10);
           setTimeout(function() {
             $("#transitCard").removeClass("shake");
@@ -560,9 +589,9 @@
                 $("#main-info .leftTrips").html(element.leftTrips);
                 cardLoading('stop');
                 if ($("#app").attr("aria-hidden") == "false") {
-                  TapticEngine.notification({
-                    type: "success" // success | warning | error
-                  });
+                  // TapticEngine.notification({
+                  //   type: "success" // success | warning | error
+                  // });
                 }
                 data['lastCard'][0].saldo = element.saldo;
                 data['lastCard'][0].leftTrips = element.leftTrips;
@@ -590,9 +619,9 @@
           if (currentCard == data['lastCard'][0].type && element.num == data['lastCard'][0].num) {
             $("#main-info figcaption").html("Error al consultar la tarjeta.");
             cardLoading("stop");
-            TapticEngine.notification({
-              type: "error" // success | warning | error
-            });
+            // TapticEngine.notification({
+            //   type: "error" // success | warning | error
+            // });
             data['lastCard'][0].saldo = "···";
             data['lastCard'][0].leftTrips = "···";
 
@@ -646,9 +675,9 @@
         setTimeout(function() {
           $("#email").addClass("shake");
           showNotification('Correo Inválido', 3000);
-          TapticEngine.notification({
-            type: "error" // success | warning | error
-          });
+          // TapticEngine.notification({
+          //   type: "error" // success | warning | error
+          // });
         }, 10);
         setTimeout(function() {
           $("#email").removeClass("shake");
@@ -850,6 +879,8 @@
 
     $(document).ready(function() {
 
+      checkIfItsTimeToDie()
+
       if (localStorage.getItem('data') == null) {
 
         console.log("estamos iniciando la app y la data la vamos a guardar así:");
@@ -889,6 +920,16 @@
       }, 60 * 2000); // 60 * 2000 milsec
 
       var touchmoved;
+
+      $("#timeToDieOverlayAction").on("touchend", function(e) {
+        if(touchmoved != true){
+          openUrl($(this).attr('data-url'));
+        }
+      }).on("touchmove", function(e) {
+        touchmoved = true;
+      }).on("touchstart", function() {
+        touchmoved = false;
+      });
 
       $("#card").on("touchend", function(e) {
         if(touchmoved != true){
@@ -1081,6 +1122,14 @@
     </script>
   </head>
   <body data-card-type="Pase" data-card-name="El pase…" data-card-num="77200982" data-status="ok">
+
+    <!-- Time to die overlay -->
+    <div id="timeToDieOverlay" data-its-time-to-die="false" data-hide-siblings="false">
+      <img class="app-icon" src="SaldoRed-Icon.png" alt="Ícono de Saldo Red" aria-hidden="true" />
+      <h1 id="timeToDieOverlayTitle"></h1>
+      <p id="timeToDieOverlayDescription"></p>
+      <button data-url="" class="primary" id="timeToDieOverlayAction"></button>
+    </div>
 
     <!-- Notificaciones In-App -->
     <div id="notifications">
