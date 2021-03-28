@@ -30,9 +30,9 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Tu ubicación es utilizada para entregarte una experiencia más personalizada, y jamás se almacena ni se comparte con nadie sin tu permiso.</string>
+	<string>Tu ubicación es utilizada para priorizar tarjetas de transporte público según tu ciudad.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tu ubicación será utilizada para entregarte una experiencia más personalizada, y jamás se almacenará ni compartirá con nadie sin tu permiso.</string>
+	<string>Tu ubicación será utilizada para priorizar tarjetas de transporte público según tu ciudad.</string>
 	<key>NSMainNibFile</key>
 	<string></string>
 	<key>NSMainNibFile~ipad</key>
