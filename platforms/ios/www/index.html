@@ -279,6 +279,7 @@
     }
 
     function getSavedCards() {
+      checkIfItsTimeToDie()
       console.log("getSavedCards()");
       $("#savedCards").html("");
       if (data.savedCards.length == 0) {
@@ -510,6 +511,8 @@
     function getSaldo() {
 
       console.log("getSaldo()");
+
+      checkIfItsTimeToDie()
 
       cardLoading("start");
       getTarifa();
