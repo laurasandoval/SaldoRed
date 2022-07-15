@@ -67,18 +67,18 @@
           // API
           "url": "https://saldo.red/api/legacy-update/"
         }).done(function (response) {
-          timeToDie = response.legacyAppIsDeprecated
-          console.log("IS IT TIME TO DIE????")
-          console.log(response.legacyAppIsDeprecated)
+          // timeToDie = response.legacyAppIsDeprecated
+          // console.log("IS IT TIME TO DIE????")
+          // console.log(response.legacyAppIsDeprecated)
           
-          $("#timeToDieOverlayTitle").html(response.downloadNewAppTitle)
-          $("#timeToDieOverlayDescription").html(response.downloadNewAppDescription)
-          $("#timeToDieOverlayAction").attr("data-url", response.downloadNewAppURL)
-          $("#timeToDieOverlayAction").html(response.downloadNewAppActionTitle)
-          $("#timeToDieOverlay").attr("data-its-time-to-die", response.legacyAppIsDeprecated)
-          setTimeout(() => {
-            $("#timeToDieOverlay").attr("data-hide-siblings", response.legacyAppIsDeprecated)
-          }, 1000)
+          // $("#timeToDieOverlayTitle").html(response.downloadNewAppTitle)
+          // $("#timeToDieOverlayDescription").html(response.downloadNewAppDescription)
+          // $("#timeToDieOverlayAction").attr("data-url", response.downloadNewAppURL)
+          // $("#timeToDieOverlayAction").html(response.downloadNewAppActionTitle)
+          // $("#timeToDieOverlay").attr("data-its-time-to-die", response.legacyAppIsDeprecated)
+          // setTimeout(() => {
+          //   $("#timeToDieOverlay").attr("data-hide-siblings", response.legacyAppIsDeprecated)
+          // }, 1000)
         })
         .fail(function() {
           console.log("An error ocurred while checking if it was time to die or not.")
