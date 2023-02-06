@@ -2,7 +2,7 @@
 
 # Saldo Red
 
-Este repositorio contiene la versión original de Saldo Red, una aplicación para administrar tarjetas de transporte público Chilenas creada el 2019 por [Laura Sandoval](https://twitter.com/laurasideral), con la gran ayuda de [Eduardo Riveros](https://github.com/eriverosr). El código es viejo, desordenado y poco legible. La mayoría de los endpoints que usa la app están deprecados (no funcionan y nadie los mantiene), y diría que el 90% del código sigue exactamente igual a como estaba a principios de 2019, cuando este proyecto era mi espacio principal de aprendizaje y exploración con el código.
+Este repositorio contiene la versión original de Saldo Red, una aplicación para administrar tarjetas de transporte público Chilenas creada el 2019 por [Laura Sandoval](https://twitter.com/laurasideral), con la gran ayuda de [Eduardo Riveros](https://github.com/adderou). El código es viejo, desordenado y poco legible. La mayoría de los endpoints que usa la app están deprecados (no funcionan y nadie los mantiene), y diría que el 90% del código sigue exactamente igual a como estaba a principios de 2019, cuando este proyecto era mi espacio principal de aprendizaje y exploración con el código.
 
 ## Historia y actualidad
 
